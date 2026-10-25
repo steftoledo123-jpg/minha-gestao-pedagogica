@@ -40,7 +40,33 @@
     <!-- Fundo Personalizado Overlay -->
     <div id="custom-bg-overlay" class="absolute inset-0 bg-lilac-50/90 pointer-events-none z-0"></div>
 
-    <!-- Botão Menu Mobile -->
+    <!-- Tela de Confirmação Externa (Caso a família acesse via Link) -->
+    <div id="view-confirmacao-familia" class="absolute inset-0 bg-lilac-900 z-50 hidden flex flex-col items-center justify-center p-6 text-white text-center">
+        <div class="bg-white text-gray-800 p-8 rounded-3xl shadow-2xl max-w-md w-full space-y-6">
+            <div class="w-16 h-16 bg-lilac-100 text-lilac-700 rounded-full flex items-center justify-center mx-auto text-3xl">
+                <i class="fa-solid fa-graduation-cap"></i>
+            </div>
+            <div>
+                <h2 class="text-xl font-bold text-lilac-900">Stefanie Toledo • Pedagoga</h2>
+                <p class="text-xs text-gray-500 mt-1">Confirmação de Sessão Pedagógica</p>
+            </div>
+            <div id="detalhes-sessao-familia" class="bg-lilac-50 p-4 rounded-2xl text-sm text-gray-700 space-y-2 border border-lilac-100">
+                <!-- Preenchido via JS -->
+            </div>
+            <div class="space-y-3 pt-2">
+                <button onclick="responderConfirmacaoFamilia('Confirmado')" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 rounded-xl shadow transition flex items-center justify-center space-x-2">
+                    <i class="fa-solid fa-check text-lg"></i>
+                    <span>Sim, confirmo presença!</span>
+                </button>
+                <button onclick="responderConfirmacaoFamilia('Cancelado')" class="w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-3 rounded-xl shadow transition flex items-center justify-center space-x-2">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                    <span>Não poderei comparecer</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Topo Mobile -->
     <div class="md:hidden bg-lilac-800 text-white p-4 flex justify-between items-center z-20 relative">
         <div class="flex items-center space-x-3">
             <div id="mobile-logo-container" class="w-10 h-10 rounded-full bg-lilac-200 flex items-center justify-center text-lilac-900 font-bold overflow-hidden shadow">
@@ -52,14 +78,14 @@
             </div>
         </div>
         <button onclick="toggleMobileMenu()" class="text-white focus:outline-none text-xl p-2">
-            <i class="fa-solid fa-bars" id="mobile-menu-icon"></i>
+            <i class="fa-solid fa-bars"></i>
         </button>
     </div>
 
-    <!-- Menu Lateral (Sidebar) -->
+    <!-- Menu Lateral Fixo (Sidebar) -->
     <aside id="sidebar" class="bg-lilac-900 text-white w-full md:w-72 flex-shrink-0 flex flex-col justify-between transition-all duration-300 z-20 shadow-xl hidden md:flex relative">
         <div>
-            <!-- Topo do Menu / Perfil -->
+            <!-- Topo do Menu -->
             <div class="p-6 border-b border-lilac-800 flex items-center space-x-4">
                 <div id="sidebar-logo-container" class="w-12 h-12 rounded-full bg-lilac-200 flex items-center justify-center text-lilac-900 font-bold text-xl overflow-hidden shadow-inner flex-shrink-0">
                     <i class="fa-solid fa-graduation-cap text-lilac-800"></i>
@@ -70,40 +96,40 @@
                 </div>
             </div>
 
-            <!-- Navegação por Abas -->
-            <nav class="p-4 space-y-1.5">
-                <button onclick="switchTab('alunos')" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition text-lilac-100 hover:bg-lilac-800 active-tab" data-tab="alunos">
+            <!-- Botões de Navegação -->
+            <nav class="p-4 space-y-2">
+                <button onclick="switchTab('alunos')" id="nav-alunos" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition text-lilac-100 hover:bg-lilac-800 bg-lilac-800 text-white">
                     <i class="fa-solid fa-users w-5 text-center text-lilac-300"></i>
                     <span>Alunos & Anamnese</span>
                 </button>
-                <button onclick="switchTab('agenda')" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition text-lilac-100 hover:bg-lilac-800" data-tab="agenda">
+                <button onclick="switchTab('agenda')" id="nav-agenda" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition text-lilac-100 hover:bg-lilac-800">
                     <i class="fa-solid fa-calendar-days w-5 text-center text-lilac-300"></i>
-                    <span>Agenda Semanal & Tarefas</span>
+                    <span>Agenda Semanal & WhatsApp</span>
                 </button>
-                <button onclick="switchTab('registros')" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition text-lilac-100 hover:bg-lilac-800" data-tab="registros">
+                <button onclick="switchTab('registros')" id="nav-registros" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition text-lilac-100 hover:bg-lilac-800">
                     <i class="fa-solid fa-book-open w-5 text-center text-lilac-300"></i>
                     <span>Diário de Sessões</span>
                 </button>
-                <button onclick="switchTab('avaliacoes')" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition text-lilac-100 hover:bg-lilac-800" data-tab="avaliacoes">
+                <button onclick="switchTab('avaliacoes')" id="nav-avaliacoes" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition text-lilac-100 hover:bg-lilac-800">
                     <i class="fa-solid fa-clipboard-check w-5 text-center text-lilac-300"></i>
                     <span>Avaliações Escolares</span>
                 </button>
-                <button onclick="switchTab('aba')" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition text-lilac-100 hover:bg-lilac-800" data-tab="aba">
+                <button onclick="switchTab('aba')" id="nav-aba" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition text-lilac-100 hover:bg-lilac-800">
                     <i class="fa-solid fa-brain w-5 text-center text-lilac-300"></i>
                     <span>Módulo ABA</span>
                 </button>
-                <button onclick="switchTab('financeiro')" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition text-lilac-100 hover:bg-lilac-800" data-tab="financeiro">
+                <button onclick="switchTab('financeiro')" id="nav-financeiro" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition text-lilac-100 hover:bg-lilac-800">
                     <i class="fa-solid fa-wallet w-5 text-center text-lilac-300"></i>
                     <span>Financeiro & Extratos</span>
                 </button>
-                <button onclick="switchTab('configuracoes')" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition text-lilac-100 hover:bg-lilac-800" data-tab="configuracoes">
+                <button onclick="switchTab('configuracoes')" id="nav-configuracoes" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition text-lilac-100 hover:bg-lilac-800">
                     <i class="fa-solid fa-gear w-5 text-center text-lilac-300"></i>
                     <span>Configurações & Visual</span>
                 </button>
             </nav>
         </div>
 
-        <!-- Rodapé do Menu Lateral -->
+        <!-- Rodapé Lateral -->
         <div class="p-4 border-t border-lilac-800 text-xs text-lilac-300 space-y-1">
             <div class="flex justify-between">
                 <span>Alunos cadastrados:</span>
@@ -114,15 +140,15 @@
                 <span id="badge-sessoes-hoje" class="font-bold text-white">0</span>
             </div>
             <div class="pt-2 text-center text-[10px] text-lilac-400">
-                Painel Pedagógico v4.0
+                Painel Pedagógico v5.0
             </div>
         </div>
     </aside>
 
-    <!-- Conteúdo Principal -->
+    <!-- Conteúdo Das Abas -->
     <main class="flex-1 p-4 md:p-8 overflow-y-auto z-10 relative">
 
-        <!-- ABA 1: ALUNOS & ANAMNESE -->
+        <!-- ABA 1: ALUNOS -->
         <section id="tab-alunos" class="tab-content space-y-6">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white p-6 rounded-2xl shadow-sm border border-lilac-100">
                 <div>
@@ -134,18 +160,15 @@
                     <span>Novo Aluno</span>
                 </button>
             </div>
-
-            <div id="alunos-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Preenchido via JS -->
-            </div>
+            <div id="alunos-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
         </section>
 
-        <!-- ABA 2: AGENDA SEMANAL estilo Google Agenda, TO-DO e COMPROMISSOS -->
+        <!-- ABA 2: AGENDA SEMANAL & WHATSAPP -->
         <section id="tab-agenda" class="tab-content space-y-6 hidden">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white p-6 rounded-2xl shadow-sm border border-lilac-100">
                 <div>
-                    <h2 class="text-2xl font-bold text-lilac-900">Agenda Semanal & Afazeres</h2>
-                    <p class="text-sm text-gray-500">Visualização semanal estilo Google Agenda, controle de compromissos e lista de tarefas.</p>
+                    <h2 class="text-2xl font-bold text-lilac-900">Agenda Semanal & Confirmações</h2>
+                    <p class="text-sm text-gray-500">Acompanhe a semana, status de confirmação da família e tarefas pendentes.</p>
                 </div>
                 <button onclick="openModalAgendamento()" class="bg-lilac-700 hover:bg-lilac-800 text-white font-medium px-5 py-2.5 rounded-xl shadow transition flex items-center space-x-2">
                     <i class="fa-solid fa-calendar-plus"></i>
@@ -153,59 +176,50 @@
                 </button>
             </div>
 
-            <!-- Grade Semanal Estilo Google Agenda -->
             <div class="bg-white p-6 rounded-2xl shadow-sm border border-lilac-100 space-y-4">
                 <div class="flex justify-between items-center border-b pb-4">
                     <div class="flex items-center space-x-3">
                         <button onclick="mudarSemana(-1)" class="p-2 rounded-xl bg-lilac-100 hover:bg-lilac-200 text-lilac-800 transition"><i class="fa-solid fa-chevron-left"></i></button>
-                        <span id="semana-rotulo" class="font-bold text-lilac-900 text-sm md:text-base">Semana Atual</span>
+                        <span id="semana-rotulo" class="font-bold text-lilac-900 text-sm md:text-base">Semana</span>
                         <button onclick="mudarSemana(1)" class="p-2 rounded-xl bg-lilac-100 hover:bg-lilac-200 text-lilac-800 transition"><i class="fa-solid fa-chevron-right"></i></button>
                     </div>
                     <button onclick="irParaSemanaAtual()" class="text-xs bg-lilac-50 hover:bg-lilac-100 text-lilac-700 font-semibold px-3 py-1.5 rounded-lg border border-lilac-200">Hoje</button>
                 </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-7 gap-3 text-xs" id="grade-semanal">
-                    <!-- Gerado dinamicamente via JS -->
-                </div>
+                <div class="grid grid-cols-1 md:grid-cols-7 gap-3 text-xs" id="grade-semanal"></div>
             </div>
 
-            <!-- Bloco de Afazeres & Próximos Compromissos -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <!-- Lista de Afazeres (To-Do List) -->
+                <!-- Lista de Afazeres -->
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-lilac-100 space-y-4">
                     <h3 class="font-bold text-lg text-lilac-900 flex items-center space-x-2">
                         <i class="fa-solid fa-list-check text-lilac-600"></i>
-                        <span>Lista de Afazeres & Preparativos</span>
+                        <span>Lista de Afazeres</span>
                     </h3>
                     <div class="flex space-x-2">
-                        <input type="text" id="novo-afazer" class="flex-1 border border-gray-200 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-lilac-500 outline-none" placeholder="Ex: Preparar jogo de alfabetização...">
-                        <button onclick="adicionarAfazer()" class="bg-lilac-700 hover:bg-lilac-800 text-white font-medium px-4 py-2 rounded-xl text-sm transition">Adicionar</button>
+                        <input type="text" id="novo-afazer" class="flex-1 border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-lilac-500" placeholder="Ex: Preparar jogo de leitura...">
+                        <button onclick="adicionarAfazer()" class="bg-lilac-700 text-white px-4 py-2 rounded-xl text-sm font-medium">Adicionar</button>
                     </div>
-                    <ul id="lista-afazeres" class="space-y-2 pt-2">
-                        <!-- Preenchido via JS -->
-                    </ul>
+                    <ul id="lista-afazeres" class="space-y-2 pt-2"></ul>
                 </div>
 
-                <!-- Lista de Próximos Compromissos e Envio WhatsApp -->
+                <!-- WhatsApp com Link Dinâmico -->
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-lilac-100 space-y-4">
                     <h3 class="font-bold text-lg text-lilac-900 flex items-center space-x-2">
                         <i class="fa-brands fa-whatsapp text-emerald-600"></i>
-                        <span>Confirmação via WhatsApp</span>
+                        <span>Envio de Link de Confirmação</span>
                     </h3>
                     <div class="space-y-3">
                         <div>
-                            <label class="block text-xs font-semibold text-gray-600 mb-1">WhatsApp da Família (DDD + Número)</label>
-                            <input type="text" id="whats-numero" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-lilac-500 outline-none" placeholder="Ex: 19999999999">
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">WhatsApp da Família (Ex: 19999999999)</label>
+                            <input type="text" id="whats-numero" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" placeholder="DDD + Número">
                         </div>
                         <div>
                             <label class="block text-xs font-semibold text-gray-600 mb-1">Selecionar Sessão Agendada</label>
-                            <select id="whats-sessao-select" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-lilac-500 outline-none">
-                                <option value="">Selecione um horário...</option>
-                            </select>
+                            <select id="whats-sessao-select" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none"></select>
                         </div>
-                        <button onclick="enviarConfirmacaoWhatsApp()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2.5 rounded-xl shadow transition flex items-center justify-center space-x-2 text-sm">
+                        <button onclick="enviarLinkConfirmacaoWhatsApp()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2.5 rounded-xl shadow transition flex items-center justify-center space-x-2 text-sm">
                             <i class="fa-brands fa-whatsapp text-lg"></i>
-                            <span>Enviar Mensagem no WhatsApp</span>
+                            <span>Enviar Link no WhatsApp</span>
                         </button>
                     </div>
                 </div>
@@ -217,38 +231,32 @@
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white p-6 rounded-2xl shadow-sm border border-lilac-100">
                 <div>
                     <h2 class="text-2xl font-bold text-lilac-900">Diário de Sessões Pedagógicas</h2>
-                    <p class="text-sm text-gray-500">Registre objetivos, atividades, áudios e observações da aula.</p>
+                    <p class="text-sm text-gray-500">Registre os objetivos, atividades e observações da aula.</p>
                 </div>
                 <button onclick="openModalRegistro()" class="bg-lilac-700 hover:bg-lilac-800 text-white font-medium px-5 py-2.5 rounded-xl shadow transition flex items-center space-x-2">
                     <i class="fa-solid fa-pen-to-square"></i>
                     <span>Novo Registro de Aula</span>
                 </button>
             </div>
-
-            <div id="registros-lista" class="space-y-4">
-                <!-- Preenchido via JS -->
-            </div>
+            <div id="registros-lista" class="space-y-4"></div>
         </section>
 
-        <!-- ABA 4: AVALIAÇÕES ESCOLARES -->
+        <!-- ABA 4: AVALIAÇÕES APROFUNDADAS -->
         <section id="tab-avaliacoes" class="tab-content space-y-6 hidden">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white p-6 rounded-2xl shadow-sm border border-lilac-100">
                 <div>
-                    <h2 class="text-2xl font-bold text-lilac-900">Avaliações de Desempenho Escolar</h2>
-                    <p class="text-sm text-gray-500">Acompanhamento pedagógico estruturado do 1º ao 5º ano do Ensino Fundamental.</p>
+                    <h2 class="text-2xl font-bold text-lilac-900">Avaliações de Desempenho Escolar Detalhadas</h2>
+                    <p class="text-sm text-gray-500">Acompanhamento completo por pilares psicopedagógicos (1º ao 5º ano).</p>
                 </div>
                 <button onclick="openModalAvaliacao()" class="bg-lilac-700 hover:bg-lilac-800 text-white font-medium px-5 py-2.5 rounded-xl shadow transition flex items-center space-x-2">
                     <i class="fa-solid fa-clipboard-question"></i>
-                    <span>Nova Avaliação</span>
+                    <span>Nova Avaliação Detalhada</span>
                 </button>
             </div>
-
-            <div id="avaliacoes-lista" class="space-y-4">
-                <!-- Preenchido via JS -->
-            </div>
+            <div id="avaliacoes-lista" class="space-y-4"></div>
         </section>
 
-        <!-- ABA 5: MÓDULO ABA (FUTURO) -->
+        <!-- ABA 5: MÓDULO ABA -->
         <section id="tab-aba" class="tab-content space-y-6 hidden">
             <div class="bg-white p-8 rounded-2xl shadow-sm border border-lilac-100 text-center space-y-4 max-w-2xl mx-auto my-8">
                 <div class="w-16 h-16 bg-lilac-100 text-lilac-700 rounded-full flex items-center justify-center mx-auto text-3xl">
@@ -256,7 +264,7 @@
                 </div>
                 <h2 class="text-2xl font-bold text-lilac-900">Módulo ABA (Análise do Comportamento)</h2>
                 <p class="text-sm text-gray-600 leading-relaxed">
-                    Este espaço está reservado para o cadastro de programas comportamentais, folhas de registro de frequência/duração, ajuda e evolução de habilidades da Análise do Comportamento Aplicada.
+                    Espaço reservado para o cadastro de programas comportamentais e registro de habilidades ABA.
                 </p>
                 <div class="inline-block bg-lilac-50 text-lilac-800 px-4 py-2 rounded-xl text-xs font-semibold border border-lilac-200">
                     Em breve • Recurso em desenvolvimento
@@ -264,12 +272,12 @@
             </div>
         </section>
 
-        <!-- ABA 6: FINANCEIRO & EXTRATOS -->
+        <!-- ABA 6: FINANCEIRO -->
         <section id="tab-financeiro" class="tab-content space-y-6 hidden">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white p-6 rounded-2xl shadow-sm border border-lilac-100">
                 <div>
                     <h2 class="text-2xl font-bold text-lilac-900">Controle Financeiro & Extratos</h2>
-                    <p class="text-sm text-gray-500">Acompanhe mensalidades, valores pagos/pendentes e gere extratos para a família.</p>
+                    <p class="text-sm text-gray-500">Acompanhe mensalidades e gere extratos para os pais.</p>
                 </div>
                 <button onclick="openModalFinanceiro()" class="bg-lilac-700 hover:bg-lilac-800 text-white font-medium px-5 py-2.5 rounded-xl shadow transition flex items-center space-x-2">
                     <i class="fa-solid fa-file-invoice-dollar"></i>
@@ -293,9 +301,7 @@
             </div>
 
             <div class="bg-white rounded-2xl shadow-sm border border-lilac-100 overflow-hidden">
-                <div class="p-4 border-b border-gray-100 font-bold text-lilac-900">
-                    <span>Lançamentos Recentes</span>
-                </div>
+                <div class="p-4 border-b border-gray-100 font-bold text-lilac-900">Lançamentos Recentes</div>
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse text-sm">
                         <thead>
@@ -309,62 +315,43 @@
                                 <th class="p-3.5 font-semibold text-right">Ações</th>
                             </tr>
                         </thead>
-                        <tbody id="financeiro-tabela-corpo">
-                            <!-- Preenchido via JS -->
-                        </tbody>
+                        <tbody id="financeiro-tabela-corpo"></tbody>
                     </table>
                 </div>
             </div>
         </section>
 
-        <!-- ABA 7: CONFIGURAÇÕES & VISUAL -->
+        <!-- ABA 7: CONFIGURAÇÕES -->
         <section id="tab-configuracoes" class="tab-content space-y-6 hidden">
             <div class="bg-white p-6 rounded-2xl shadow-sm border border-lilac-100">
-                <h2 class="text-2xl font-bold text-lilac-900">Configurações & Personalização Visual</h2>
-                <p class="text-sm text-gray-500">Personalize a sua logomarca, cores e plano de fundo do aplicativo.</p>
+                <h2 class="text-2xl font-bold text-lilac-900">Configurações Visual & Personalização</h2>
+                <p class="text-sm text-gray-500">Personalize a logomarca e as cores de fundo do seu aplicativo.</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-lilac-100 space-y-4">
-                    <h3 class="font-bold text-lg text-lilac-900 flex items-center space-x-2">
-                        <i class="fa-solid fa-image text-lilac-600"></i>
-                        <span>Logomarca do Aplicativo</span>
-                    </h3>
-                    <p class="text-xs text-gray-500">Envie uma imagem para substituir o ícone padrão do topo.</p>
-                    
+                    <h3 class="font-bold text-lg text-lilac-900">Logomarca do App</h3>
                     <div class="flex items-center space-x-4">
                         <div id="config-logo-preview" class="w-16 h-16 rounded-full bg-lilac-100 flex items-center justify-center overflow-hidden border border-lilac-200">
                             <i class="fa-solid fa-graduation-cap text-lilac-700 text-xl"></i>
                         </div>
-                        <input type="file" id="input-logo-file" accept="image/*" onchange="carregarLogoCustomizada(event)" class="text-xs text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-lilac-100 file:text-lilac-700 hover:file:bg-lilac-200">
+                        <input type="file" id="input-logo-file" accept="image/*" onchange="carregarLogoCustomizada(event)" class="text-xs text-gray-500">
                     </div>
-                    <button onclick="removerLogoCustomizada()" class="text-xs text-red-600 hover:underline pt-2 inline-block">Remover logomarca e usar padrão</button>
+                    <button onclick="removerLogoCustomizada()" class="text-xs text-red-600 hover:underline">Restaurar logo padrão</button>
                 </div>
 
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-lilac-100 space-y-4">
-                    <h3 class="font-bold text-lg text-lilac-900 flex items-center space-x-2">
-                        <i class="fa-solid fa-palette text-lilac-600"></i>
-                        <span>Aparência e Fundo</span>
-                    </h3>
-                    <p class="text-xs text-gray-500">Escolha uma cor de fundo sólida ou envie uma foto para plano de fundo.</p>
-
+                    <h3 class="font-bold text-lg text-lilac-900">Plano de Fundo</h3>
                     <div class="space-y-3">
                         <div>
-                            <label class="block text-xs font-semibold text-gray-600 mb-1">Cor de Fundo Sólida</label>
-                            <div class="flex items-center space-x-3">
-                                <input type="color" id="input-cor-fundo" value="#f5f3ff" onchange="mudarCorFundo(this.value)" class="w-10 h-10 rounded-lg cursor-pointer border-0">
-                                <span class="text-xs text-gray-500">Escolha o tom desejado</span>
-                            </div>
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">Cor Sólida</label>
+                            <input type="color" id="input-cor-fundo" value="#f5f3ff" onchange="mudarCorFundo(this.value)" class="w-10 h-10 rounded-lg cursor-pointer border-0">
                         </div>
-
                         <div>
-                            <label class="block text-xs font-semibold text-gray-600 mb-1">Ou Enviar Imagem de Fundo</label>
-                            <input type="file" id="input-bg-file" accept="image/*" onchange="carregarFundoImagem(event)" class="text-xs text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-lilac-100 file:text-lilac-700 hover:file:bg-lilac-200">
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">Imagem de Fundo</label>
+                            <input type="file" id="input-bg-file" accept="image/*" onchange="carregarFundoImagem(event)" class="text-xs text-gray-500">
                         </div>
-
-                        <button onclick="restaurarPadraoVisual()" class="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2 rounded-xl text-xs transition mt-2">
-                            Restaurar Visual Padrão
-                        </button>
+                        <button onclick="restaurarPadraoVisual()" class="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 py-2 rounded-xl text-xs transition">Restaurar Visual Padrão</button>
                     </div>
                 </div>
             </div>
@@ -378,67 +365,46 @@
     <div id="modal-aluno" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-xl rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col">
             <div class="bg-lilac-900 text-white p-4 flex justify-between items-center">
-                <h3 class="font-bold text-lg" id="modal-aluno-titulo">Cadastrar Novo Aluno</h3>
-                <button onclick="closeModalAluno()" class="text-white hover:text-lilac-200"><i class="fa-solid fa-xmark text-lg"></i></button>
+                <h3 class="font-bold text-lg">Cadastrar Aluno & Anamnese</h3>
+                <button onclick="closeModalAluno()" class="text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
             <div class="p-6 overflow-y-auto space-y-4 flex-1">
                 <input type="hidden" id="aluno-id">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-xs font-semibold text-gray-600 mb-1">Nome Completo</label>
-                        <input type="text" id="aluno-nome" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-lilac-500 outline-none">
+                        <input type="text" id="aluno-nome" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none">
                     </div>
                     <div>
                         <label class="block text-xs font-semibold text-gray-600 mb-1">Data de Nascimento</label>
-                        <input type="date" id="aluno-nascimento" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-lilac-500 outline-none">
+                        <input type="date" id="aluno-nascimento" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none">
                     </div>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-xs font-semibold text-gray-600 mb-1">Ano Escolar</label>
-                        <select id="aluno-ano" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-lilac-500 outline-none">
-                            <option value="Educação Infantil">Educação Infantil</option>
+                        <select id="aluno-ano" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none">
                             <option value="1º Ano Fundamental">1º Ano Fundamental</option>
                             <option value="2º Ano Fundamental">2º Ano Fundamental</option>
                             <option value="3º Ano Fundamental">3º Ano Fundamental</option>
                             <option value="4º Ano Fundamental">4º Ano Fundamental</option>
                             <option value="5º Ano Fundamental">5º Ano Fundamental</option>
-                            <option value="Outros">Outros</option>
+                            <option value="Educação Infantil">Educação Infantil</option>
                         </select>
                     </div>
                     <div>
-                        <label class="block text-xs font-semibold text-gray-600 mb-1">Escola em que Estuda</label>
-                        <input type="text" id="aluno-escola" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-lilac-500 outline-none">
+                        <label class="block text-xs font-semibold text-gray-600 mb-1">Escola</label>
+                        <input type="text" id="aluno-escola" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none">
                     </div>
                 </div>
-
-                <div class="border-t border-gray-100 pt-4 mt-2">
-                    <h4 class="font-bold text-sm text-lilac-900 mb-2">Anamnese Pedagógica Resumida</h4>
-                    <div class="space-y-3">
-                        <div>
-                            <label class="block text-xs font-semibold text-gray-600 mb-1">Queixa Principal / Motivo do Atendimento</label>
-                            <textarea id="anamnese-queixa" rows="2" class="w-full border border-gray-200 rounded-xl p-3 text-sm focus:ring-2 focus:ring-lilac-500 outline-none"></textarea>
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-gray-600 mb-1">Histórico Escolar e Desenvolvimento</label>
-                            <textarea id="anamnese-historico" rows="2" class="w-full border border-gray-200 rounded-xl p-3 text-sm focus:ring-2 focus:ring-lilac-500 outline-none"></textarea>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-xs font-semibold text-gray-600 mb-1">Facilidades / Pontos Fortes</label>
-                                <input type="text" id="anamnese-facilidades" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-lilac-500 outline-none">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-semibold text-gray-600 mb-1">Dificuldades Apresentadas</label>
-                                <input type="text" id="anamnese-dificuldades" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-lilac-500 outline-none">
-                            </div>
-                        </div>
-                    </div>
+                <div class="border-t pt-3">
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Anamnese / Queixa Principal</label>
+                    <textarea id="anamnese-queixa" rows="3" class="w-full border border-gray-200 rounded-xl p-3 text-sm outline-none"></textarea>
                 </div>
             </div>
-            <div class="p-4 bg-gray-50 border-t border-gray-100 flex justify-end space-x-3">
-                <button onclick="closeModalAluno()" class="px-4 py-2 text-sm text-gray-600 hover:bg-gray-200 rounded-xl transition">Cancelar</button>
-                <button onclick="salvarAluno()" class="px-5 py-2 text-sm bg-lilac-700 hover:bg-lilac-800 text-white font-medium rounded-xl shadow transition">Salvar Aluno</button>
+            <div class="p-4 bg-gray-50 border-t flex justify-end space-x-3">
+                <button onclick="closeModalAluno()" class="px-4 py-2 text-sm text-gray-600">Cancelar</button>
+                <button onclick="salvarAluno()" class="px-5 py-2 text-sm bg-lilac-700 text-white font-medium rounded-xl">Salvar Aluno</button>
             </div>
         </div>
     </div>
@@ -448,113 +414,135 @@
         <div class="bg-white w-full max-w-md rounded-2xl shadow-2xl overflow-hidden flex flex-col">
             <div class="bg-lilac-900 text-white p-4 flex justify-between items-center">
                 <h3 class="font-bold text-lg">Novo Agendamento</h3>
-                <button onclick="closeModalAgendamento()" class="text-white hover:text-lilac-200"><i class="fa-solid fa-xmark text-lg"></i></button>
+                <button onclick="closeModalAgendamento()" class="text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
             <div class="p-6 space-y-4 flex-1">
                 <div>
                     <label class="block text-xs font-semibold text-gray-600 mb-1">Aluno</label>
-                    <select id="agenda-aluno-id" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-lilac-500 outline-none">
-                        <!-- Preenchido via JS -->
-                    </select>
+                    <select id="agenda-aluno-id" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none"></select>
                 </div>
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <label class="block text-xs font-semibold text-gray-600 mb-1">Data</label>
-                        <input type="date" id="agenda-data" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-lilac-500 outline-none">
+                        <input type="date" id="agenda-data" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none">
                     </div>
                     <div>
                         <label class="block text-xs font-semibold text-gray-600 mb-1">Horário</label>
-                        <input type="time" id="agenda-horario" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-lilac-500 outline-none">
+                        <input type="time" id="agenda-horario" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none">
                     </div>
                 </div>
                 <div>
-                    <label class="block text-xs font-semibold text-gray-600 mb-1">Tipo de Compromisso</label>
-                    <input type="text" id="agenda-tipo" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-lilac-500 outline-none" value="Sessão Pedagógica">
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Assunto / Tipo</label>
+                    <input type="text" id="agenda-tipo" value="Sessão Pedagógica" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none">
                 </div>
             </div>
-            <div class="p-4 bg-gray-50 border-t border-gray-100 flex justify-end space-x-3">
-                <button onclick="closeModalAgendamento()" class="px-4 py-2 text-sm text-gray-600 hover:bg-gray-200 rounded-xl transition">Cancelar</button>
-                <button onclick="salvarAgendamento()" class="px-5 py-2 text-sm bg-lilac-700 hover:bg-lilac-800 text-white font-medium rounded-xl shadow transition">Agendar</button>
+            <div class="p-4 bg-gray-50 border-t flex justify-end space-x-3">
+                <button onclick="closeModalAgendamento()" class="px-4 py-2 text-sm text-gray-600">Cancelar</button>
+                <button onclick="salvarAgendamento()" class="px-5 py-2 text-sm bg-lilac-700 text-white font-medium rounded-xl">Agendar</button>
             </div>
         </div>
     </div>
 
-    <!-- Modal Registro de Sessão -->
+    <!-- Modal Registro -->
     <div id="modal-registro" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-xl rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col">
             <div class="bg-lilac-900 text-white p-4 flex justify-between items-center">
-                <h3 class="font-bold text-lg">Diário da Sessão Pedagógica</h3>
-                <button onclick="closeModalRegistro()" class="text-white hover:text-lilac-200"><i class="fa-solid fa-xmark text-lg"></i></button>
+                <h3 class="font-bold text-lg">Registro de Sessão</h3>
+                <button onclick="closeModalRegistro()" class="text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
             <div class="p-6 overflow-y-auto space-y-4 flex-1">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-xs font-semibold text-gray-600 mb-1">Aluno</label>
-                        <select id="reg-aluno-id" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-lilac-500 outline-none"></select>
+                        <select id="reg-aluno-id" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none"></select>
                     </div>
                     <div>
-                        <label class="block text-xs font-semibold text-gray-600 mb-1">Data da Sessão</label>
-                        <input type="date" id="reg-data" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-lilac-500 outline-none">
+                        <label class="block text-xs font-semibold text-gray-600 mb-1">Data</label>
+                        <input type="date" id="reg-data" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none">
                     </div>
                 </div>
                 <div>
-                    <label class="block text-xs font-semibold text-gray-600 mb-1">Objetivos da Sessão</label>
-                    <textarea id="reg-objetivos" rows="2" class="w-full border border-gray-200 rounded-xl p-3 text-sm focus:ring-2 focus:ring-lilac-500 outline-none"></textarea>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Objetivos</label>
+                    <textarea id="reg-objetivos" rows="2" class="w-full border border-gray-200 rounded-xl p-3 text-sm outline-none"></textarea>
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-gray-600 mb-1">Atividades Realizadas</label>
-                    <textarea id="reg-atividades" rows="2" class="w-full border border-gray-200 rounded-xl p-3 text-sm focus:ring-2 focus:ring-lilac-500 outline-none"></textarea>
+                    <textarea id="reg-atividades" rows="2" class="w-full border border-gray-200 rounded-xl p-3 text-sm outline-none"></textarea>
                 </div>
                 <div>
-                    <label class="block text-xs font-semibold text-gray-600 mb-1">Observações e Avanços</label>
-                    <textarea id="reg-observacoes" rows="2" class="w-full border border-gray-200 rounded-xl p-3 text-sm focus:ring-2 focus:ring-lilac-500 outline-none"></textarea>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Observações</label>
+                    <textarea id="reg-observacoes" rows="2" class="w-full border border-gray-200 rounded-xl p-3 text-sm outline-none"></textarea>
                 </div>
             </div>
-            <div class="p-4 bg-gray-50 border-t border-gray-100 flex justify-end space-x-3">
-                <button onclick="closeModalRegistro()" class="px-4 py-2 text-sm text-gray-600 hover:bg-gray-200 rounded-xl transition">Cancelar</button>
-                <button onclick="salvarRegistro()" class="px-5 py-2 text-sm bg-lilac-700 hover:bg-lilac-800 text-white font-medium rounded-xl shadow transition">Salvar Registro</button>
+            <div class="p-4 bg-gray-50 border-t flex justify-end space-x-3">
+                <button onclick="closeModalRegistro()" class="px-4 py-2 text-sm text-gray-600">Cancelar</button>
+                <button onclick="salvarRegistro()" class="px-5 py-2 text-sm bg-lilac-700 text-white font-medium rounded-xl">Salvar Registro</button>
             </div>
         </div>
     </div>
 
-    <!-- Modal Avaliação Escolar -->
+    <!-- Modal Avaliação Aprofundada -->
     <div id="modal-avaliacao" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col">
             <div class="bg-lilac-900 text-white p-4 flex justify-between items-center">
-                <h3 class="font-bold text-lg">Avaliação de Desempenho Escolar</h3>
-                <button onclick="closeModalAvaliacao()" class="text-white hover:text-lilac-200"><i class="fa-solid fa-xmark text-lg"></i></button>
+                <h3 class="font-bold text-lg">Avaliação Pedagógica Detalhada</h3>
+                <button onclick="closeModalAvaliacao()" class="text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
             <div class="p-6 overflow-y-auto space-y-4 flex-1">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-xs font-semibold text-gray-600 mb-1">Aluno</label>
-                        <select id="aval-aluno-id" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-lilac-500 outline-none"></select>
+                        <select id="aval-aluno-id" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none"></select>
                     </div>
                     <div>
-                        <label class="block text-xs font-semibold text-gray-600 mb-1">Ano / Faixa Avaliada</label>
-                        <select id="aval-ano-escolar" onchange="carregarModeloCriterios()" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-lilac-500 outline-none">
-                            <option value="1">1º Ano Fundamental</option>
-                            <option value="2">2º Ano Fundamental</option>
-                            <option value="3">3º Ano Fundamental</option>
-                            <option value="4">4º Ano Fundamental</option>
-                            <option value="5">5º Ano Fundamental</option>
+                        <label class="block text-xs font-semibold text-gray-600 mb-1">Ano / Faixa</label>
+                        <select id="aval-ano-escolar" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none">
+                            <option value="1º Ano">1º Ano Fundamental</option>
+                            <option value="2º Ano">2º Ano Fundamental</option>
+                            <option value="3º Ano">3º Ano Fundamental</option>
+                            <option value="4º Ano">4º Ano Fundamental</option>
+                            <option value="5º Ano">5º Ano Fundamental</option>
                         </select>
                     </div>
                 </div>
 
-                <div class="border-t border-gray-100 pt-4">
-                    <h4 class="font-bold text-sm text-lilac-900 mb-2">Critérios de Acompanhamento Pedagógico</h4>
-                    <div id="criterios-container" class="space-y-3"></div>
+                <div class="space-y-3 border-t pt-3">
+                    <h4 class="font-bold text-xs text-lilac-900 uppercase tracking-wide">1. Consciência Fonológica & Hipótese de Escrita</h4>
+                    <select id="aval-fonologica" class="w-full border rounded-xl p-2 text-xs">
+                        <option value="Pré-silábica">Hipótese: Pré-silábica</option>
+                        <option value="Silábica sem valor sonoro">Hipótese: Silábica sem valor sonoro</option>
+                        <option value="Silábica com valor sonoro">Hipótese: Silábica com valor sonoro</option>
+                        <option value="Silábico-alfabética">Hipótese: Silábico-alfabética</option>
+                        <option value="Alfabética consolidada">Hipótese: Alfabética consolidada</option>
+                    </select>
                 </div>
 
-                <div class="border-t border-gray-100 pt-4">
-                    <label class="block text-xs font-semibold text-gray-600 mb-1">Parecer Descritivo Pedagógico</label>
-                    <textarea id="aval-parecer" rows="3" class="w-full border border-gray-200 rounded-xl p-3 text-sm focus:ring-2 focus:ring-lilac-500 outline-none"></textarea>
+                <div class="space-y-3 border-t pt-3">
+                    <h4 class="font-bold text-xs text-lilac-900 uppercase tracking-wide">2. Fluência Leitora & Compreensão</h4>
+                    <select id="aval-leitura" class="w-full border rounded-xl p-2 text-xs">
+                        <option value="Leitura silabada palavra a palavra">Leitura silabada palavra a palavra</option>
+                        <option value="Leitura fluente com apoio">Leitura fluente com apoio</option>
+                        <option value="Leitura fluente autônoma com boa compreensão">Leitura fluente autônoma com boa compreensão</option>
+                    </select>
+                </div>
+
+                <div class="space-y-3 border-t pt-3">
+                    <h4 class="font-bold text-xs text-lilac-900 uppercase tracking-wide">3. Raciocínio Lógico-Matemático</h4>
+                    <select id="aval-matematica" class="w-full border rounded-xl p-2 text-xs">
+                        <option value="Dificuldade na noção numérica básica">Dificuldade na noção numérica básica</option>
+                        <option value="Compreende operações simples com material concreto">Compreende operações simples com material concreto</option>
+                        <option value="Bom raciocínio lógico e resolução de problemas">Bom raciocínio lógico e resolução de problemas</option>
+                    </select>
+                </div>
+
+                <div class="border-t pt-3">
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Parecer Descritivo Detalhado & Metas</label>
+                    <textarea id="aval-parecer" rows="3" class="w-full border border-gray-200 rounded-xl p-3 text-sm outline-none" placeholder="Escreva o parecer descritivo detalhado..."></textarea>
                 </div>
             </div>
-            <div class="p-4 bg-gray-50 border-t border-gray-100 flex justify-end space-x-3">
-                <button onclick="closeModalAvaliacao()" class="px-4 py-2 text-sm text-gray-600 hover:bg-gray-200 rounded-xl transition">Cancelar</button>
-                <button onclick="salvarAvaliacao()" class="px-5 py-2 text-sm bg-lilac-700 hover:bg-lilac-800 text-white font-medium rounded-xl shadow transition">Salvar Avaliação</button>
+            <div class="p-4 bg-gray-50 border-t flex justify-end space-x-3">
+                <button onclick="closeModalAvaliacao()" class="px-4 py-2 text-sm text-gray-600">Cancelar</button>
+                <button onclick="salvarAvaliacao()" class="px-5 py-2 text-sm bg-lilac-700 text-white font-medium rounded-xl">Salvar Avaliação</button>
             </div>
         </div>
     </div>
@@ -564,48 +552,46 @@
         <div class="bg-white w-full max-w-md rounded-2xl shadow-2xl overflow-hidden flex flex-col">
             <div class="bg-lilac-900 text-white p-4 flex justify-between items-center">
                 <h3 class="font-bold text-lg">Lançamento Financeiro</h3>
-                <button onclick="closeModalFinanceiro()" class="text-white hover:text-lilac-200"><i class="fa-solid fa-xmark text-lg"></i></button>
+                <button onclick="closeModalFinanceiro()" class="text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
             <div class="p-6 space-y-4 flex-1">
                 <div>
                     <label class="block text-xs font-semibold text-gray-600 mb-1">Aluno</label>
-                    <select id="fin-aluno-id" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-lilac-500 outline-none"></select>
+                    <select id="fin-aluno-id" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none"></select>
                 </div>
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <label class="block text-xs font-semibold text-gray-600 mb-1">Valor Total (R$)</label>
-                        <input type="number" step="0.01" id="fin-valor" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-lilac-500 outline-none">
+                        <input type="number" step="0.01" id="fin-valor" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none">
                     </div>
                     <div>
                         <label class="block text-xs font-semibold text-gray-600 mb-1">Valor Pago (R$)</label>
-                        <input type="number" step="0.01" id="fin-pago" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-lilac-500 outline-none">
+                        <input type="number" step="0.01" id="fin-pago" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none">
                     </div>
                 </div>
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <label class="block text-xs font-semibold text-gray-600 mb-1">Data Vencimento</label>
-                        <input type="date" id="fin-vencimento" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-lilac-500 outline-none">
+                        <input type="date" id="fin-vencimento" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none">
                     </div>
                     <div>
                         <label class="block text-xs font-semibold text-gray-600 mb-1">Status</label>
-                        <select id="fin-status" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-lilac-500 outline-none">
+                        <select id="fin-status" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none">
                             <option value="Pendente">Pendente</option>
-                            <option value="Pago Parcial">Pago Parcial</option>
                             <option value="Pago">Pago Integral</option>
                         </select>
                     </div>
                 </div>
             </div>
-            <div class="p-4 bg-gray-50 border-t border-gray-100 flex justify-end space-x-3">
-                <button onclick="closeModalFinanceiro()" class="px-4 py-2 text-sm text-gray-600 hover:bg-gray-200 rounded-xl transition">Cancelar</button>
-                <button onclick="salvarFinanceiro()" class="px-5 py-2 text-sm bg-lilac-700 hover:bg-lilac-800 text-white font-medium rounded-xl shadow transition">Salvar</button>
+            <div class="p-4 bg-gray-50 border-t flex justify-end space-x-3">
+                <button onclick="closeModalFinanceiro()" class="px-4 py-2 text-sm text-gray-600">Cancelar</button>
+                <button onclick="salvarFinanceiro()" class="px-5 py-2 text-sm bg-lilac-700 text-white font-medium rounded-xl">Salvar Lançamento</button>
             </div>
         </div>
     </div>
 
-    <!-- JAVASCRIPT LOGIC -->
+    <!-- JAVASCRIPT NATIVO -->
     <script>
-        // Data Stores
         let alunos = JSON.parse(localStorage.getItem('st_alunos')) || [];
         let agendamentos = JSON.parse(localStorage.getItem('st_agendamentos')) || [];
         let registros = JSON.parse(localStorage.getItem('st_registros')) || [];
@@ -615,17 +601,11 @@
         let configVisual = JSON.parse(localStorage.getItem('st_config_visual')) || { logo: '', corFundo: '#f5f3ff', bgImagem: '' };
 
         let dataSemanaAtual = new Date();
+        let sessaoRespondendoId = null;
 
-        const criteriosPorAno = {
-            "1": ["Consciência fonológica e rimas", "Identificação de letras e sons", "Traçado e coordenação motora fina", "Contagem e noção numérica básica", "Atenção e concentração na tarefa", "Autonomia na organização do material"],
-            "2": ["Fluência na leitura de palavras e frases", "Escrita alfabética (ortografia natural)", "Interpretação básica de enunciados", "Adição e subtração simples", "Raciocínio lógico-matemático", "Participação e interesse nas atividades"],
-            "3": ["Leitura e compreensão de pequenos textos", "Produção textual (uso de parágrafos)", "Pontuação e gramática básica", "Multiplicação e divisão introdutória", "Resolução de problemas do cotidiano", "Organização e foco nos estudos"],
-            "4": ["Compreensão de textos complexos", "Ortografia avançada e coesão", "Operações matemáticas fundamentais", "Raciocínio em situações-problema", "Capacidade crítica e argumentação", "Autonomia e persistência nas tarefas"],
-            "5": ["Leitura crítica e interpretação aprofundada", "Coesão e coerência na produção escrita", "Matemática: Frações, decimais e lógica", "Resolução de problemas avançados", "Autonomia plena nos estudos", "Autorregulação emocional e foco"]
-        };
-
-        document.addEventListener('DOMContentLoaded', () => {
+        window.onload = function() {
             aplicarConfigVisualSalva();
+            verificarLinkConfirmacaoURL();
             renderAlunos();
             renderAgendaSemanal();
             renderAfazeres();
@@ -634,24 +614,59 @@
             renderFinanceiro();
             atualizarContadoresMenu();
             atualizarSelectsAlunos();
-            carregarModeloCriterios();
-        });
+        };
+
+        // Verificar se a familia abriu o link de confirmacao
+        function verificarLinkConfirmacaoURL() {
+            const hash = window.location.hash;
+            if(hash.includes('sessao=')) {
+                const idSessao = hash.split('sessao=')[1];
+                sessaoRespondendoId = Number(idSessao);
+                const ag = agendamentos.find(a => a.id === sessaoRespondendoId);
+                const aluno = ag ? alunos.find(a => a.id === ag.alunoId) : null;
+
+                if(ag) {
+                    document.getElementById('detalhes-sessao-familia').innerHTML = `
+                        <p><strong>Aluno(a):</strong> ${aluno ? aluno.nome : 'Estudante'}</p>
+                        <p><strong>Data:</strong> ${new Date(ag.data + 'T00:00:00').toLocaleDateString('pt-BR')}</p>
+                        <p><strong>Horário:</strong> ${ag.horario}</p>
+                    `;
+                    document.getElementById('view-confirmacao-familia').classList.remove('hidden');
+                }
+            }
+        }
+
+        function responderConfirmacaoFamilia(status) {
+            if(sessaoRespondendoId) {
+                const ag = agendamentos.find(a => a.id === sessaoRespondendoId);
+                if(ag) {
+                    ag.statusConfirmacao = status; // 'Confirmado' ou 'Cancelado'
+                    localStorage.setItem('st_agendamentos', JSON.stringify(agendamentos));
+                }
+            }
+            alert('Obrigado! Sua resposta foi registrada com sucesso.');
+            window.location.hash = '';
+            document.getElementById('view-confirmacao-familia').classList.add('hidden');
+            location.reload();
+        }
 
         function switchTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-            document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('bg-lilac-800', 'text-white', 'shadow'));
-            
-            document.getElementById('tab-' + tabId).classList.remove('hidden');
-            const activeBtn = document.querySelector(`[data-tab="${tabId}"]`);
-            if(activeBtn) activeBtn.classList.add('bg-lilac-800', 'text-white', 'shadow');
-            document.getElementById('sidebar').classList.add('hidden');
+            const contents = document.querySelectorAll('.tab-content');
+            for(let i=0; i<contents.length; i++) contents[i].classList.add('hidden');
+            const navBtns = document.querySelectorAll('.nav-btn');
+            for(let i=0; i<navBtns.length; i++) navBtns[i].classList.remove('bg-lilac-800', 'text-white');
+
+            const target = document.getElementById('tab-' + tabId);
+            if(target) target.classList.remove('hidden');
+            const activeBtn = document.getElementById('nav-' + tabId);
+            if(activeBtn) activeBtn.classList.add('bg-lilac-800', 'text-white');
+
+            if(window.innerWidth < 768) document.getElementById('sidebar').classList.add('hidden');
         }
 
-        function toggleMobileMenu() {
-            document.getElementById('sidebar').classList.toggle('hidden');
-        }
+        function toggleMobileMenu() { document.getElementById('sidebar').classList.toggle('hidden'); }
 
-        // --- AGENDA SEMANAL ESTILO GOOGLE AGENDA ---
+        // --- AGENDA SEMANAL & WHATSAPP LINK ---
         function getSegundaFeira(d) {
             const date = new Date(d);
             const day = date.getDay();
@@ -674,37 +689,41 @@
             const domingo = new Date(segunda);
             domingo.setDate(segunda.getDate() + 6);
 
-            document.getElementById('semana-rotulo').innerText = `${segunda.toLocaleDateString('pt-BR', {day:'numeric', month:'short'})} - ${domingo.toLocaleDateString('pt-BR', {day:'numeric', month:'short', year:'numeric'})}`;
+            document.getElementById('semana-rotulo').innerText = `${segunda.toLocaleDateString('pt-BR', {day:'numeric', month:'short'})} - ${domingo.toLocaleDateString('pt-BR', {day:'numeric', month:'short'})}`;
 
             const grade = document.getElementById('grade-semanal');
             grade.innerHTML = '';
-
             const diasSemana = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'];
 
             for(let i = 0; i < 7; i++) {
                 const dia = new Date(segunda);
                 dia.setDate(segunda.getDate() + i);
                 const isoDate = dia.toISOString().split('T')[0];
-                const hojeIso = new Date().toISOString().split('T')[0];
-                const isHoje = isoDate === hojeIso;
-
+                const isHoje = isoDate === new Date().toISOString().split('T')[0];
                 const agsDia = agendamentos.filter(a => a.data === isoDate);
 
                 grade.innerHTML += `
-                    <div class="border rounded-2xl p-3 flex flex-col ${isHoje ? 'bg-lilac-100 border-lilac-400 font-bold' : 'bg-lilac-50/50 border-lilac-100'} min-h-[160px]">
-                        <div class="text-center border-b pb-1.5 mb-2 border-lilac-200">
+                    <div class="border rounded-2xl p-2.5 flex flex-col ${isHoje ? 'bg-lilac-100 border-lilac-400 font-bold' : 'bg-lilac-50/50 border-lilac-100'} min-h-[140px]">
+                        <div class="text-center border-b pb-1 mb-2 border-lilac-200">
                             <span class="text-[10px] uppercase text-lilac-700 block">${diasSemana[i]}</span>
-                            <span class="text-sm font-bold text-lilac-900">${dia.getDate()}</span>
+                            <span class="text-xs font-bold text-lilac-900">${dia.getDate()}</span>
                         </div>
-                        <div class="space-y-1.5 flex-1 overflow-y-auto">
+                        <div class="space-y-1.5 flex-1">
                             ${agsDia.length === 0 ? '<p class="text-[10px] text-gray-400 text-center py-2">Sem horários</p>' : 
                                 agsDia.map(ag => {
                                     const aluno = alunos.find(a => a.id === ag.alunoId);
+                                    let badgeColor = 'bg-gray-100 text-gray-700';
+                                    let badgeText = 'Pendente';
+                                    if(ag.statusConfirmacao === 'Confirmado') { badgeColor = 'bg-emerald-100 text-emerald-800'; badgeText = 'Confirmado'; }
+                                    if(ag.statusConfirmacao === 'Cancelado') { badgeColor = 'bg-red-100 text-red-800'; badgeText = 'Cancelado'; }
+
                                     return `
-                                        <div class="bg-white p-2 rounded-xl shadow-xs border border-lilac-200 text-[11px] space-y-0.5">
-                                            <div class="font-semibold text-lilac-800">${ag.horario}</div>
+                                        <div class="bg-white p-2 rounded-xl border border-lilac-200 text-[10px] space-y-1">
+                                            <div class="flex justify-between font-semibold text-lilac-800">
+                                                <span>${ag.horario}</span>
+                                                <span class="px-1.5 py-0.5 rounded text-[8px] ${badgeColor}">${badgeText}</span>
+                                            </div>
                                             <div class="font-bold text-gray-800">${aluno ? aluno.nome : 'Aluno'}</div>
-                                            <div class="text-[9px] text-gray-500">${ag.tipo}</div>
                                         </div>
                                     `;
                                 }).join('')
@@ -714,21 +733,37 @@
                 `;
             }
 
-            // Atualizar Select do WhatsApp
             const selectSessao = document.getElementById('whats-sessao-select');
-            selectSessao.innerHTML = `<option value="">Selecione uma sessão...</option>` + agendamentos.map(ag => {
+            selectSessao.innerHTML = `<option value="">Selecione a sessão...</option>` + agendamentos.map(ag => {
                 const aluno = alunos.find(a => a.id === ag.alunoId);
-                const nome = aluno ? aluno.nome : 'Aluno';
-                return `<option value="${ag.id}">${nome} - ${new Date(ag.data + 'T00:00:00').toLocaleDateString('pt-BR')} às ${ag.horario}</option>`;
+                return `<option value="${ag.id}">${aluno ? aluno.nome : 'Aluno'} - ${ag.data} às ${ag.horario}</option>`;
             }).join('');
         }
 
-        // --- AFAZERES (TO-DO) ---
+        function enviarLinkConfirmacaoWhatsApp() {
+            const numero = document.getElementById('whats-numero').value.trim();
+            const sessaoId = document.getElementById('whats-sessao-select').value;
+
+            if(!numero || !sessaoId) { alert('Informe o número e selecione uma sessão.'); return; }
+
+            const ag = agendamentos.find(a => a.id == sessaoId);
+            const aluno = alunos.find(a => a.id === ag.alunoId);
+            const nomeAluno = aluno ? aluno.nome : 'o(a) aluno(a)';
+            const dataF = new Date(ag.data + 'T00:00:00').toLocaleDateString('pt-BR');
+
+            // Gerar link com hash da sessao
+            const urlBase = window.location.href.split('#')[0];
+            const linkConfirmacao = `${urlBase}#sessao=${ag.id}`;
+
+            const mensagem = `Olá! Aqui é a Professora Stefanie Toledo. Gostaríamos de confirmar a nossa sessão pedagógica com ${nomeAluno} marcada para o dia *${dataF}* às *${ag.horario}*.\n\nPor favor, clique no link abaixo para confirmar ou cancelar sua presença:\n${linkConfirmacao}`;
+            window.open(`https://api.whatsapp.com/send?phone=55${numero}&text=${encodeURIComponent(mensagem)}`, '_blank');
+        }
+
+        // --- AFAZERES ---
         function adicionarAfazer() {
             const input = document.getElementById('novo-afazer');
             const texto = input.value.trim();
             if(!texto) return;
-
             afazeres.push({ id: Date.now(), texto, concluido: false });
             localStorage.setItem('st_afazeres', JSON.stringify(afazeres));
             input.value = '';
@@ -737,11 +772,7 @@
 
         function toggleAfazer(id) {
             const item = afazeres.find(a => a.id === id);
-            if(item) {
-                item.concluido = !item.concluido;
-                localStorage.setItem('st_afazeres', JSON.stringify(afazeres));
-                renderAfazeres();
-            }
+            if(item) { item.concluido = !item.concluido; localStorage.setItem('st_afazeres', JSON.stringify(afazeres)); renderAfazeres(); }
         }
 
         function deletarAfazer(id) {
@@ -752,15 +783,11 @@
 
         function renderAfazeres() {
             const lista = document.getElementById('lista-afazeres');
-            if(afazeres.length === 0) {
-                lista.innerHTML = `<li class="text-xs text-gray-400 text-center py-2">Nenhum afazer pendente.</li>`;
-                return;
-            }
-
+            if(afazeres.length === 0) { lista.innerHTML = `<li class="text-xs text-gray-400 text-center py-2">Nenhum afazer pendente.</li>`; return; }
             lista.innerHTML = afazeres.map(a => `
                 <li class="flex justify-between items-center bg-lilac-50 p-2.5 rounded-xl text-xs border border-lilac-100">
                     <div class="flex items-center space-x-2">
-                        <input type="checkbox" ${a.concluido ? 'checked' : ''} onchange="toggleAfazer(${a.id})" class="rounded text-lilac-600 focus:ring-lilac-500">
+                        <input type="checkbox" ${a.concluido ? 'checked' : ''} onchange="toggleAfazer(${a.id})" class="rounded text-lilac-600">
                         <span class="${a.concluido ? 'line-through text-gray-400' : 'text-gray-700 font-medium'}">${a.texto}</span>
                     </div>
                     <button onclick="deletarAfazer(${a.id})" class="text-red-400 hover:text-red-600 p-1"><i class="fa-solid fa-trash"></i></button>
@@ -773,25 +800,17 @@
             document.getElementById('aluno-id').value = '';
             document.getElementById('aluno-nome').value = '';
             document.getElementById('aluno-nascimento').value = '';
-            document.getElementById('aluno-ano').value = '1º Ano Fundamental';
             document.getElementById('aluno-escola').value = '';
             document.getElementById('anamnese-queixa').value = '';
-            document.getElementById('anamnese-historico').value = '';
-            document.getElementById('anamnese-facilidades').value = '';
-            document.getElementById('anamnese-dificuldades').value = '';
-
             if(id) {
-                const aluno = alunos.find(a => a.id === id);
-                if(aluno) {
-                    document.getElementById('aluno-id').value = aluno.id;
-                    document.getElementById('aluno-nome').value = aluno.nome;
-                    document.getElementById('aluno-nascimento').value = aluno.nascimento;
-                    document.getElementById('aluno-ano').value = aluno.ano;
-                    document.getElementById('aluno-escola').value = aluno.escola;
-                    document.getElementById('anamnese-queixa').value = aluno.queixa || '';
-                    document.getElementById('anamnese-historico').value = aluno.historico || '';
-                    document.getElementById('anamnese-facilidades').value = aluno.facilidades || '';
-                    document.getElementById('anamnese-dificuldades').value = aluno.dificuldades || '';
+                const a = alunos.find(item => item.id === id);
+                if(a) {
+                    document.getElementById('aluno-id').value = a.id;
+                    document.getElementById('aluno-nome').value = a.nome;
+                    document.getElementById('aluno-nascimento').value = a.nascimento;
+                    document.getElementById('aluno-ano').value = a.ano;
+                    document.getElementById('aluno-escola').value = a.escola;
+                    document.getElementById('anamnese-queixa').value = a.queixa || '';
                 }
             }
             document.getElementById('modal-aluno').classList.remove('hidden');
@@ -803,26 +822,16 @@
             const id = document.getElementById('aluno-id').value;
             const nome = document.getElementById('aluno-nome').value.trim();
             if(!nome) { alert('Digite o nome do aluno.'); return; }
-
             const dados = {
                 id: id ? Number(id) : Date.now(),
                 nome,
                 nascimento: document.getElementById('aluno-nascimento').value,
                 ano: document.getElementById('aluno-ano').value,
                 escola: document.getElementById('aluno-escola').value,
-                queixa: document.getElementById('anamnese-queixa').value,
-                historico: document.getElementById('anamnese-historico').value,
-                facilidades: document.getElementById('anamnese-facilidades').value,
-                dificuldades: document.getElementById('anamnese-dificuldades').value
+                queixa: document.getElementById('anamnese-queixa').value
             };
-
-            if(id) {
-                const index = alunos.findIndex(a => a.id == id);
-                if(index !== -1) alunos[index] = dados;
-            } else {
-                alunos.push(dados);
-            }
-
+            if(id) { const i = alunos.findIndex(a => a.id == id); if(i !== -1) alunos[i] = dados; }
+            else { alunos.push(dados); }
             localStorage.setItem('st_alunos', JSON.stringify(alunos));
             closeModalAluno();
             renderAlunos();
@@ -843,36 +852,29 @@
         function renderAlunos() {
             const grid = document.getElementById('alunos-grid');
             if(alunos.length === 0) {
-                grid.innerHTML = `<div class="col-span-full text-center py-12 text-gray-400 bg-white rounded-2xl border border-lilac-100 p-8">
-                    <i class="fa-solid fa-users text-4xl mb-3 text-lilac-300"></i>
-                    <p>Nenhum aluno cadastrado ainda.</p>
-                </div>`;
+                grid.innerHTML = `<div class="col-span-full text-center py-12 text-gray-400 bg-white rounded-2xl border border-lilac-100 p-8"><p>Nenhum aluno cadastrado.</p></div>`;
                 return;
             }
-
             grid.innerHTML = alunos.map(a => `
-                <div class="bg-white rounded-2xl p-6 shadow-sm border border-lilac-100 space-y-4 flex flex-col justify-between">
-                    <div>
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <h3 class="font-bold text-lg text-lilac-900">${a.nome}</h3>
-                                <span class="inline-block bg-lilac-100 text-lilac-800 text-xs px-2.5 py-1 rounded-lg font-medium mt-1">${a.ano}</span>
-                            </div>
-                            <div class="space-x-1">
-                                <button onclick="openModalAluno(${a.id})" class="text-lilac-600 hover:text-lilac-800 p-1.5"><i class="fa-solid fa-pen"></i></button>
-                                <button onclick="deletarAluno(${a.id})" class="text-red-400 hover:text-red-600 p-1.5"><i class="fa-solid fa-trash"></i></button>
-                            </div>
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-lilac-100 space-y-4">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="font-bold text-lg text-lilac-900">${a.nome}</h3>
+                            <span class="inline-block bg-lilac-100 text-lilac-800 text-xs px-2.5 py-1 rounded-lg font-medium mt-1">${a.ano}</span>
                         </div>
-                        <div class="mt-3 text-xs text-gray-600 space-y-1">
-                            <p><strong class="text-gray-700">Escola:</strong> ${a.escola || 'Não informada'}</p>
-                            <p><strong class="text-gray-700">Nascimento:</strong> ${a.nascimento ? new Date(a.nascimento + 'T00:00:00').toLocaleDateString('pt-BR') : 'Não informada'}</p>
+                        <div class="space-x-1">
+                            <button onclick="openModalAluno(${a.id})" class="text-lilac-600 hover:text-lilac-800 p-1"><i class="fa-solid fa-pen"></i></button>
+                            <button onclick="deletarAluno(${a.id})" class="text-red-400 hover:text-red-600 p-1"><i class="fa-solid fa-trash"></i></button>
                         </div>
+                    </div>
+                    <div class="text-xs text-gray-600 space-y-1">
+                        <p><strong>Escola:</strong> ${a.escola || 'Não informada'}</p>
+                        <p><strong>Anamnese:</strong> ${a.queixa || 'Sem registro'}</p>
                     </div>
                 </div>
             `).join('');
         }
 
-        // --- AGENDA E WHATSAPP ---
         function openModalAgendamento() {
             document.getElementById('agenda-data').value = new Date().toISOString().split('T')[0];
             document.getElementById('agenda-horario').value = '14:00';
@@ -885,54 +887,27 @@
             const alunoId = document.getElementById('agenda-aluno-id').value;
             const data = document.getElementById('agenda-data').value;
             const horario = document.getElementById('agenda-horario').value;
-            const tipo = document.getElementById('agenda-tipo').value;
-
-            if(!alunoId || !data || !horario) { alert('Preencha os campos obrigatórios.'); return; }
-
-            agendamentos.push({ id: Date.now(), alunoId: Number(alunoId), data, horario, tipo });
+            if(!alunoId || !data || !horario) return;
+            agendamentos.push({ id: Date.now(), alunoId: Number(alunoId), data, horario, tipo: document.getElementById('agenda-tipo').value, statusConfirmacao: 'Pendente' });
             localStorage.setItem('st_agendamentos', JSON.stringify(agendamentos));
             closeModalAgendamento();
             renderAgendaSemanal();
             atualizarContadoresMenu();
         }
 
-        function enviarConfirmacaoWhatsApp() {
-            const numero = document.getElementById('whats-numero').value.trim();
-            const sessaoId = document.getElementById('whats-sessao-select').value;
-
-            if(!numero || !sessaoId) { alert('Informe o número e selecione uma sessão.'); return; }
-
-            const ag = agendamentos.find(a => a.id == sessaoId);
-            const aluno = alunos.find(a => a.id === ag.alunoId);
-            const nomeAluno = aluno ? aluno.nome : 'o(a) aluno(a)';
-            const dataF = new Date(ag.data + 'T00:00:00').toLocaleDateString('pt-BR');
-
-            const mensagem = `Olá! Aqui é a Professora Stefanie Toledo. Gostaria de confirmar a nossa sessão pedagógica com ${nomeAluno} para o dia *${dataF}* às *${ag.horario}*. Confirma a presença?`;
-            window.open(`https://api.whatsapp.com/send?phone=55${numero}&text=${encodeURIComponent(mensagem)}`, '_blank');
-        }
-
         // --- REGISTROS ---
-        function openModalRegistro() {
-            document.getElementById('reg-data').value = new Date().toISOString().split('T')[0];
-            document.getElementById('modal-registro').classList.remove('hidden');
-        }
-
+        function openModalRegistro() { document.getElementById('modal-registro').classList.remove('hidden'); }
         function closeModalRegistro() { document.getElementById('modal-registro').classList.add('hidden'); }
-
         function salvarRegistro() {
             const alunoId = document.getElementById('reg-aluno-id').value;
             const data = document.getElementById('reg-data').value;
-            if(!alunoId || !data) { alert('Selecione o aluno e a data.'); return; }
-
+            if(!alunoId || !data) return;
             registros.push({
-                id: Date.now(),
-                alunoId: Number(alunoId),
-                data,
+                id: Date.now(), alunoId: Number(alunoId), data,
                 objetivos: document.getElementById('reg-objetivos').value,
                 atividades: document.getElementById('reg-atividades').value,
                 observacoes: document.getElementById('reg-observacoes').value
             });
-
             localStorage.setItem('st_registros', JSON.stringify(registros));
             closeModalRegistro();
             renderRegistros();
@@ -940,16 +915,12 @@
 
         function renderRegistros() {
             const lista = document.getElementById('registros-lista');
-            if(registros.length === 0) {
-                lista.innerHTML = `<div class="text-center py-12 text-gray-400 bg-white rounded-2xl border border-lilac-100 p-8"><p>Nenhum registro efetuado.</p></div>`;
-                return;
-            }
-
+            if(registros.length === 0) { lista.innerHTML = `<div class="text-center py-12 text-gray-400 bg-white rounded-2xl border p-8"><p>Nenhum registro.</p></div>`; return; }
             lista.innerHTML = registros.map(r => {
                 const aluno = alunos.find(a => a.id === r.alunoId);
                 return `
-                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-lilac-100 space-y-2 text-xs">
-                        <h3 class="font-bold text-base text-lilac-900">${aluno ? aluno.nome : 'Aluno'} - ${new Date(r.data + 'T00:00:00').toLocaleDateString('pt-BR')}</h3>
+                    <div class="bg-white rounded-2xl p-6 shadow-sm border text-xs space-y-2">
+                        <h3 class="font-bold text-base text-lilac-900">${aluno ? aluno.nome : 'Aluno'} - ${r.data}</h3>
                         <p><strong>Objetivos:</strong> ${r.objetivos || 'N/A'}</p>
                         <p><strong>Atividades:</strong> ${r.atividades || 'N/A'}</p>
                         <p><strong>Observações:</strong> ${r.observacoes || 'N/A'}</p>
@@ -958,42 +929,23 @@
             }).join('');
         }
 
-        // --- AVALIAÇÕES ---
-        function openModalAvaliacao() {
-            carregarModeloCriterios();
-            document.getElementById('modal-avaliacao').classList.remove('hidden');
-        }
-
+        // --- AVALIAÇÕES APROFUNDADAS ---
+        function openModalAvaliacao() { document.getElementById('modal-avaliacao').classList.remove('hidden'); }
         function closeModalAvaliacao() { document.getElementById('modal-avaliacao').classList.add('hidden'); }
-
-        function carregarModeloCriterios() {
-            const ano = document.getElementById('aval-ano-escolar').value;
-            const listaCriterios = criteriosPorAno[ano] || [];
-            document.getElementById('criterios-container').innerHTML = listaCriterios.map((crit, idx) => `
-                <div class="flex justify-between items-center bg-lilac-50 p-2.5 rounded-xl text-xs">
-                    <span class="font-medium text-lilac-900">${idx+1}. ${crit}</span>
-                    <select id="crit-nivel-${idx}" class="text-xs border rounded px-2 py-1 bg-white">
-                        <option value="D">D</option>
-                        <option value="ED" selected>ED</option>
-                        <option value="NS">NS</option>
-                    </select>
-                </div>
-            `).join('');
-        }
 
         function salvarAvaliacao() {
             const alunoId = document.getElementById('aval-aluno-id').value;
-            const ano = document.getElementById('aval-ano-escolar').value;
             if(!alunoId) return;
-
             avaliacoes.push({
                 id: Date.now(),
                 alunoId: Number(alunoId),
-                anoEscolar: ano + 'º Ano',
+                ano: document.getElementById('aval-ano-escolar').value,
+                fonologica: document.getElementById('aval-fonologica').value,
+                leitura: document.getElementById('aval-leitura').value,
+                matematica: document.getElementById('aval-matematica').value,
                 parecer: document.getElementById('aval-parecer').value,
                 data: new Date().toISOString().split('T')[0]
             });
-
             localStorage.setItem('st_avaliacoes', JSON.stringify(avaliacoes));
             closeModalAvaliacao();
             renderAvaliacoes();
@@ -1001,17 +953,16 @@
 
         function renderAvaliacoes() {
             const lista = document.getElementById('avaliacoes-lista');
-            if(avaliacoes.length === 0) {
-                lista.innerHTML = `<div class="text-center py-12 text-gray-400 bg-white rounded-2xl border border-lilac-100 p-8"><p>Nenhuma avaliação cadastrada.</p></div>`;
-                return;
-            }
-
+            if(avaliacoes.length === 0) { lista.innerHTML = `<div class="text-center py-12 text-gray-400 bg-white rounded-2xl border p-8"><p>Nenhuma avaliação detalhada.</p></div>`; return; }
             lista.innerHTML = avaliacoes.map(av => {
                 const aluno = alunos.find(a => a.id === av.alunoId);
                 return `
-                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-lilac-100 text-xs space-y-2">
-                        <h3 class="font-bold text-base text-lilac-900">${aluno ? aluno.nome : 'Aluno'} (${av.anoEscolar})</h3>
-                        <p><strong>Parecer:</strong> ${av.parecer || 'N/A'}</p>
+                    <div class="bg-white rounded-2xl p-6 shadow-sm border text-xs space-y-2">
+                        <h3 class="font-bold text-base text-lilac-900">${aluno ? aluno.nome : 'Aluno'} (${av.ano})</h3>
+                        <p><strong>Consciência Fonológica / Escrita:</strong> ${av.fonologica}</p>
+                        <p><strong>Fluência Leitora:</strong> ${av.leitura}</p>
+                        <p><strong>Raciocínio Matemático:</strong> ${av.matematica}</p>
+                        <p class="pt-1"><strong>Parecer Descritivo:</strong> ${av.parecer || 'N/A'}</p>
                     </div>
                 `;
             }).join('');
@@ -1020,23 +971,12 @@
         // --- FINANCEIRO ---
         function openModalFinanceiro() { document.getElementById('modal-financeiro').classList.remove('hidden'); }
         function closeModalFinanceiro() { document.getElementById('modal-financeiro').classList.add('hidden'); }
-
         function salvarFinanceiro() {
             const alunoId = document.getElementById('fin-aluno-id').value;
             const valor = parseFloat(document.getElementById('fin-valor').value) || 0;
             const pago = parseFloat(document.getElementById('fin-pago').value) || 0;
-
             if(!alunoId || !valor) return;
-
-            financeiro.push({
-                id: Date.now(),
-                alunoId: Number(alunoId),
-                valor,
-                pago,
-                vencimento: document.getElementById('fin-vencimento').value,
-                status: document.getElementById('fin-status').value
-            });
-
+            financeiro.push({ id: Date.now(), alunoId: Number(alunoId), valor, pago, vencimento: document.getElementById('fin-vencimento').value, status: document.getElementById('fin-status').value });
             localStorage.setItem('st_financeiro', JSON.stringify(financeiro));
             closeModalFinanceiro();
             renderFinanceiro();
@@ -1045,31 +985,23 @@
         function renderFinanceiro() {
             const corpo = document.getElementById('financeiro-tabela-corpo');
             let rec = 0, pen = 0;
-
-            if(financeiro.length === 0) {
-                corpo.innerHTML = `<tr><td colspan="7" class="p-6 text-center text-gray-400">Nenhum lançamento.</td></tr>`;
-                return;
-            }
-
+            if(financeiro.length === 0) { corpo.innerHTML = `<tr><td colspan="7" class="p-6 text-center text-gray-400">Nenhum lançamento.</td></tr>`; return; }
             corpo.innerHTML = financeiro.map(f => {
                 const aluno = alunos.find(a => a.id === f.alunoId);
                 const falta = f.valor - f.pago;
-                rec += f.pago;
-                pen += falta > 0 ? falta : 0;
-
+                rec += f.pago; pen += falta > 0 ? falta : 0;
                 return `
-                    <tr class="border-b border-gray-100 text-xs">
+                    <tr class="border-b text-xs">
                         <td class="p-3 font-medium">${aluno ? aluno.nome : 'Aluno'}</td>
                         <td class="p-3">R$ ${f.valor.toFixed(2)}</td>
                         <td class="p-3 text-emerald-600">R$ ${f.pago.toFixed(2)}</td>
                         <td class="p-3 text-amber-600">R$ ${falta.toFixed(2)}</td>
                         <td class="p-3">${f.vencimento}</td>
                         <td class="p-3"><span class="px-2 py-0.5 rounded font-bold ${f.status === 'Pago' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}">${f.status}</span></td>
-                        <td class="p-3 text-right"><button onclick="deletarFinanceiro(${f.id})" class="text-red-400 hover:text-red-600"><i class="fa-solid fa-trash"></i></button></td>
+                        <td class="p-3 text-right"><button onclick="deletarFinanceiro(${f.id})" class="text-red-400"><i class="fa-solid fa-trash"></i></button></td>
                     </tr>
                 `;
             }).join('');
-
             document.getElementById('fin-total-recebido').innerText = `R$ ${rec.toFixed(2)}`;
             document.getElementById('fin-total-pendente').innerText = `R$ ${pen.toFixed(2)}`;
             document.getElementById('fin-total-qtd').innerText = financeiro.length;
@@ -1081,7 +1013,7 @@
             renderFinanceiro();
         }
 
-        // --- CONFIGURAÇÕES VISUAIS ---
+        // --- CONFIGURAÇÕES ---
         function carregarLogoCustomizada(e) {
             const file = e.target.files[0];
             if(file) {
@@ -1090,10 +1022,8 @@
                 r.readAsDataURL(file);
             }
         }
-
         function removerLogoCustomizada() { configVisual.logo = ''; localStorage.setItem('st_config_visual', JSON.stringify(configVisual)); aplicarConfigVisualSalva(); }
         function mudarCorFundo(cor) { configVisual.corFundo = cor; configVisual.bgImagem = ''; localStorage.setItem('st_config_visual', JSON.stringify(configVisual)); aplicarConfigVisualSalva(); }
-
         function carregarFundoImagem(e) {
             const file = e.target.files[0];
             if(file) {
@@ -1102,12 +1032,7 @@
                 r.readAsDataURL(file);
             }
         }
-
-        function restaurarPadraoVisual() {
-            configVisual = { logo: '', corFundo: '#f5f3ff', bgImagem: '' };
-            localStorage.setItem('st_config_visual', JSON.stringify(configVisual));
-            aplicarConfigVisualSalva();
-        }
+        function restaurarPadraoVisual() { configVisual = { logo: '', corFundo: '#f5f3ff', bgImagem: '' }; localStorage.setItem('st_config_visual', JSON.stringify(configVisual)); aplicarConfigVisualSalva(); }
 
         function aplicarConfigVisualSalva() {
             const body = document.getElementById('app-body');
