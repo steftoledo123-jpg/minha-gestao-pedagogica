@@ -1,1 +1,178 @@
-
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#8b70c9">
+<meta name="description" content="Organize alunos, agenda, registros de atendimentos pedagógicos e financeiro em um só lugar.">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Minha Gestão Pedagógica | Painel de gestão</title>
+<style>
+:root{--accent:#8b70c9;--accent2:#efe9fb;--ink:#302a3b;--muted:#746d80;--bg:#f7f5fb;--card:#fff;--line:#e9e3f1;--danger:#b84d67;--good:#3b8568}
+*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--ink)}
+header{background:linear-gradient(135deg,var(--accent),#b7a4e4);color:white;padding:22px 18px 20px;border-radius:0 0 25px 25px}
+.top{display:flex;align-items:center;gap:12px}.avatar{width:48px;height:48px;border-radius:16px;background:#ffffff35;display:grid;place-items:center;font-size:24px;overflow:hidden;border:1px solid #ffffff66}.avatar img{width:100%;height:100%;object-fit:cover}
+h1{font-size:20px;margin:0 0 4px}.sub{font-size:12px;opacity:.9}.date{margin-top:20px;font-size:13px;opacity:.95}
+nav{display:flex;gap:7px;overflow-x:auto;padding:12px 12px 5px;background:var(--bg);position:sticky;top:0;z-index:5}
+nav button{border:0;background:white;color:var(--muted);padding:10px 13px;border-radius:13px;white-space:nowrap;font-size:12px;font-weight:700;box-shadow:0 2px 8px #39215b0a}
+nav button.active{background:var(--accent);color:white}
+main{padding:12px;max-width:850px;margin:auto}.page{display:none}.page.active{display:block}
+h2{font-size:18px;margin:10px 0 14px}h3{font-size:14px;margin:0 0 10px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.stat,.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:15px;margin-bottom:11px;box-shadow:0 4px 16px #33234b06}
+.stat .emoji{font-size:21px}.stat .label{font-size:12px;color:var(--muted);margin-top:10px}.stat .value{font-size:22px;font-weight:800;margin-top:3px;overflow-wrap:anywhere}
+input,select,textarea{width:100%;padding:12px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);font:inherit;font-size:14px;margin:5px 0 10px;outline-color:var(--accent)}
+label{font-size:12px;font-weight:700;color:var(--muted)}textarea{min-height:85px;resize:vertical}
+button.primary,.btn{border:0;border-radius:12px;padding:12px 14px;background:var(--accent);color:white;font-weight:750;font-size:13px;cursor:pointer}
+button.secondary{background:var(--accent2);color:var(--accent);border:0;border-radius:12px;padding:10px 12px;font-weight:700;cursor:pointer}
+button.danger{background:#fff0f2;color:var(--danger);border:0;border-radius:10px;padding:8px 10px;font-weight:700;cursor:pointer}
+.row{display:flex;gap:8px;align-items:center}.row>*{flex:1}.item{padding:12px 0;border-top:1px solid var(--line)}.item:first-child{border-top:0}.item-title{font-weight:750;font-size:14px}.meta{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.5}.empty{font-size:13px;color:var(--muted);padding:12px 0}
+.pill{display:inline-block;background:var(--accent2);color:var(--accent);border-radius:99px;padding:4px 8px;font-size:11px;font-weight:700}
+.note{font-size:12px;color:var(--muted);line-height:1.55;background:#fff8e8;padding:12px;border-radius:12px;margin:12px 0}
+.colorrow{display:flex;gap:9px;flex-wrap:wrap;margin:8px 0 14px}.swatch{width:32px;height:32px;border-radius:50%;border:3px solid white;box-shadow:0 0 0 1px #ddd;cursor:pointer}.swatch.selected{box-shadow:0 0 0 2px var(--ink)}
+footer{text-align:center;font-size:11px;color:var(--muted);padding:20px}
+@media(min-width:650px){main{padding:20px}.grid{grid-template-columns:repeat(4,minmax(0,1fr))}header{padding-left:max(22px,calc((100vw - 810px)/2));padding-right:max(22px,calc((100vw - 810px)/2))}}
+</style>
+</head>
+<body>
+<header>
+  <div class="top">
+    <div class="avatar" id="avatar">📚</div>
+    <div style="min-width:0"><h1 id="brandTitle">Minha Gestão Pedagógica</h1><div class="sub">Organização do atendimento pedagógico</div></div>
+  </div>
+  <div class="date" id="todayText"></div>
+</header>
+<nav id="nav">
+  <button class="active" data-page="inicio">Início</button><button data-page="alunos">Alunos</button><button data-page="agenda">Agenda</button><button data-page="sessoes">Sessões</button><button data-page="financeiro">Financeiro</button><button data-page="ajustes">Personalizar</button>
+</nav>
+<main>
+<section class="page active" id="inicio">
+  <h2>Visão geral ✨</h2>
+  <div class="grid">
+    <div class="stat"><div class="emoji">🧒</div><div class="label">Alunos cadastrados</div><div class="value" id="statStudents">0</div></div>
+    <div class="stat"><div class="emoji">🗓️</div><div class="label">Atendimentos hoje</div><div class="value" id="statToday">0</div></div>
+    <div class="stat"><div class="emoji">📝</div><div class="label">Registros de sessão</div><div class="value" id="statSessions">0</div></div>
+    <div class="stat"><div class="emoji">💰</div><div class="label">Saldo registrado</div><div class="value" id="statBalance">R$ 0,00</div></div>
+  </div>
+  <div class="card"><h3>Próximos atendimentos</h3><div id="upcomingList" class="empty">Seus agendamentos aparecerão aqui.</div></div>
+  <div class="note">Esta é uma versão inicial demonstrativa. Os dados ficam salvos somente neste navegador/dispositivo. Não use dados reais ou sensíveis de crianças nesta versão.</div>
+</section>
+<section class="page" id="alunos">
+  <h2>Alunos 🧒</h2>
+  <div class="card"><h3>Cadastrar aluno</h3>
+    <form id="studentForm">
+      <label>Nome do aluno</label><input name="name" required placeholder="Nome e sobrenome">
+      <div class="row"><div><label>Idade</label><input name="age" type="number" min="1" max="99" placeholder="Ex.: 8"></div><div><label>Ano escolar</label><input name="grade" placeholder="Ex.: 3º ano"></div></div>
+      <label>Nome do responsável</label><input name="guardian" placeholder="Nome do responsável">
+      <label>WhatsApp do responsável</label><input name="phone" type="tel" placeholder="(19) 99999-9999">
+      <button class="primary" type="submit">Salvar aluno</button>
+    </form>
+  </div>
+  <div class="card"><h3>Lista de alunos</h3><div id="studentList" class="empty">Nenhum aluno cadastrado.</div></div>
+</section>
+<section class="page" id="agenda">
+  <h2>Agenda 🗓️</h2>
+  <div class="card"><h3>Novo atendimento</h3>
+    <form id="appointmentForm">
+      <label>Aluno</label><select name="student" id="appointmentStudent" required><option value="">Cadastre um aluno primeiro</option></select>
+      <div class="row"><div><label>Data</label><input name="date" type="date" required></div><div><label>Horário</label><input name="time" type="time" required></div></div>
+      <label>Observação (opcional)</label><input name="note" placeholder="Ex.: reforço de leitura">
+      <button class="primary" type="submit">Adicionar à agenda</button>
+    </form>
+  </div>
+  <div class="card"><h3>Atendimentos agendados</h3><div id="appointmentList" class="empty">Nenhum atendimento agendado.</div></div>
+</section>
+<section class="page" id="sessoes">
+  <h2>Registros de sessão 📝</h2>
+  <div class="card"><h3>Registrar atendimento</h3>
+    <form id="sessionForm">
+      <label>Aluno</label><select name="student" id="sessionStudent" required><option value="">Cadastre um aluno primeiro</option></select>
+      <div class="row"><div><label>Data</label><input name="date" type="date" required></div><div><label>Área trabalhada</label><select name="area"><option>Alfabetização</option><option>Leitura</option><option>Escrita</option><option>Matemática</option><option>Interpretação</option><option>Habilidades escolares</option><option>Outra</option></select></div></div>
+      <label>O que foi trabalhado e observações</label><textarea name="notes" required placeholder="Registre as atividades, avanços e próximos passos..."></textarea>
+      <button class="primary" type="submit">Salvar registro</button>
+    </form>
+  </div>
+  <div class="card"><h3>Histórico de registros</h3><div id="sessionList" class="empty">Nenhum registro ainda.</div></div>
+</section>
+<section class="page" id="financeiro">
+  <h2>Financeiro 💰</h2>
+  <div class="grid">
+    <div class="stat"><div class="label">Receitas</div><div class="value" id="incomeTotal">R$ 0,00</div></div>
+    <div class="stat"><div class="label">Despesas</div><div class="value" id="expenseTotal">R$ 0,00</div></div>
+  </div>
+  <div class="card"><h3>Adicionar lançamento</h3>
+    <form id="financeForm">
+      <label>Descrição</label><input name="description" required placeholder="Ex.: mensalidade, materiais">
+      <div class="row"><div><label>Tipo</label><select name="type"><option value="in">Receita</option><option value="out">Despesa</option></select></div><div><label>Valor (R$)</label><input name="amount" type="number" min="0.01" step="0.01" required placeholder="0,00"></div></div>
+      <label>Data</label><input name="date" type="date" required>
+      <button class="primary" type="submit">Adicionar lançamento</button>
+    </form>
+  </div>
+  <div class="card"><h3>Movimentações</h3><div id="financeList" class="empty">Nenhum lançamento registrado.</div></div>
+</section>
+<section class="page" id="ajustes">
+  <h2>Personalizar 🎨</h2>
+  <div class="card"><h3>Nome do aplicativo</h3><label>Como quer chamar seu app?</label><input id="customName" maxlength="40" placeholder="Minha Gestão Pedagógica"><button class="primary" id="saveName">Salvar nome</button></div>
+  <div class="card"><h3>Escolha sua cor</h3><div class="colorrow" id="swatches">
+    <button class="swatch selected" style="background:#8b70c9" data-color="#8b70c9" aria-label="Lilás"></button><button class="swatch" style="background:#d879a7" data-color="#d879a7" aria-label="Rosa"></button><button class="swatch" style="background:#4c86c6" data-color="#4c86c6" aria-label="Azul"></button><button class="swatch" style="background:#4d9a83" data-color="#4d9a83" aria-label="Verde"></button><button class="swatch" style="background:#bd795a" data-color="#bd795a" aria-label="Terracota"></button><button class="swatch" style="background:#48434f" data-color="#48434f" aria-label="Grafite"></button>
+  </div><label>Ou escolha uma cor personalizada (HEX)</label><input id="customColor" value="#8b70c9" placeholder="#8b70c9"><button class="primary" id="saveColor">Aplicar cor</button></div>
+  <div class="card"><h3>Sua foto ou logo</h3><label>Escolher imagem deste dispositivo</label><input id="photoInput" type="file" accept="image/*"><p class="meta">A imagem é salva localmente neste navegador, apenas para esta demonstração.</p><button class="secondary" id="removePhoto">Usar símbolo de educação</button></div>
+  <div class="note">A personalização fica salva neste navegador. Para usar em outros dispositivos, sincronizar informações, proteger os dados com login ou enviar confirmações automaticamente pelo WhatsApp, será necessário publicar uma versão com infraestrutura própria.</div>
+  <button class="secondary" id="exportData">Exportar meus dados (JSON)</button>
+</section>
+<footer>Versão inicial de demonstração • Gestão pedagógica com carinho 💜</footer>
+</main>
+<script>
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const KEY='gestaoPedagogicaDemo_v1';
+let db={students:[],appointments:[],sessions:[],finance:[],settings:{name:'Minha Gestão Pedagógica',color:'#8b70c9',photo:''}};
+try{const saved=JSON.parse(localStorage.getItem(KEY)||'null');if(saved)db={...db,...saved,settings:{...db.settings,...saved.settings}}}catch(e){}
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const money=n=>Number(n||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+const today=()=>new Date().toISOString().slice(0,10);
+function save(){try{localStorage.setItem(KEY,JSON.stringify(db))}catch(e){alert('Não foi possível salvar. A imagem pode ser grande demais; tente uma imagem menor.')}} 
+function dateBR(d){if(!d)return '';const [y,m,day]=d.split('-');return `${day}/${m}/${y}`}
+function studentName(id){return db.students.find(s=>s.id===id)?.name||'Aluno removido'}
+function applySettings(){
+ document.documentElement.style.setProperty('--accent',db.settings.color||'#8b70c9');
+ const c=db.settings.color||'#8b70c9';document.documentElement.style.setProperty('--accent2',hexTint(c));
+ $('#brandTitle').textContent=db.settings.name||'Minha Gestão Pedagógica';$('#customName').value=db.settings.name||'';
+ $('#customColor').value=c;$('#avatar').innerHTML=db.settings.photo?`<img alt="Foto ou logo" src="${db.settings.photo}">`:'📚';
+ $$('.swatch').forEach(b=>b.classList.toggle('selected',b.dataset.color.toLowerCase()===c.toLowerCase()));
+}
+function hexTint(hex){if(!/^#[0-9a-f]{6}$/i.test(hex))return '#efe9fb';let n=parseInt(hex.slice(1),16),r=(n>>16)&255,g=(n>>8)&255,b=n&255;r=Math.round(r*.12+255*.88);g=Math.round(g*.12+255*.88);b=Math.round(b*.12+255*.88);return '#'+[r,g,b].map(v=>v.toString(16).padStart(2,'0')).join('')}
+function render(){
+ const opts=db.students.map(s=>`<option value="${s.id}">${esc(s.name)}</option>`).join('');
+ ['#appointmentStudent','#sessionStudent'].forEach(id=>{const old=$(id).value;$(id).innerHTML='<option value="">Selecione um aluno</option>'+opts;if(old)$(id).value=old});
+ $('#studentList').innerHTML=db.students.length?db.students.map(s=>`<div class="item"><div class="item-title">${esc(s.name)} <span class="pill">${esc(s.age? s.age+' anos':'Aluno')}</span></div><div class="meta">${esc(s.grade||'Ano escolar não informado')} · Responsável: ${esc(s.guardian||'Não informado')}<br>WhatsApp: ${esc(s.phone||'Não informado')}</div><div style="text-align:right"><button class="danger" onclick="removeItem('students','${s.id}')">Excluir</button></div></div>`).join(''):'<div class="empty">Nenhum aluno cadastrado.</div>';
+ const apps=[...db.appointments].sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time));
+ $('#appointmentList').innerHTML=apps.length?apps.map(a=>`<div class="item"><div class="item-title">${esc(studentName(a.student))}</div><div class="meta">${dateBR(a.date)} às ${esc(a.time)}${a.note?' · '+esc(a.note):''}</div><div class="row" style="margin-top:9px"><button class="secondary" onclick="confirmMsg('${a.id}')">Mensagem WhatsApp</button><button class="danger" onclick="removeItem('appointments','${a.id}')">Excluir</button></div></div>`).join(''):'<div class="empty">Nenhum atendimento agendado.</div>';
+ const sessions=[...db.sessions].sort((a,b)=>b.date.localeCompare(a.date));
+ $('#sessionList').innerHTML=sessions.length?sessions.map(s=>`<div class="item"><div class="item-title">${esc(studentName(s.student))} <span class="pill">${esc(s.area)}</span></div><div class="meta">${dateBR(s.date)}<br>${esc(s.notes)}</div><div style="text-align:right"><button class="danger" onclick="removeItem('sessions','${s.id}')">Excluir</button></div></div>`).join(''):'<div class="empty">Nenhum registro ainda.</div>';
+ const finances=[...db.finance].sort((a,b)=>b.date.localeCompare(a.date));
+ $('#financeList').innerHTML=finances.length?finances.map(f=>`<div class="item"><div class="row"><div><div class="item-title">${esc(f.description)}</div><div class="meta">${dateBR(f.date)} · ${f.type==='in'?'Receita':'Despesa'}</div></div><div style="text-align:right;font-weight:800;color:${f.type==='in'?'var(--good)':'var(--danger)'}">${f.type==='in'?'+':'−'} ${money(f.amount)}</div></div><div style="text-align:right"><button class="danger" onclick="removeItem('finance','${f.id}')">Excluir</button></div></div>`).join(''):'<div class="empty">Nenhum lançamento registrado.</div>';
+ const inc=db.finance.filter(f=>f.type==='in').reduce((t,f)=>t+Number(f.amount),0),out=db.finance.filter(f=>f.type==='out').reduce((t,f)=>t+Number(f.amount),0);
+ $('#incomeTotal').textContent=money(inc);$('#expenseTotal').textContent=money(out);$('#statBalance').textContent=money(inc-out);
+ $('#statStudents').textContent=db.students.length;$('#statSessions').textContent=db.sessions.length;$('#statToday').textContent=db.appointments.filter(a=>a.date===today()).length;
+ const upcoming=apps.filter(a=>a.date>=today()).slice(0,4);
+ $('#upcomingList').innerHTML=upcoming.length?upcoming.map(a=>`<div class="item"><div class="item-title">${esc(studentName(a.student))}</div><div class="meta">${dateBR(a.date)} às ${esc(a.time)}</div></div>`).join(''):'<div class="empty">Nenhum atendimento futuro cadastrado.</div>';
+}
+window.removeItem=(type,id)=>{if(confirm('Deseja excluir este registro?')){db[type]=db[type].filter(x=>x.id!==id);save();render()}};
+window.confirmMsg=id=>{const a=db.appointments.find(x=>x.id===id),s=db.students.find(x=>x.id===a.student);const msg=`Olá${s?.guardian?' '+s.guardian:''}! 💜 Passando para confirmar o atendimento pedagógico de ${s?.name||'seu/sua filho(a)'} no dia ${dateBR(a.date)}, às ${a.time}. Podemos confirmar?`;if(s?.phone){const phone=s.phone.replace(/\D/g,'');location.href=`https://wa.me/55${phone}?text=${encodeURIComponent(msg)}`}else if(navigator.clipboard){navigator.clipboard.writeText(msg).then(()=>alert('Mensagem copiada! Cadastre o WhatsApp do responsável para abrir a conversa diretamente.')).catch(()=>prompt('Copie a mensagem:',msg))}else prompt('Copie a mensagem:',msg)};
+function id(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
+$('#studentForm').addEventListener('submit',e=>{e.preventDefault();const f=new FormData(e.target);db.students.push({id:id(),name:f.get('name').trim(),age:f.get('age'),grade:f.get('grade').trim(),guardian:f.get('guardian').trim(),phone:f.get('phone').trim()});save();e.target.reset();render();alert('Aluno cadastrado nesta demonstração!')});
+$('#appointmentForm').addEventListener('submit',e=>{e.preventDefault();const f=new FormData(e.target);db.appointments.push({id:id(),student:f.get('student'),date:f.get('date'),time:f.get('time'),note:f.get('note').trim()});save();e.target.reset();render()});
+$('#sessionForm').addEventListener('submit',e=>{e.preventDefault();const f=new FormData(e.target);db.sessions.push({id:id(),student:f.get('student'),date:f.get('date'),area:f.get('area'),notes:f.get('notes').trim()});save();e.target.reset();render()});
+$('#financeForm').addEventListener('submit',e=>{e.preventDefault();const f=new FormData(e.target);db.finance.push({id:id(),description:f.get('description').trim(),type:f.get('type'),amount:Number(f.get('amount')),date:f.get('date')});save();e.target.reset();render()});
+$$('nav button').forEach(b=>b.addEventListener('click',()=>{$$('nav button').forEach(x=>x.classList.toggle('active',x===b));$$('.page').forEach(p=>p.classList.toggle('active',p.id===b.dataset.page));window.scrollTo({top:0,behavior:'smooth'})}));
+$('#saveName').addEventListener('click',()=>{db.settings.name=$('#customName').value.trim()||'Minha Gestão Pedagógica';save();applySettings();alert('Nome atualizado!')});
+function setColor(c){if(!/^#[0-9a-f]{6}$/i.test(c)){alert('Digite uma cor HEX válida, por exemplo #8b70c9.');return}db.settings.color=c;save();applySettings()}
+$$('.swatch').forEach(b=>b.addEventListener('click',()=>setColor(b.dataset.color)));
+$('#saveColor').addEventListener('click',()=>setColor($('#customColor').value.trim()));
+$('#photoInput').addEventListener('change',e=>{const file=e.target.files[0];if(!file)return;if(file.size>1200000){alert('Escolha uma imagem de até 1,2 MB para esta demonstração.');e.target.value='';return}const reader=new FileReader();reader.onload=()=>{db.settings.photo=reader.result;save();applySettings()};reader.readAsDataURL(file)});
+$('#removePhoto').addEventListener('click',()=>{db.settings.photo='';save();applySettings();$('#photoInput').value=''});
+$('#exportData').addEventListener('click',()=>{const blob=new Blob([JSON.stringify(db,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='gestao-pedagogica-dados.json';a.click();URL.revokeObjectURL(url)});
+$('#todayText').textContent=new Date().toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+applySettings();render();
+</script>
+</body>
+</html>
