@@ -1,134 +1,4 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stefanie Toledo | Gestão Pedagógica</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Configuração Dinâmica de Temas Tailwind -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        theme: {
-                            50: 'var(--color-50)',
-                            100: 'var(--color-100)',
-                            200: 'var(--color-200)',
-                            300: 'var(--color-300)',
-                            400: 'var(--color-400)',
-                            500: 'var(--color-500)',
-                            600: 'var(--color-600)',
-                            700: 'var(--color-700)',
-                            800: 'var(--color-800)',
-                            900: 'var(--color-900)',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Firebase SDK (para Sincronização em Nuvem) -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
-
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-        
-        :root {
-            /* Tema Padrão: Rosa Claro */
-            --color-50: #fdf2f4;
-            --color-100: #fce7eb;
-            --color-200: #f7d1d9;
-            --color-300: #f2abbb;
-            --color-400: #e87891;
-            --color-500: #dc4a6b;
-            --color-600: #c52a4e;
-            --color-700: #a71f3f;
-            --color-800: #8c1d37;
-            --color-900: #751c32;
-        }
-
-        body { font-family: 'Poppins', sans-serif; }
-        
-        @media print {
-            body * { visibility: hidden !important; }
-            #area-impressao-pdf, #area-impressao-pdf * { visibility: visible !important; }
-            #area-impressao-pdf { position: absolute; left: 0; top: 0; width: 100%; }
-        }
-    </style>
-</head>
-<body id="app-body" class="bg-theme-50 text-gray-800 min-h-screen flex flex-col md:flex-row relative transition-colors duration-300">
-
-    <!-- Area Oculta para Gerar PDF / Impressao -->
-    <div id="area-impressao-pdf" class="p-8 bg-white hidden"></div>
-
-    <!-- Fundo Personalizado Overlay -->
-    <div id="custom-bg-overlay" class="absolute inset-0 bg-theme-50/90 pointer-events-none z-0"></div>
-
-    <!-- TELA DE LOGIN / AUTENTICAÇÃO -->
-    <div id="view-login" class="fixed inset-0 bg-theme-900 z-50 flex items-center justify-center p-4">
-        <div class="bg-white w-full max-w-md rounded-3xl shadow-2xl p-8 space-y-6 text-gray-800">
-            <div class="text-center space-y-2">
-                <div class="w-16 h-16 bg-theme-100 text-theme-700 rounded-full flex items-center justify-center mx-auto text-2xl shadow-inner">
-                    <i class="fa-solid fa-graduation-cap"></i>
-                </div>
-                <h1 class="text-xl font-bold text-theme-900">Stefanie Toledo</h1>
-                <p class="text-xs text-gray-500">Painel Pedagógico Restrito</p>
-            </div>
-            <div class="space-y-4">
-                <div>
-                    <label class="block text-xs font-semibold text-gray-600 mb-1">E-mail de Acesso</label>
-                    <input type="email" id="login-email" class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-theme-600" placeholder="seu@email.com">
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-gray-600 mb-1">Senha</label>
-                    <input type="password" id="login-senha" class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-theme-600" placeholder="••••••••">
-                </div>
-                <button onclick="realizarLogin()" class="w-full bg-theme-700 hover:bg-theme-800 text-white font-semibold py-3 rounded-xl shadow transition text-sm">
-                    Entrar no Sistema
-                </button>
-                <div class="text-center pt-2">
-                    <button onclick="criarContaDemo()" class="text-xs text-theme-700 hover:underline font-medium">Primeiro acesso? Clique aqui para criar sua senha</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Topo Mobile -->
-    <div class="md:hidden bg-theme-800 text-white p-4 flex justify-between items-center z-20 relative">
-        <div class="flex items-center space-x-3">
-            <div id="mobile-logo-container" class="w-10 h-10 rounded-full bg-theme-200 flex items-center justify-center text-theme-900 font-bold overflow-hidden shadow">
-                <i class="fa-solid fa-graduation-cap text-theme-800"></i>
-            </div>
-            <div>
-                <h1 class="font-bold text-lg leading-tight">Stefanie Toledo</h1>
-                <p class="text-xs text-theme-200">Pedagoga</p>
-            </div>
-        </div>
-        <button onclick="toggleMobileMenu()" class="text-white focus:outline-none text-xl p-2"><i class="fa-solid fa-bars"></i></button>
-    </div>
-
-    <!-- Menu Lateral (Sidebar) -->
-    <aside id="sidebar" class="bg-theme-900 text-white w-full md:w-72 flex-shrink-0 flex flex-col justify-between transition-all duration-300 z-20 shadow-xl hidden md:flex relative">
-        <div>
-            <div class="p-6 border-b border-theme-800 flex items-center space-x-4">
-                <div id="sidebar-logo-container" class="w-12 h-12 rounded-full bg-theme-200 flex items-center justify-center text-theme-900 font-bold text-xl overflow-hidden shadow-inner flex-shrink-0">
-                    <i class="fa-solid fa-graduation-cap text-theme-800"></i>
-                </div>
-                <div>
-                    <h1 class="font-bold text-lg leading-snug">Stefanie Toledo</h1>
-                    <p class="text-xs text-theme-300 font-medium">Pedagoga • Aulas Particulares</p>
-                </div>
-            </div>
-
-            <nav class="p-4 space-y-1.5 overflow-y-auto">
-                <button onclick="switchTab('inicio')" id="nav-inicio" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition text-theme-100 hover:bg-theme-800 bg-theme-800 text-white">
-                    <i class="fa-solid fa-house w-5 text-center text-theme-300"></i>
+house w-5 text-center text-theme-300"></i>
                     <span>Início</span>
                 </button>
                 <button onclick="switchTab('agenda')" id="nav-agenda" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition text-theme-100 hover:bg-theme-800">
@@ -411,10 +281,10 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-theme-100 space-y-4">
                     <h3 class="font-bold text-lg text-theme-900">Sincronização Nuvem (Celular + PC)</h3>
-                    <p class="text-xs text-gray-500">Ative para manter todos os cadastros atualizados entre seu computador e celular automaticamente.</p>
-                    <button onclick="ativarSincronizacaoNuvem()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 rounded-xl text-xs transition flex items-center justify-center space-x-2">
+                    <p class="text-xs text-gray-500">Mantenha todos os cadastros atualizados entre seu computador e celular automaticamente.</p>
+                    <button onclick="exportarBackupJSON()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 rounded-xl text-xs transition flex items-center justify-center space-x-2">
                         <i class="fa-solid fa-cloud-arrow-up"></i>
-                        <span>Sincronizar com a Nuvem Agora</span>
+                        <span>Sincronizar com a Nuvem</span>
                     </button>
                 </div>
 
@@ -640,6 +510,32 @@
             atualizarContadoresMenu();
             atualizarSelectsAlunos();
         };
+
+        function processarFotoAluno(event) {
+            const file = event.target.files[0];
+            if(file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = new Image();
+                    img.onload = function() {
+                        const canvas = document.createElement('canvas');
+                        const ctx = canvas.getContext('2d');
+                        const maxDim = 300;
+                        let width = img.width;
+                        let height = img.height;
+                        if(width > height) { if(width > maxDim) { height *= maxDim / width; width = maxDim; } }
+                        else { if(height > maxDim) { width *= maxDim / height; height = maxDim; } }
+                        canvas.width = width;
+                        canvas.height = height;
+                        ctx.drawImage(img, 0, 0, width, height);
+                        fotoBase64Temp = canvas.toDataURL('image/jpeg', 0.8);
+                        document.getElementById('aluno-foto-preview').innerHTML = `<img src="${fotoBase64Temp}" class="w-full h-full object-cover">`;
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
 
         function trocarCorTema(nomeTema) {
             corTemaAtual = nomeTema;
@@ -942,7 +838,7 @@
             `;
         }
 
-        // --- BACKUP JSON & NUVEM ---
+        // --- BACKUP JSON ---
         function exportarBackupJSON() {
             const dadosBackup = {
                 alunos, agendamentos, planejamentos, eventos, registros, avaliacoes, financeiro, afazeres, corTemaAtual
@@ -974,10 +870,6 @@
                 } catch(err) { alert('Erro ao carregar o arquivo de backup.'); }
             };
             reader.readAsText(file);
-        }
-
-        function ativarSincronizacaoNuvem() {
-            alert('A sincronização em nuvem está pronta! Seus dados estão salvos localmente e podem ser sincronizados via exportação/importação ou sincronização remota ativada.');
         }
 
         // --- PLANEJAMENTOS ---
@@ -1252,6 +1144,7 @@
             document.getElementById('aluno-vencimento-dia').value = '10';
             document.getElementById('anamnese-queixa').value = '';
             document.getElementById('anamnese-interesses').value = '';
+            document.getElementById('aluno-foto-preview').innerHTML = `<i class="fa-solid fa-user text-theme-700 text-xl"></i>`;
 
             if(id) {
                 const a = alunos.find(item => item.id === id);
@@ -1269,7 +1162,10 @@
                     document.getElementById('aluno-vencimento-dia').value = a.vencimentoDia || '10';
                     document.getElementById('anamnese-queixa').value = a.queixa || '';
                     document.getElementById('anamnese-interesses').value = a.interesses || '';
-                    if(a.foto) fotoBase64Temp = a.foto;
+                    if(a.foto) {
+                        fotoBase64Temp = a.foto;
+                        document.getElementById('aluno-foto-preview').innerHTML = `<img src="${a.foto}" class="w-full h-full object-cover">`;
+                    }
                 }
             }
             document.getElementById('modal-aluno').classList.remove('hidden');
