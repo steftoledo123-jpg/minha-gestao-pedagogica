@@ -1,356 +1,1818 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#8b70c9">
-<meta name="description" content="Organize alunos, agenda, registros de atendimentos pedagógicos e financeiro em um só lugar.">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Minha Gestão Pedagógica | Painel de gestão</title>
-<style>
-/* Navegação alinhada à esquerda */
-nav, aside {
-  text-align: left;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stefanie Toledo | Pedagoga</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        lilac: {
+                            50: '#FAF5FF',
+                            100: '#F3E8FF',
+                            200: '#E9D5FF',
+                            300: '#D8B4FE',
+                            400: '#C084FC',
+                            500: '#A855F7',
+                            600: '#9333EA',
+                            700: '#7E22CE',
+                            800: '#6B21A8',
+                            900: '#581C87',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #F8F5FC;
+            transition: background-color 0.3s ease;
+        }
+        
+        /* Layer de Background Customizável */
+        #custom-bg-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            pointer-events: none;
+            transition: opacity 0.3s ease, filter 0.3s ease;
+        }
 
-nav a, nav button, aside a, aside button {
-  justify-content: flex-start;
-  text-align: left;
-}
-
-/* Fonte um pouco maior */
-body {
-  font-size: 20px;
-}
-
-button, input, select, textarea {
-  font-size: 20px;
-}
-
-/* Facilitar a leitura dos itens de navegação */
-nav a, nav button, aside a, aside button {
-  padding-top: 10px;
-  padding-bottom: 10px;
-}
-
-/* Barra lateral de navegação */
-nav {
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: stretch !important;
-  justify-content: flex-start !important;
-  gap: 6px !important;
-  width: 220px;
-  min-width: 220px;
-  padding: 16px 12px;
-  box-sizing: border-box;
-  text-align: left !important;
-}
-
-/* Botões do menu */
-nav button {
-  display: flex !important;
-  flex-direction: row !important;
-  align-items: center !important;
-  justify-content: flex-start !important;
-  width: 100% !important;
-  min-height: 44px;
-  padding: 12px 14px !important;
-  margin: 0 !important;
-  box-sizing: border-box;
-  text-align: left !important;
-  font-size: 16px !important;
-  border-radius: 10px;
-  cursor: pointer;
-}
-
-/* Destaque da página selecionada */
-nav button.active {
-  background-color: #B57AE8 !important;
-  color: #FFFFFF !important;
-}
-
-/* Ajuste para telas menores */
-@media (max-width: 600px) {
-  nav {
-    width: 100%;
-    min-width: 0;
-  }
-:root{--accent:#8b70c9;--accent2:#efe9fb;--ink:#302a3b;--muted:#746d80;--bg:#f7f5fb;--card:#fff;--line:#e9e3f1;--danger:#b84d67;--good:#3b8568}
-*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--ink)}
-header{background:linear-gradient(135deg,var(--accent),#b7a4e4);color:white;padding:22px 18px 20px;border-radius:0 0 25px 25px}
-.top{display:flex;align-items:center;gap:12px}.avatar{width:48px;height:48px;border-radius:16px;background:#ffffff35;display:grid;place-items:center;font-size:24px;overflow:hidden;border:1px solid #ffffff66}.avatar img{width:100%;height:100%;object-fit:cover}
-h1{font-size:20px;margin:0 0 4px}.sub{font-size:12px;opacity:.9}.date{margin-top:20px;font-size:13px;opacity:.95}
-nav{display:flex;gap:7px;overflow-x:auto;padding:12px 12px 5px;background:var(--bg);position:sticky;top:0;z-index:5}
-nav button{border:0;background:white;color:var(--muted);padding:10px 13px;border-radius:13px;white-space:nowrap;font-size:12px;font-weight:700;box-shadow:0 2px 8px #39215b0a}
-nav button.active{background:var(--accent);color:white}
-main{padding:12px;max-width:850px;margin:auto}.page{display:none}.page.active{display:block}
-h2{font-size:18px;margin:10px 0 14px}h3{font-size:14px;margin:0 0 10px}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.stat,.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:15px;margin-bottom:11px;box-shadow:0 4px 16px #33234b06}
-.stat .emoji{font-size:21px}.stat .label{font-size:12px;color:var(--muted);margin-top:10px}.stat .value{font-size:22px;font-weight:800;margin-top:3px;overflow-wrap:anywhere}
-input,select,textarea{width:100%;padding:12px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);font:inherit;font-size:14px;margin:5px 0 10px;outline-color:var(--accent)}
-label{font-size:12px;font-weight:700;color:var(--muted)}textarea{min-height:85px;resize:vertical}
-button.primary,.btn{border:0;border-radius:12px;padding:12px 14px;background:var(--accent);color:white;font-weight:750;font-size:13px;cursor:pointer}
-button.secondary{background:var(--accent2);color:var(--accent);border:0;border-radius:12px;padding:10px 12px;font-weight:700;cursor:pointer}
-button.danger{background:#fff0f2;color:var(--danger);border:0;border-radius:10px;padding:8px 10px;font-weight:700;cursor:pointer}
-.row{display:flex;gap:8px;align-items:center}.row>*{flex:1}.item{padding:12px 0;border-top:1px solid var(--line)}.item:first-child{border-top:0}.item-title{font-weight:750;font-size:14px}.meta{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.5}.empty{font-size:13px;color:var(--muted);padding:12px 0}
-.pill{display:inline-block;background:var(--accent2);color:var(--accent);border-radius:99px;padding:4px 8px;font-size:11px;font-weight:700}
-.note{font-size:12px;color:var(--muted);line-height:1.55;background:#fff8e8;padding:12px;border-radius:12px;margin:12px 0}
-.colorrow{display:flex;gap:9px;flex-wrap:wrap;margin:8px 0 14px}.swatch{width:32px;height:32px;border-radius:50%;border:3px solid white;box-shadow:0 0 0 1px #ddd;cursor:pointer}.swatch.selected{box-shadow:0 0 0 2px var(--ink)}
-footer{text-align:center;font-size:11px;color:var(--muted);padding:20px}
-@media(min-width:650px){main{padding:20px}.grid{grid-template-columns:repeat(4,minmax(0,1fr))}header{padding-left:max(22px,calc((100vw - 810px)/2));padding-right:max(22px,calc((100vw - 810px)/2))}}
-
-/* Tema lilás Minha Gestão Pedagógica */
-:root {
-  --lilas-claro: #F8F2FF;
-  --lilas-fundo: #F3E8FF;
-  --lilas-medio: #DCC2F5;
-  --lilas-principal: #B57AE8;
-  --lilas-escuro: #7541A6;
-}
-
-body {
-  background-color: var(--lilas-fundo) !important;
-}
-
-header, nav, aside {
-  background-color: var(--lilas-principal) !important;
-}
-
-button {
-  background-color: var(--lilas-principal);
-  border-color: var(--lilas-principal);
-}
-
-button:hover {
-  background-color: var(--lilas-escuro);
-}
-
-input, select, textarea {
-  border-color: var(--lilas-medio);
-}
-
-.card, .panel, section {
-  border-color: var(--lilas-medio);
-}
-
-/* Menu lateral à esquerda */
-body {
-  display: grid;
-  grid-template-columns: 220px minmax(0, 1fr);
-  grid-template-rows: auto 1fr;
-  min-height: 100vh;
-  align-items: start;
-}
-
-/* Cabeçalho no topo, ocupando a largura toda */
-header {
-  grid-column: 1 / -1;
-}
-
-/* Navegação vertical */
-nav#nav {
-  grid-column: 1;
-  grid-row: 2;
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: stretch !important;
-  width: 220px;
-  padding: 16px 12px;
-  box-sizing: border-box;
-}
-
-/* Botões do menu */
-nav#nav button {
-  display: block !important;
-  width: 100% !important;
-  margin: 0 0 8px !important;
-  text-align: left !important;
-  font-size: 16px !important;
-  padding: 12px !important;
-}
-
-/* Conteúdo à direita */
-main {
-  grid-column: 2;
-  grid-row: 2;
-  min-width: 0;
-  padding: 20px;
-}
-
-/* Ajuste para celular */
-@media (max-width: 600px) {
-  body {
-    display: flex;
-    flex-direction: column;
-  }
-
-  nav#nav {
-    width: 100%;
-  }
-
-  main {
-    width: 100%;
-    box-sizing: border-box;
-  }
-}
-</style>
+        /* Scrollbar suave */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F3E8FF;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #C084FC;
+            border-radius: 9999px;
+        }
+        @media print {
+            .no-print { display: none !important; }
+            .print-only { display: block !important; }
+            body { background: white !important; }
+            #custom-bg-overlay { display: none !important; }
+        }
+    </style>
 </head>
-<link rel="manifest" href="./manifest.webmanifest">
-<link rel="icon" href="./icon.svg" type="image/svg+xml">
-<meta name="theme-color" content="#B57AE8">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="Minha Gestão">
-<body>
-<script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function () {
-    navigator.serviceWorker.register('./sw.js').catch(function (error) {
-      console.log('Registro do aplicativo indisponível:', error);
-    });
-  });
-}
-</script>
-<header>
-  <div class="top">
-    <div class="avatar" id="avatar">📚</div>
-    <div style="min-width:0"><h1 id="brandTitle">Minha Gestão Pedagógica</h1><div class="sub">Organização do atendimento pedagógico</div></div>
-  </div>
-  <div class="date" id="todayText"></div>
-</header>
-<nav id="nav">
-  <button class="active" data-page="inicio">Início</button><button data-page="alunos">Alunos</button><button data-page="agenda">Agenda</button><button data-page="sessoes">Sessões</button><button data-page="financeiro">Financeiro</button><button data-page="ajustes">Personalizar</button>
-</nav>
-<main>
-<section class="page active" id="inicio">
-  <h2>Visão geral ✨</h2>
-  <div class="grid">
-    <div class="stat"><div class="emoji">🧒</div><div class="label">Alunos cadastrados</div><div class="value" id="statStudents">0</div></div>
-    <div class="stat"><div class="emoji">🗓️</div><div class="label">Atendimentos hoje</div><div class="value" id="statToday">0</div></div>
-    <div class="stat"><div class="emoji">📝</div><div class="label">Registros de sessão</div><div class="value" id="statSessions">0</div></div>
-    <div class="stat"><div class="emoji">💰</div><div class="label">Saldo registrado</div><div class="value" id="statBalance">R$ 0,00</div></div>
-  </div>
-  <div class="card"><h3>Próximos atendimentos</h3><div id="upcomingList" class="empty">Seus agendamentos aparecerão aqui.</div></div>
-  <div class="note">Esta é uma versão inicial demonstrativa. Os dados ficam salvos somente neste navegador/dispositivo. Não use dados reais ou sensíveis de crianças nesta versão.</div>
-</section>
-<section class="page" id="alunos">
-  <h2>Alunos 🧒</h2>
-  <div class="card"><h3>Cadastrar aluno</h3>
-    <form id="studentForm">
-      <label>Nome do aluno</label><input name="name" required placeholder="Nome e sobrenome">
-      <div class="row"><div><label>Idade</label><input name="age" type="number" min="1" max="99" placeholder="Ex.: 8"></div><div><label>Ano escolar</label><input name="grade" placeholder="Ex.: 3º ano"></div></div>
-      <label>Nome do responsável</label><input name="guardian" placeholder="Nome do responsável">
-      <label>WhatsApp do responsável</label><input name="phone" type="tel" placeholder="(19) 99999-9999">
-      <button class="primary" type="submit">Salvar aluno</button>
-    </form>
-  </div>
-  <div class="card"><h3>Lista de alunos</h3><div id="studentList" class="empty">Nenhum aluno cadastrado.</div></div>
-</section>
-<section class="page" id="agenda">
-  <h2>Agenda 🗓️</h2>
-  <div class="card"><h3>Novo atendimento</h3>
-    <form id="appointmentForm">
-      <label>Aluno</label><select name="student" id="appointmentStudent" required><option value="">Cadastre um aluno primeiro</option></select>
-      <div class="row"><div><label>Data</label><input name="date" type="date" required></div><div><label>Horário</label><input name="time" type="time" required></div></div>
-      <label>Observação (opcional)</label><input name="note" placeholder="Ex.: reforço de leitura">
-      <button class="primary" type="submit">Adicionar à agenda</button>
-    </form>
-  </div>
-  <div class="card"><h3>Atendimentos agendados</h3><div id="appointmentList" class="empty">Nenhum atendimento agendado.</div></div>
-</section>
-<section class="page" id="sessoes">
-  <h2>Registros de sessão 📝</h2>
-  <div class="card"><h3>Registrar atendimento</h3>
-    <form id="sessionForm">
-      <label>Aluno</label><select name="student" id="sessionStudent" required><option value="">Cadastre um aluno primeiro</option></select>
-      <div class="row"><div><label>Data</label><input name="date" type="date" required></div><div><label>Área trabalhada</label><select name="area"><option>Alfabetização</option><option>Leitura</option><option>Escrita</option><option>Matemática</option><option>Interpretação</option><option>Habilidades escolares</option><option>Outra</option></select></div></div>
-      <label>O que foi trabalhado e observações</label><textarea name="notes" required placeholder="Registre as atividades, avanços e próximos passos..."></textarea>
-      <button class="primary" type="submit">Salvar registro</button>
-    </form>
-  </div>
-  <div class="card"><h3>Histórico de registros</h3><div id="sessionList" class="empty">Nenhum registro ainda.</div></div>
-</section>
-<section class="page" id="financeiro">
-  <h2>Financeiro 💰</h2>
-  <div class="grid">
-    <div class="stat"><div class="label">Receitas</div><div class="value" id="incomeTotal">R$ 0,00</div></div>
-    <div class="stat"><div class="label">Despesas</div><div class="value" id="expenseTotal">R$ 0,00</div></div>
-  </div>
-  <div class="card"><h3>Adicionar lançamento</h3>
-    <form id="financeForm">
-      <label>Descrição</label><input name="description" required placeholder="Ex.: mensalidade, materiais">
-      <div class="row"><div><label>Tipo</label><select name="type"><option value="in">Receita</option><option value="out">Despesa</option></select></div><div><label>Valor (R$)</label><input name="amount" type="number" min="0.01" step="0.01" required placeholder="0,00"></div></div>
-      <label>Data</label><input name="date" type="date" required>
-      <button class="primary" type="submit">Adicionar lançamento</button>
-    </form>
-  </div>
-  <div class="card"><h3>Movimentações</h3><div id="financeList" class="empty">Nenhum lançamento registrado.</div></div>
-</section>
-<section class="page" id="ajustes">
-  <h2>Personalizar 🎨</h2>
-  <div class="card"><h3>Nome do aplicativo</h3><label>Como quer chamar seu app?</label><input id="customName" maxlength="40" placeholder="Minha Gestão Pedagógica"><button class="primary" id="saveName">Salvar nome</button></div>
-  <div class="card"><h3>Escolha sua cor</h3><div class="colorrow" id="swatches">
-    <button class="swatch selected" style="background:#8b70c9" data-color="#8b70c9" aria-label="Lilás"></button><button class="swatch" style="background:#d879a7" data-color="#d879a7" aria-label="Rosa"></button><button class="swatch" style="background:#4c86c6" data-color="#4c86c6" aria-label="Azul"></button><button class="swatch" style="background:#4d9a83" data-color="#4d9a83" aria-label="Verde"></button><button class="swatch" style="background:#bd795a" data-color="#bd795a" aria-label="Terracota"></button><button class="swatch" style="background:#48434f" data-color="#48434f" aria-label="Grafite"></button>
-  </div><label>Ou escolha uma cor personalizada (HEX)</label><input id="customColor" value="#8b70c9" placeholder="#8b70c9"><button class="primary" id="saveColor">Aplicar cor</button></div>
-  <div class="card"><h3>Sua foto ou logo</h3><label>Escolher imagem deste dispositivo</label><input id="photoInput" type="file" accept="image/*"><p class="meta">A imagem é salva localmente neste navegador, apenas para esta demonstração.</p><button class="secondary" id="removePhoto">Usar símbolo de educação</button></div>
-  <div class="note">A personalização fica salva neste navegador. Para usar em outros dispositivos, sincronizar informações, proteger os dados com login ou enviar confirmações automaticamente pelo WhatsApp, será necessário publicar uma versão com infraestrutura própria.</div>
-  <button class="secondary" id="exportData">Exportar meus dados (JSON)</button>
-</section>
-<footer>Versão inicial de demonstração • Gestão pedagógica com carinho 💜</footer>
-</main>
-<script>
-const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-const KEY='gestaoPedagogicaDemo_v1';
-let db={students:[],appointments:[],sessions:[],finance:[],settings:{name:'Minha Gestão Pedagógica',color:'#8b70c9',photo:''}};
-try{const saved=JSON.parse(localStorage.getItem(KEY)||'null');if(saved)db={...db,...saved,settings:{...db.settings,...saved.settings}}}catch(e){}
-const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const money=n=>Number(n||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
-const today=()=>new Date().toISOString().slice(0,10);
-function save(){try{localStorage.setItem(KEY,JSON.stringify(db))}catch(e){alert('Não foi possível salvar. A imagem pode ser grande demais; tente uma imagem menor.')}} 
-function dateBR(d){if(!d)return '';const [y,m,day]=d.split('-');return `${day}/${m}/${y}`}
-function studentName(id){return db.students.find(s=>s.id===id)?.name||'Aluno removido'}
-function applySettings(){
- document.documentElement.style.setProperty('--accent',db.settings.color||'#8b70c9');
- const c=db.settings.color||'#8b70c9';document.documentElement.style.setProperty('--accent2',hexTint(c));
- $('#brandTitle').textContent=db.settings.name||'Minha Gestão Pedagógica';$('#customName').value=db.settings.name||'';
- $('#customColor').value=c;$('#avatar').innerHTML=db.settings.photo?`<img alt="Foto ou logo" src="${db.settings.photo}">`:'📚';
- $$('.swatch').forEach(b=>b.classList.toggle('selected',b.dataset.color.toLowerCase()===c.toLowerCase()));
-}
-function hexTint(hex){if(!/^#[0-9a-f]{6}$/i.test(hex))return '#efe9fb';let n=parseInt(hex.slice(1),16),r=(n>>16)&255,g=(n>>8)&255,b=n&255;r=Math.round(r*.12+255*.88);g=Math.round(g*.12+255*.88);b=Math.round(b*.12+255*.88);return '#'+[r,g,b].map(v=>v.toString(16).padStart(2,'0')).join('')}
-function render(){
- const opts=db.students.map(s=>`<option value="${s.id}">${esc(s.name)}</option>`).join('');
- ['#appointmentStudent','#sessionStudent'].forEach(id=>{const old=$(id).value;$(id).innerHTML='<option value="">Selecione um aluno</option>'+opts;if(old)$(id).value=old});
- $('#studentList').innerHTML=db.students.length?db.students.map(s=>`<div class="item"><div class="item-title">${esc(s.name)} <span class="pill">${esc(s.age? s.age+' anos':'Aluno')}</span></div><div class="meta">${esc(s.grade||'Ano escolar não informado')} · Responsável: ${esc(s.guardian||'Não informado')}<br>WhatsApp: ${esc(s.phone||'Não informado')}</div><div style="text-align:right"><button class="danger" onclick="removeItem('students','${s.id}')">Excluir</button></div></div>`).join(''):'<div class="empty">Nenhum aluno cadastrado.</div>';
- const apps=[...db.appointments].sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time));
- $('#appointmentList').innerHTML=apps.length?apps.map(a=>`<div class="item"><div class="item-title">${esc(studentName(a.student))}</div><div class="meta">${dateBR(a.date)} às ${esc(a.time)}${a.note?' · '+esc(a.note):''}</div><div class="row" style="margin-top:9px"><button class="secondary" onclick="confirmMsg('${a.id}')">Mensagem WhatsApp</button><button class="danger" onclick="removeItem('appointments','${a.id}')">Excluir</button></div></div>`).join(''):'<div class="empty">Nenhum atendimento agendado.</div>';
- const sessions=[...db.sessions].sort((a,b)=>b.date.localeCompare(a.date));
- $('#sessionList').innerHTML=sessions.length?sessions.map(s=>`<div class="item"><div class="item-title">${esc(studentName(s.student))} <span class="pill">${esc(s.area)}</span></div><div class="meta">${dateBR(s.date)}<br>${esc(s.notes)}</div><div style="text-align:right"><button class="danger" onclick="removeItem('sessions','${s.id}')">Excluir</button></div></div>`).join(''):'<div class="empty">Nenhum registro ainda.</div>';
- const finances=[...db.finance].sort((a,b)=>b.date.localeCompare(a.date));
- $('#financeList').innerHTML=finances.length?finances.map(f=>`<div class="item"><div class="row"><div><div class="item-title">${esc(f.description)}</div><div class="meta">${dateBR(f.date)} · ${f.type==='in'?'Receita':'Despesa'}</div></div><div style="text-align:right;font-weight:800;color:${f.type==='in'?'var(--good)':'var(--danger)'}">${f.type==='in'?'+':'−'} ${money(f.amount)}</div></div><div style="text-align:right"><button class="danger" onclick="removeItem('finance','${f.id}')">Excluir</button></div></div>`).join(''):'<div class="empty">Nenhum lançamento registrado.</div>';
- const inc=db.finance.filter(f=>f.type==='in').reduce((t,f)=>t+Number(f.amount),0),out=db.finance.filter(f=>f.type==='out').reduce((t,f)=>t+Number(f.amount),0);
- $('#incomeTotal').textContent=money(inc);$('#expenseTotal').textContent=money(out);$('#statBalance').textContent=money(inc-out);
- $('#statStudents').textContent=db.students.length;$('#statSessions').textContent=db.sessions.length;$('#statToday').textContent=db.appointments.filter(a=>a.date===today()).length;
- const upcoming=apps.filter(a=>a.date>=today()).slice(0,4);
- $('#upcomingList').innerHTML=upcoming.length?upcoming.map(a=>`<div class="item"><div class="item-title">${esc(studentName(a.student))}</div><div class="meta">${dateBR(a.date)} às ${esc(a.time)}</div></div>`).join(''):'<div class="empty">Nenhum atendimento futuro cadastrado.</div>';
-}
-window.removeItem=(type,id)=>{if(confirm('Deseja excluir este registro?')){db[type]=db[type].filter(x=>x.id!==id);save();render()}};
-window.confirmMsg=id=>{const a=db.appointments.find(x=>x.id===id),s=db.students.find(x=>x.id===a.student);const msg=`Olá${s?.guardian?' '+s.guardian:''}! 💜 Passando para confirmar o atendimento pedagógico de ${s?.name||'seu/sua filho(a)'} no dia ${dateBR(a.date)}, às ${a.time}. Podemos confirmar?`;if(s?.phone){const phone=s.phone.replace(/\D/g,'');location.href=`https://wa.me/55${phone}?text=${encodeURIComponent(msg)}`}else if(navigator.clipboard){navigator.clipboard.writeText(msg).then(()=>alert('Mensagem copiada! Cadastre o WhatsApp do responsável para abrir a conversa diretamente.')).catch(()=>prompt('Copie a mensagem:',msg))}else prompt('Copie a mensagem:',msg)};
-function id(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
-$('#studentForm').addEventListener('submit',e=>{e.preventDefault();const f=new FormData(e.target);db.students.push({id:id(),name:f.get('name').trim(),age:f.get('age'),grade:f.get('grade').trim(),guardian:f.get('guardian').trim(),phone:f.get('phone').trim()});save();e.target.reset();render();alert('Aluno cadastrado nesta demonstração!')});
-$('#appointmentForm').addEventListener('submit',e=>{e.preventDefault();const f=new FormData(e.target);db.appointments.push({id:id(),student:f.get('student'),date:f.get('date'),time:f.get('time'),note:f.get('note').trim()});save();e.target.reset();render()});
-$('#sessionForm').addEventListener('submit',e=>{e.preventDefault();const f=new FormData(e.target);db.sessions.push({id:id(),student:f.get('student'),date:f.get('date'),area:f.get('area'),notes:f.get('notes').trim()});save();e.target.reset();render()});
-$('#financeForm').addEventListener('submit',e=>{e.preventDefault();const f=new FormData(e.target);db.finance.push({id:id(),description:f.get('description').trim(),type:f.get('type'),amount:Number(f.get('amount')),date:f.get('date')});save();e.target.reset();render()});
-$$('nav button').forEach(b=>b.addEventListener('click',()=>{$$('nav button').forEach(x=>x.classList.toggle('active',x===b));$$('.page').forEach(p=>p.classList.toggle('active',p.id===b.dataset.page));window.scrollTo({top:0,behavior:'smooth'})}));
-$('#saveName').addEventListener('click',()=>{db.settings.name=$('#customName').value.trim()||'Minha Gestão Pedagógica';save();applySettings();alert('Nome atualizado!')});
-function setColor(c){if(!/^#[0-9a-f]{6}$/i.test(c)){alert('Digite uma cor HEX válida, por exemplo #8b70c9.');return}db.settings.color=c;save();applySettings()}
-$$('.swatch').forEach(b=>b.addEventListener('click',()=>setColor(b.dataset.color)));
-$('#saveColor').addEventListener('click',()=>setColor($('#customColor').value.trim()));
-$('#photoInput').addEventListener('change',e=>{const file=e.target.files[0];if(!file)return;if(file.size>1200000){alert('Escolha uma imagem de até 1,2 MB para esta demonstração.');e.target.value='';return}const reader=new FileReader();reader.onload=()=>{db.settings.photo=reader.result;save();applySettings()};reader.readAsDataURL(file)});
-$('#removePhoto').addEventListener('click',()=>{db.settings.photo='';save();applySettings();$('#photoInput').value=''});
-$('#exportData').addEventListener('click',()=>{const blob=new Blob([JSON.stringify(db,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='gestao-pedagogica-dados.json';a.click();URL.revokeObjectURL(url)});
-$('#todayText').textContent=new Date().toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
-applySettings();render();
-</script>
+<body class="text-slate-800 min-h-screen flex flex-col md:flex-row antialiased relative">
+
+    <!-- Camada do Background Personalizado -->
+    <div id="custom-bg-overlay"></div>
+
+    <!-- Backdrop do Menu Mobile (iPhone/Smartphones) -->
+    <div id="mobile-sidebar-backdrop" onclick="toggleMobileSidebar()" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-40 hidden md:hidden"></div>
+
+    <!-- SIDEBAR FIXED / MENU LATERAL NA ESQUERDA -->
+    <aside id="sidebar-menu" class="fixed md:sticky top-0 left-0 h-screen w-72 bg-gradient-to-b from-lilac-900 via-lilac-800 to-lilac-900 text-white z-50 flex flex-col justify-between shadow-2xl transition-transform duration-300 -translate-x-full md:translate-x-0">
+        
+        <div class="p-6 space-y-6">
+            <!-- Header do Perfil / Logo Customizada no Menu -->
+            <div id="sidebar-brand-container" class="flex items-center space-x-3 border-b border-white/10 pb-5">
+                <div id="sidebar-logo-icon" class="w-12 h-12 rounded-2xl bg-white/15 backdrop-blur-md flex items-center justify-center border border-white/20 text-white shadow-inner flex-shrink-0 overflow-hidden">
+                    <i data-lucide="sparkles" class="w-6 h-6 text-lilac-200"></i>
+                </div>
+                <div class="overflow-hidden">
+                    <h1 id="sidebar-brand-title" class="text-lg font-bold tracking-tight truncate leading-tight">Stefanie Toledo</h1>
+                    <p id="sidebar-brand-sub" class="text-[11px] text-lilac-200 font-medium uppercase tracking-wider">Pedagoga</p>
+                </div>
+            </div>
+
+            <!-- Botões de Navegação Principal -->
+            <nav class="space-y-1.5">
+                <button onclick="switchTab('alunos')" id="side-nav-alunos" class="side-nav-item w-full flex items-center space-x-3 px-4 py-3 rounded-xl font-medium text-xs transition-all text-lilac-100 hover:bg-white/10 hover:text-white">
+                    <i data-lucide="users" class="w-5 h-5"></i>
+                    <span>Alunos & Anamnese</span>
+                </button>
+
+                <button onclick="switchTab('agenda')" id="side-nav-agenda" class="side-nav-item w-full flex items-center space-x-3 px-4 py-3 rounded-xl font-medium text-xs transition-all text-lilac-100 hover:bg-white/10 hover:text-white">
+                    <i data-lucide="calendar-clock" class="w-5 h-5"></i>
+                    <span>Agenda & WhatsApp</span>
+                </button>
+
+                <button onclick="switchTab('sessoes')" id="side-nav-sessoes" class="side-nav-item w-full flex items-center space-x-3 px-4 py-3 rounded-xl font-medium text-xs transition-all text-lilac-100 hover:bg-white/10 hover:text-white">
+                    <i data-lucide="book-open-check" class="w-5 h-5"></i>
+                    <span>Registros de Sessão</span>
+                </button>
+
+                <button onclick="switchTab('financeiro')" id="side-nav-financeiro" class="side-nav-item w-full flex items-center space-x-3 px-4 py-3 rounded-xl font-medium text-xs transition-all text-lilac-100 hover:bg-white/10 hover:text-white">
+                    <i data-lucide="wallet" class="w-5 h-5"></i>
+                    <span>Financeiro & Extrato</span>
+                </button>
+
+                <button onclick="switchTab('configuracoes')" id="side-nav-configuracoes" class="side-nav-item w-full flex items-center space-x-3 px-4 py-3 rounded-xl font-medium text-xs transition-all text-lilac-100 hover:bg-white/10 hover:text-white">
+                    <i data-lucide="settings" class="w-5 h-5"></i>
+                    <span>Configurações & Logo</span>
+                </button>
+            </nav>
+        </div>
+
+        <!-- Rodapé do Menu Lateral (Resumo rápido) -->
+        <div class="p-6 border-t border-white/10 space-y-3 bg-black/10">
+            <div class="bg-white/10 rounded-2xl p-3.5 backdrop-blur-sm space-y-2 border border-white/10">
+                <div class="flex justify-between items-center text-xs">
+                    <span class="text-lilac-200">Total de Alunos:</span>
+                    <span id="stat-alunos-count" class="font-bold text-white">0</span>
+                </div>
+                <div class="flex justify-between items-center text-xs">
+                    <span class="text-lilac-200">Sessões Hoje:</span>
+                    <span id="stat-sessoes-count" class="font-bold text-white">0</span>
+                </div>
+            </div>
+            <p class="text-[10px] text-center text-lilac-300">Gestão Pedagógica • v2.1</p>
+        </div>
+    </aside>
+
+    <!-- ÁREA DE CONTEÚDO PRINCIPAL DA PÁGINA -->
+    <div class="flex-1 flex flex-col min-w-0">
+
+        <!-- Topbar Mobile (Visível apenas em telas menores / iPhone) -->
+        <header class="md:hidden bg-gradient-to-r from-lilac-900 to-lilac-700 text-white px-4 py-3.5 flex items-center justify-between sticky top-0 z-30 shadow-md">
+            <div class="flex items-center space-x-3">
+                <button onclick="toggleMobileSidebar()" class="p-2 bg-white/10 rounded-xl text-white hover:bg-white/20 transition-all">
+                    <i data-lucide="menu" class="w-5 h-5"></i>
+                </button>
+                <div class="flex items-center space-x-2 overflow-hidden">
+                    <div id="mobile-logo-preview" class="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center overflow-hidden hidden">
+                        <img id="mobile-logo-img" src="" class="w-full h-full object-cover">
+                    </div>
+                    <div>
+                        <h1 class="text-base font-bold leading-none truncate">Stefanie Toledo</h1>
+                        <p class="text-[10px] text-lilac-200 font-medium">Pedagoga</p>
+                    </div>
+                </div>
+            </div>
+            <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
+                <i data-lucide="graduation-cap" class="w-4 h-4 text-lilac-100"></i>
+            </div>
+        </header>
+
+        <!-- Conteúdo Interno das Abas -->
+        <main class="flex-grow p-4 md:p-8 max-w-7xl w-full mx-auto space-y-6">
+
+            <!-- ================= ABA 1: ALUNOS ================= -->
+            <section id="tab-alunos" class="tab-content space-y-6">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white/90 backdrop-blur-md p-5 rounded-2xl shadow-sm border border-lilac-100">
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+                            <i data-lucide="users" class="text-lilac-600"></i> Gestão de Alunos
+                        </h2>
+                        <p class="text-xs text-slate-500">Cadastre alunos e gerencie o histórico de anamnese familiar.</p>
+                    </div>
+                    <button onclick="openModal('modal-aluno')" class="inline-flex items-center justify-center space-x-2 bg-lilac-600 hover:bg-lilac-700 text-white font-medium px-4 py-2.5 rounded-xl shadow-md transition-all active:scale-95 text-sm">
+                        <i data-lucide="user-plus" class="w-4 h-4"></i>
+                        <span>Cadastrar Aluno</span>
+                    </button>
+                </div>
+
+                <!-- Search Bar -->
+                <div class="relative">
+                    <i data-lucide="search" class="w-5 h-5 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                    <input type="text" id="search-aluno" oninput="renderAlunos()" placeholder="Buscar por nome do aluno, escola ou ano escolar..." class="w-full pl-10 pr-4 py-3 bg-white/90 backdrop-blur-md border border-lilac-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-lilac-500 text-sm shadow-sm">
+                </div>
+
+                <!-- Cards Container -->
+                <div id="alunos-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                    <!-- Injetado via JS -->
+                </div>
+            </section>
+
+            <!-- ================= ABA 2: AGENDA & WHATSAPP ================= -->
+            <section id="tab-agenda" class="tab-content hidden space-y-6">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white/90 backdrop-blur-md p-5 rounded-2xl shadow-sm border border-lilac-100">
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+                            <i data-lucide="calendar-range" class="text-lilac-600"></i> Agenda & Confirmações
+                        </h2>
+                        <p class="text-xs text-slate-500">Organize sessões, compromissos pessoais e envie confirmações via WhatsApp.</p>
+                    </div>
+                    <button onclick="openModal('modal-agenda')" class="inline-flex items-center justify-center space-x-2 bg-lilac-600 hover:bg-lilac-700 text-white font-medium px-4 py-2.5 rounded-xl shadow-md transition-all active:scale-95 text-sm">
+                        <i data-lucide="calendar-plus" class="w-4 h-4"></i>
+                        <span>Novo Agendamento</span>
+                    </button>
+                </div>
+
+                <!-- Filter and WhatsApp Confirmation Column -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="lg:col-span-2 space-y-4">
+                        <div class="bg-white/90 backdrop-blur-md p-4 rounded-2xl shadow-sm border border-lilac-100 flex items-center justify-between">
+                            <span class="font-semibold text-slate-700 text-sm flex items-center gap-2">
+                                <i data-lucide="list-filter" class="w-4 h-4 text-lilac-600"></i> Compromissos e Sessões
+                            </span>
+                            <input type="date" id="filter-agenda-date" onchange="renderAgenda()" class="border border-lilac-200 rounded-lg text-xs p-2 focus:ring-2 focus:ring-lilac-500 outline-none">
+                        </div>
+
+                        <div id="agenda-list" class="space-y-3">
+                            <!-- Injetado via JS -->
+                        </div>
+                    </div>
+
+                    <!-- Card de Envio para o WhatsApp -->
+                    <div class="bg-gradient-to-br from-white/90 to-lilac-50/90 backdrop-blur-md p-5 rounded-2xl shadow-sm border border-lilac-200 space-y-4 h-fit">
+                        <div class="flex items-center space-x-2 text-emerald-600 font-bold">
+                            <i data-lucide="message-square" class="w-5 h-5"></i>
+                            <span>Confirmação via WhatsApp</span>
+                        </div>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            Clique em "Confirmar WhatsApp" em um compromisso para gerar a mensagem e enviar para a família.
+                        </p>
+
+                        <div id="whatsapp-preview-card" class="bg-white p-4 rounded-xl border border-lilac-100 space-y-3 text-xs">
+                            <p class="text-slate-400 italic">Nenhuma sessão selecionada. Clique no botão de WhatsApp da lista.</p>
+                        </div>
+
+                        <a id="whatsapp-send-link" href="#" target="_blank" class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-medium text-xs flex items-center justify-center space-x-2 transition-all shadow-md opacity-50 pointer-events-none">
+                            <i data-lucide="send" class="w-4 h-4"></i>
+                            <span>Enviar Mensagem no WhatsApp</span>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================= ABA 3: REGISTROS DE SESSÃO ================= -->
+            <section id="tab-sessoes" class="tab-content hidden space-y-6">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white/90 backdrop-blur-md p-5 rounded-2xl shadow-sm border border-lilac-100">
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+                            <i data-lucide="clipboard-list" class="text-lilac-600"></i> Registros de Sessão Pedagógica
+                        </h2>
+                        <p class="text-xs text-slate-500">Documente atividades, objetivos, gravações de áudio e anexos para cada aula.</p>
+                    </div>
+                    <button onclick="openModal('modal-sessao')" class="inline-flex items-center justify-center space-x-2 bg-lilac-600 hover:bg-lilac-700 text-white font-medium px-4 py-2.5 rounded-xl shadow-md transition-all active:scale-95 text-sm">
+                        <i data-lucide="file-plus" class="w-4 h-4"></i>
+                        <span>Novo Registro</span>
+                    </button>
+                </div>
+
+                <!-- Filtro de Aluno -->
+                <div class="bg-white/90 backdrop-blur-md p-4 rounded-2xl shadow-sm border border-lilac-100 flex flex-col sm:flex-row gap-3 sm:items-center justify-between">
+                    <label class="text-xs font-semibold text-slate-600 uppercase tracking-wider">Filtrar por Aluno:</label>
+                    <select id="filter-sessao-aluno" onchange="renderSessoes()" class="w-full sm:w-64 bg-slate-50 border border-lilac-200 rounded-xl px-3 py-2 text-xs focus:ring-2 focus:ring-lilac-500 outline-none">
+                        <option value="">Todos os Alunos</option>
+                    </select>
+                </div>
+
+                <!-- Histórico de Sessões -->
+                <div id="sessoes-list" class="space-y-5">
+                    <!-- Injetado via JS -->
+                </div>
+            </section>
+
+            <!-- ================= ABA 4: FINANCEIRO & EXTRATO ================= -->
+            <section id="tab-financeiro" class="tab-content hidden space-y-6">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white/90 backdrop-blur-md p-5 rounded-2xl shadow-sm border border-lilac-100">
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+                            <i data-lucide="wallet" class="text-lilac-600"></i> Registros Financeiros
+                        </h2>
+                        <p class="text-xs text-slate-500">Controle mensalidades, pagamentos pendentes e gere extratos para os pais.</p>
+                    </div>
+                    <button onclick="openModal('modal-financeiro')" class="inline-flex items-center justify-center space-x-2 bg-lilac-600 hover:bg-lilac-700 text-white font-medium px-4 py-2.5 rounded-xl shadow-md transition-all active:scale-95 text-sm">
+                        <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                        <span>Nova Cobrança</span>
+                    </button>
+                </div>
+
+                <!-- Cards de Indicadores -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div class="bg-white/90 backdrop-blur-md p-5 rounded-2xl border border-lilac-100 shadow-sm flex items-center space-x-4">
+                        <div class="p-3 bg-emerald-100 text-emerald-600 rounded-xl">
+                            <i data-lucide="trending-up" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-slate-500 font-medium">Total Recebido</p>
+                            <h3 id="stat-financeiro-pago" class="text-xl font-bold text-slate-800">R$ 0,00</h3>
+                        </div>
+                    </div>
+
+                    <div class="bg-white/90 backdrop-blur-md p-5 rounded-2xl border border-lilac-100 shadow-sm flex items-center space-x-4">
+                        <div class="p-3 bg-amber-100 text-amber-600 rounded-xl">
+                            <i data-lucide="clock" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-slate-500 font-medium">Pendente / Restante</p>
+                            <h3 id="stat-financeiro-pendente" class="text-xl font-bold text-slate-800">R$ 0,00</h3>
+                        </div>
+                    </div>
+
+                    <div class="bg-white/90 backdrop-blur-md p-5 rounded-2xl border border-lilac-100 shadow-sm flex items-center space-x-4">
+                        <div class="p-3 bg-lilac-100 text-lilac-600 rounded-xl">
+                            <i data-lucide="calculator" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-slate-500 font-medium">Faturamento Previsto</p>
+                            <h3 id="stat-financeiro-total" class="text-xl font-bold text-slate-800">R$ 0,00</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tabela Financeira -->
+                <div class="bg-white/90 backdrop-blur-md rounded-2xl shadow-sm border border-lilac-100 overflow-hidden">
+                    <div class="p-4 border-b border-slate-100 flex items-center justify-between">
+                        <h3 class="font-semibold text-sm text-slate-700">Histórico de Cobranças</h3>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs">
+                            <thead class="bg-lilac-50/80 text-lilac-900 font-semibold uppercase tracking-wider">
+                                <tr>
+                                    <th class="p-3.5">Aluno</th>
+                                    <th class="p-3.5">Vencimento</th>
+                                    <th class="p-3.5">Valor Total</th>
+                                    <th class="p-3.5">Valor Pago</th>
+                                    <th class="p-3.5">Falta Pagar</th>
+                                    <th class="p-3.5">Status</th>
+                                    <th class="p-3.5 text-right">Ações / Extrato</th>
+                                </tr>
+                            </thead>
+                            <tbody id="financeiro-table-body" class="divide-y divide-slate-100">
+                                <!-- Injetado via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================= ABA 5: CONFIGURAÇÕES & PERSONALIZAÇÃO ================= -->
+            <section id="tab-configuracoes" class="tab-content hidden space-y-6">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white/90 backdrop-blur-md p-5 rounded-2xl shadow-sm border border-lilac-100">
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+                            <i data-lucide="settings" class="text-lilac-600"></i> Personalização & Logomarca
+                        </h2>
+                        <p class="text-xs text-slate-500">Configure a sua logo personalizada e mude as cores ou imagem de fundo do aplicativo.</p>
+                    </div>
+                    <button onclick="resetSettings()" class="inline-flex items-center justify-center space-x-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium px-4 py-2 rounded-xl transition-all text-xs">
+                        <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+                        <span>Restaurar Padrão</span>
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                    <!-- Painel 1: Logomarca -->
+                    <div class="bg-white/90 backdrop-blur-md p-6 rounded-2xl border border-lilac-100 shadow-sm space-y-4">
+                        <h3 class="font-bold text-slate-800 text-sm flex items-center gap-2">
+                            <i data-lucide="image" class="text-lilac-600 w-4 h-4"></i> Logomarca Personalizada
+                        </h3>
+                        <p class="text-xs text-slate-500 leading-relaxed">
+                            Envie a sua imagem de logo para substituir o título padrão no topo do menu lateral e no cabeçalho.
+                        </p>
+
+                        <!-- Preview da Logo Atual -->
+                        <div class="flex items-center space-x-4 p-4 bg-lilac-50/50 rounded-xl border border-lilac-100">
+                            <div id="settings-logo-preview" class="w-16 h-16 rounded-2xl bg-white border border-lilac-200 flex items-center justify-center overflow-hidden shadow-sm flex-shrink-0">
+                                <i data-lucide="sparkles" class="w-8 h-8 text-lilac-400"></i>
+                            </div>
+                            <div class="space-y-1">
+                                <p class="text-xs font-semibold text-slate-700">Logo Atual</p>
+                                <p id="settings-logo-status" class="text-[11px] text-slate-400">Padrão do sistema</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-medium text-slate-700 mb-1.5">Carregar Nova Logo:</label>
+                            <input type="file" id="input-logo-file" accept="image/*" onchange="handleLogoUpload(event)" class="w-full text-xs text-slate-500 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:bg-lilac-600 file:text-white hover:file:bg-lilac-700 cursor-pointer">
+                        </div>
+
+                        <button onclick="removeCustomLogo()" id="btn-remove-logo" class="hidden text-xs text-rose-600 hover:text-rose-800 font-medium flex items-center gap-1">
+                            <i data-lucide="trash" class="w-3.5 h-3.5"></i> Remover Logo Personalizada
+                        </button>
+                    </div>
+
+                    <!-- Painel 2: Plano de Fundo Customizado -->
+                    <div class="bg-white/90 backdrop-blur-md p-6 rounded-2xl border border-lilac-100 shadow-sm space-y-4">
+                        <h3 class="font-bold text-slate-800 text-sm flex items-center gap-2">
+                            <i data-lucide="palette" class="text-lilac-600 w-4 h-4"></i> Aparência & Plano de Fundo
+                        </h3>
+                        
+                        <!-- Cor de Fundo -->
+                        <div class="space-y-2">
+                            <label class="block text-xs font-semibold text-slate-700">Cor Solid de Fundo:</label>
+                            <div class="flex items-center space-x-3">
+                                <input type="color" id="input-bg-color" value="#F8F5FC" onchange="updateBgColor(this.value)" class="w-10 h-10 rounded-xl border border-lilac-200 cursor-pointer p-0.5">
+                                <span id="bg-color-hex" class="text-xs font-mono text-slate-600">#F8F5FC</span>
+                            </div>
+                        </div>
+
+                        <hr class="border-slate-100">
+
+                        <!-- Imagem de Fundo Customizada -->
+                        <div class="space-y-3">
+                            <label class="block text-xs font-semibold text-slate-700">Imagem de Fundo:</label>
+                            <input type="file" id="input-bg-image-file" accept="image/*" onchange="handleBgImageUpload(event)" class="w-full text-xs text-slate-500 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:bg-lilac-100 file:text-lilac-800 hover:file:bg-lilac-200 cursor-pointer">
+
+                            <!-- Ajuste de Opacidade / Blur caso haja imagem -->
+                            <div id="bg-image-adjustments" class="space-y-3 pt-2 hidden">
+                                <div>
+                                    <div class="flex justify-between text-xs text-slate-600 mb-1">
+                                        <span>Opacidade da Imagem:</span>
+                                        <span id="label-bg-opacity">30%</span>
+                                    </div>
+                                    <input type="range" id="input-bg-opacity" min="0.05" max="1" step="0.05" value="0.3" oninput="updateBgOpacity(this.value)" class="w-full accent-lilac-600">
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-xs text-slate-600 mb-1">
+                                        <span>Desfoque (Blur):</span>
+                                        <span id="label-bg-blur">4px</span>
+                                    </div>
+                                    <input type="range" id="input-bg-blur" min="0" max="20" step="1" value="4" oninput="updateBgBlur(this.value)" class="w-full accent-lilac-600">
+                                </div>
+                                <button onclick="removeCustomBgImage()" class="text-xs text-rose-600 hover:text-rose-800 font-medium flex items-center gap-1 pt-1">
+                                    <i data-lucide="trash" class="w-3.5 h-3.5"></i> Remover Imagem de Fundo
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+
+    <!-- ================= MODAIS ================= -->
+
+    <!-- Modal Cadastro Aluno -->
+    <div id="modal-aluno" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-lilac-200 p-6 space-y-5">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                <h3 class="font-bold text-lg text-slate-800 flex items-center gap-2">
+                    <i data-lucide="user-plus" class="text-lilac-600"></i> Novo Cadastro de Aluno
+                </h3>
+                <button onclick="closeModal('modal-aluno')" class="text-slate-400 hover:text-slate-600">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <form id="form-aluno" onsubmit="saveAluno(event)" class="space-y-4 text-xs">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div class="sm:col-span-2">
+                        <label class="block font-semibold text-slate-700 mb-1">Nome Completo do Aluno *</label>
+                        <input type="text" id="aluno-nome" required class="w-full border border-lilac-200 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-lilac-500">
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-slate-700 mb-1">Data de Nascimento</label>
+                        <input type="date" id="aluno-nascimento" class="w-full border border-lilac-200 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-lilac-500">
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-slate-700 mb-1">Ano Escolar</label>
+                        <input type="text" id="aluno-ano" placeholder="Ex: 3º Ano Ensino Fundamental" class="w-full border border-lilac-200 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-lilac-500">
+                    </div>
+                    <div class="sm:col-span-2">
+                        <label class="block font-semibold text-slate-700 mb-1">Escola onde estuda</label>
+                        <input type="text" id="aluno-escola" placeholder="Nome do colégio" class="w-full border border-lilac-200 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-lilac-500">
+                    </div>
+                    <div class="sm:col-span-2">
+                        <label class="block font-semibold text-slate-700 mb-1">Telefone / WhatsApp dos Pais</label>
+                        <input type="tel" id="aluno-whatsapp" placeholder="Ex: 19999999999" class="w-full border border-lilac-200 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-lilac-500">
+                    </div>
+                </div>
+
+                <div class="border-t border-slate-100 pt-3 space-y-3">
+                    <h4 class="font-bold text-lilac-800 text-sm flex items-center gap-1.5">
+                        <i data-lucide="file-text" class="w-4 h-4"></i> Anamnese Resumida
+                    </h4>
+                    <div>
+                        <label class="block text-slate-600 mb-1">Histórico & Desenvolvimento</label>
+                        <textarea id="aluno-anamnese-historico" rows="2" placeholder="Marco do desenvolvimento, saúde, rotina..." class="w-full border border-lilac-200 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-lilac-500"></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-slate-600 mb-1">Principais Dificuldades Relatadas</label>
+                        <textarea id="aluno-anamnese-dificuldades" rows="2" placeholder="Atenção, leitura, raciocínio lógico, socialização..." class="w-full border border-lilac-200 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-lilac-500"></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-slate-600 mb-1">Objetivos da Família</label>
+                        <textarea id="aluno-anamnese-objetivos" rows="2" placeholder="O que a família espera com a psicopedagogia..." class="w-full border border-lilac-200 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-lilac-500"></textarea>
+                    </div>
+                </div>
+
+                <div class="flex justify-end space-x-2 pt-3">
+                    <button type="button" onclick="closeModal('modal-aluno')" class="px-4 py-2 bg-slate-100 text-slate-600 rounded-xl font-medium">Cancelar</button>
+                    <button type="submit" class="px-5 py-2 bg-lilac-600 text-white rounded-xl font-medium hover:bg-lilac-700 shadow-md">Salvar Aluno</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Ver Anamnese Completa -->
+    <div id="modal-ver-anamnese" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-lilac-200 p-6 space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                <div>
+                    <h3 id="view-anamnese-nome" class="font-bold text-lg text-slate-800"></h3>
+                    <p id="view-anamnese-escola" class="text-xs text-lilac-600"></p>
+                </div>
+                <button onclick="closeModal('modal-ver-anamnese')" class="text-slate-400 hover:text-slate-600">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <div class="space-y-3 text-xs text-slate-700">
+                <div class="p-3 bg-lilac-50 rounded-xl">
+                    <p class="font-semibold text-lilac-900 mb-1">Data de Nascimento / Idade:</p>
+                    <p id="view-anamnese-nasc" class="text-slate-600"></p>
+                </div>
+
+                <div class="p-3 bg-slate-50 rounded-xl border border-slate-100">
+                    <p class="font-semibold text-slate-800 mb-1">Histórico & Desenvolvimento:</p>
+                    <p id="view-anamnese-historico" class="whitespace-pre-line text-slate-600"></p>
+                </div>
+
+                <div class="p-3 bg-slate-50 rounded-xl border border-slate-100">
+                    <p class="font-semibold text-slate-800 mb-1">Dificuldades Identificadas:</p>
+                    <p id="view-anamnese-dificuldades" class="whitespace-pre-line text-slate-600"></p>
+                </div>
+
+                <div class="p-3 bg-slate-50 rounded-xl border border-slate-100">
+                    <p class="font-semibold text-slate-800 mb-1">Objetivos da Família:</p>
+                    <p id="view-anamnese-objetivos" class="whitespace-pre-line text-slate-600"></p>
+                </div>
+            </div>
+
+            <div class="flex justify-end pt-2">
+                <button onclick="closeModal('modal-ver-anamnese')" class="px-5 py-2 bg-lilac-600 text-white rounded-xl text-xs font-medium">Fechar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Novo Agendamento (Agenda) -->
+    <div id="modal-agenda" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full shadow-2xl border border-lilac-200 p-6 space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                <h3 class="font-bold text-lg text-slate-800 flex items-center gap-2">
+                    <i data-lucide="calendar-plus" class="text-lilac-600"></i> Agendar Sessão / Compromisso
+                </h3>
+                <button onclick="closeModal('modal-agenda')" class="text-slate-400 hover:text-slate-600">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <form id="form-agenda" onsubmit="saveAgenda(event)" class="space-y-4 text-xs">
+                <div>
+                    <label class="block font-semibold text-slate-700 mb-1">Tipo de Evento</label>
+                    <select id="agenda-tipo" onchange="toggleAgendaTipo()" class="w-full border border-lilac-200 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-lilac-500">
+                        <option value="Sessão Pedagógica">Sessão Pedagógica (Aluno)</option>
+                        <option value="Compromisso Pessoal">Compromisso Pessoal</option>
+                        <option value="Reunião de Pais">Reunião com os Pais</option>
+                    </select>
+                </div>
+
+                <div id="agenda-aluno-container">
+                    <label class="block font-semibold text-slate-700 mb-1">Selecione o Aluno *</label>
+                    <select id="agenda-aluno-id" class="w-full border border-lilac-200 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-lilac-500">
+                        <!-- Options via JS -->
+                    </select>
+                </div>
+
+                <div id="agenda-titulo-container" class="hidden">
+                    <label class="block font-semibold text-slate-700 mb-1">Título do Compromisso *</label>
+                    <input type="text" id="agenda-titulo" placeholder="Ex: Reunião pedagógica escola X" class="w-full border border-lilac-200 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-lilac-500">
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-semibold text-slate-700 mb-1">Data *</label>
+                        <input type="date" id="agenda-data" required class="w-full border border-lilac-200 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-lilac-500">
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-slate-700 mb-1">Horário *</label>
+                        <input type="time" id="agenda-hora" required class="w-full border border-lilac-200 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-lilac-500">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block font-semibold text-slate-700 mb-1">Observação / Lembrete</label>
+                    <input type="text" id="agenda-obs" placeholder="Levar material de alfabetização..." class="w-full border border-lilac-200 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-lilac-500">
+                </div>
+
+                <div class="flex justify-end space-x-2 pt-2">
+                    <button type="button" onclick="closeModal('modal-agenda')" class="px-4 py-2 bg-slate-100 text-slate-600 rounded-xl font-medium">Cancelar</button>
+                    <button type="submit" class="px-5 py-2 bg-lilac-600 text-white rounded-xl font-medium hover:bg-lilac-700 shadow-md">Salvar na Agenda</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Registro de Sessão Pedagógica -->
+    <div id="modal-sessao" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-2xl w-full max-h-[92vh] overflow-y-auto shadow-2xl border border-lilac-200 p-6 space-y-5">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                <h3 class="font-bold text-lg text-slate-800 flex items-center gap-2">
+                    <i data-lucide="book-open-check" class="text-lilac-600"></i> Registrar Nova Sessão
+                </h3>
+                <button onclick="closeModal('modal-sessao')" class="text-slate-400 hover:text-slate-600">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <form id="form-sessao" onsubmit="saveSessao(event)" class="space-y-4 text-xs">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-semibold text-slate-700 mb-1">Aluno *</label>
+                        <select id="sessao-aluno-id" required class="w-full border border-lilac-200 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-lilac-500">
+                            <!-- Options via JS -->
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-slate-700 mb-1">Data e Hora *</label>
+                        <input type="datetime-local" id="sessao-data" required class="w-full border border-lilac-200 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-lilac-500">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block font-semibold text-slate-700 mb-1">Atividades Realizadas *</label>
+                    <textarea id="sessao-atividades" rows="3" required placeholder="Ex: Jogos de consciência fonológica, leitura guiada, exercícios de fixação..." class="w-full border border-lilac-200 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-lilac-500"></textarea>
+                </div>
+
+                <div>
+                    <label class="block font-semibold text-slate-700 mb-1">Objetivos da Sessão</label>
+                    <textarea id="sessao-objetivos" rows="2" placeholder="Ex: Desenvolver a fluência leitora e raciocínio lógico..." class="w-full border border-lilac-200 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-lilac-500"></textarea>
+                </div>
+
+                <div>
+                    <label class="block font-semibold text-slate-700 mb-1">Observações / Evolução do Aluno</label>
+                    <textarea id="sessao-obs" rows="2" placeholder="Desempenho, comportamento, atenção, pontos de atenção..." class="w-full border border-lilac-200 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-lilac-500"></textarea>
+                </div>
+
+                <!-- Midia / Gravador Audio e Imagens -->
+                <div class="border-t border-slate-100 pt-3 space-y-3">
+                    <h4 class="font-bold text-slate-800 text-xs flex items-center gap-1.5">
+                        <i data-lucide="mic" class="w-4 h-4 text-lilac-600"></i> Anexos & Gravação de Áudio
+                    </h4>
+
+                    <!-- Recorder Widget -->
+                    <div class="bg-lilac-50 p-3.5 rounded-2xl border border-lilac-200 space-y-2">
+                        <p class="font-medium text-slate-700">Gravação de Voz da Sessão:</p>
+                        <div class="flex items-center space-x-3">
+                            <button type="button" id="btn-record-start" onclick="toggleAudioRecording()" class="px-3.5 py-2 bg-lilac-600 hover:bg-lilac-700 text-white rounded-xl font-medium flex items-center space-x-1.5 transition-all">
+                                <i data-lucide="mic" class="w-4 h-4"></i>
+                                <span id="record-btn-text">Iniciar Gravação</span>
+                            </button>
+                            <span id="recording-timer" class="text-xs font-mono text-slate-500 hidden">00:00</span>
+                        </div>
+                        <div id="audio-preview-container" class="mt-2 hidden">
+                            <audio id="audio-preview" controls class="w-full h-8"></audio>
+                        </div>
+                    </div>
+
+                    <!-- Upload Fotos e Vídeos -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-slate-600 mb-1 font-medium">Anexar Fotos / Trabalhos</label>
+                            <input type="file" id="sessao-fotos" accept="image/*" multiple onchange="handleFileSelect(event, 'foto')" class="w-full text-xs text-slate-500 file:mr-3 file:py-2 file:px-3 file:rounded-xl file:border-0 file:bg-lilac-100 file:text-lilac-800 hover:file:bg-lilac-200 cursor-pointer">
+                        </div>
+                        <div>
+                            <label class="block text-slate-600 mb-1 font-medium">Anexar Vídeo Curto</label>
+                            <input type="file" id="sessao-videos" accept="video/*" onchange="handleFileSelect(event, 'video')" class="w-full text-xs text-slate-500 file:mr-3 file:py-2 file:px-3 file:rounded-xl file:border-0 file:bg-lilac-100 file:text-lilac-800 hover:file:bg-lilac-200 cursor-pointer">
+                        </div>
+                    </div>
+
+                    <div id="media-badges" class="flex flex-wrap gap-2 pt-1"></div>
+                </div>
+
+                <div class="flex justify-end space-x-2 pt-3">
+                    <button type="button" onclick="closeModal('modal-sessao')" class="px-4 py-2 bg-slate-100 text-slate-600 rounded-xl font-medium">Cancelar</button>
+                    <button type="submit" class="px-5 py-2 bg-lilac-600 text-white rounded-xl font-medium hover:bg-lilac-700 shadow-md">Salvar Registro</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Cobrança Financeira -->
+    <div id="modal-financeiro" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full shadow-2xl border border-lilac-200 p-6 space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                <h3 class="font-bold text-lg text-slate-800 flex items-center gap-2">
+                    <i data-lucide="circle-dollar-sign" class="text-lilac-600"></i> Registrar Cobrança
+                </h3>
+                <button onclick="closeModal('modal-financeiro')" class="text-slate-400 hover:text-slate-600">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <form id="form-financeiro" onsubmit="saveFinanceiro(event)" class="space-y-4 text-xs">
+                <div>
+                    <label class="block font-semibold text-slate-700 mb-1">Aluno *</label>
+                    <select id="fin-aluno-id" required class="w-full border border-lilac-200 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-lilac-500">
+                        <!-- Options via JS -->
+                    </select>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-semibold text-slate-700 mb-1">Valor Total (R$) *</label>
+                        <input type="number" step="0.01" id="fin-valor-total" required oninput="calcFinanceiroValores()" placeholder="300.00" class="w-full border border-lilac-200 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-lilac-500">
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-slate-700 mb-1">Valor Pago (R$)</label>
+                        <input type="number" step="0.01" id="fin-valor-pago" value="0" oninput="calcFinanceiroValores()" class="w-full border border-lilac-200 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-lilac-500">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-semibold text-slate-700 mb-1">Falta Pagar (R$)</label>
+                        <input type="number" step="0.01" id="fin-valor-restante" readonly class="w-full bg-slate-100 border border-slate-200 rounded-xl p-2.5 text-slate-500 font-bold outline-none">
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-slate-700 mb-1">Dia do Vencimento *</label>
+                        <input type="date" id="fin-vencimento" required class="w-full border border-lilac-200 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-lilac-500">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block font-semibold text-slate-700 mb-1">Observações</label>
+                    <input type="text" id="fin-obs" placeholder="Referente a 4 sessões do mês..." class="w-full border border-lilac-200 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-lilac-500">
+                </div>
+
+                <div class="flex justify-end space-x-2 pt-2">
+                    <button type="button" onclick="closeModal('modal-financeiro')" class="px-4 py-2 bg-slate-100 text-slate-600 rounded-xl font-medium">Cancelar</button>
+                    <button type="submit" class="px-5 py-2 bg-lilac-600 text-white rounded-xl font-medium hover:bg-lilac-700 shadow-md">Salvar Financeiro</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Extrato da Família -->
+    <div id="modal-extrato" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full shadow-2xl border border-lilac-200 p-6 space-y-5">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3 no-print">
+                <h3 class="font-bold text-lg text-slate-800 flex items-center gap-2">
+                    <i data-lucide="receipt" class="text-lilac-600"></i> Extrato de Pagamento
+                </h3>
+                <button onclick="closeModal('modal-extrato')" class="text-slate-400 hover:text-slate-600">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <!-- Extrato Impresso / Formatado -->
+            <div id="extrato-printable-content" class="p-5 border border-lilac-200 rounded-2xl bg-gradient-to-b from-lilac-50/50 to-white space-y-4">
+                <div class="text-center border-b border-lilac-100 pb-3 flex flex-col items-center">
+                    <div id="extrato-logo-container" class="mb-2 hidden">
+                        <img id="extrato-logo-img" src="" class="h-12 object-contain mx-auto">
+                    </div>
+                    <h2 class="text-xl font-bold text-lilac-900">Stefanie Toledo</h2>
+                    <p class="text-xs text-lilac-600 font-medium uppercase tracking-widest">Acompanhamento Pedagógico</p>
+                </div>
+
+                <div class="space-y-1.5 text-xs text-slate-700">
+                    <p><strong>Aluno(a):</strong> <span id="extrato-aluno"></span></p>
+                    <p><strong>Vencimento:</strong> <span id="extrato-vencimento"></span></p>
+                    <p><strong>Detalhamento:</strong> <span id="extrato-obs"></span></p>
+                </div>
+
+                <div class="bg-white p-3.5 rounded-xl border border-lilac-100 space-y-2 text-xs">
+                    <div class="flex justify-between">
+                        <span class="text-slate-500">Valor Total:</span>
+                        <span id="extrato-valor-total" class="font-bold text-slate-800"></span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-slate-500">Valor Recebido:</span>
+                        <span id="extrato-valor-pago" class="font-bold text-emerald-600"></span>
+                    </div>
+                    <div class="flex justify-between border-t border-slate-100 pt-2 text-sm">
+                        <span class="font-semibold text-slate-700">Saldo Pendente:</span>
+                        <span id="extrato-valor-restante" class="font-extrabold text-lilac-800"></span>
+                    </div>
+                </div>
+
+                <p class="text-[10px] text-center text-slate-400 italic pt-2">Agradeço a confiança na evolução pedagógica do seu filho(a)!</p>
+            </div>
+
+            <!-- Ações do Extrato -->
+            <div class="flex flex-col sm:flex-row gap-2 pt-2 no-print">
+                <button onclick="copyExtratoWhatsApp()" class="flex-1 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-semibold flex items-center justify-center space-x-1.5 shadow">
+                    <i data-lucide="copy" class="w-4 h-4"></i>
+                    <span>Copiar p/ WhatsApp</span>
+                </button>
+                <button onclick="window.print()" class="flex-1 py-2.5 bg-lilac-600 hover:bg-lilac-700 text-white rounded-xl text-xs font-semibold flex items-center justify-center space-x-1.5 shadow">
+                    <i data-lucide="printer" class="w-4 h-4"></i>
+                    <span>Imprimir / PDF</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ================= JAVASCRIPT LOGIC ================= -->
+    <script>
+        // Storage Keys
+        const STORAGE_ALUNOS = 'stefanie_alunos_v1';
+        const STORAGE_AGENDA = 'stefanie_agenda_v1';
+        const STORAGE_SESSOES = 'stefanie_sessoes_v1';
+        const STORAGE_FINANCEIRO = 'stefanie_financeiro_v1';
+        const STORAGE_SETTINGS = 'stefanie_settings_v1';
+
+        let alunos = [];
+        let agenda = [];
+        let sessoes = [];
+        let financeiro = [];
+        
+        let settings = {
+            logoUrl: null,
+            bgColor: '#F8F5FC',
+            bgImageUrl: null,
+            bgOpacity: 0.3,
+            bgBlur: 4
+        };
+
+        // Audio Recording State
+        let mediaRecorder;
+        let audioChunks = [];
+        let currentAudioBase64 = null;
+        let isRecording = false;
+        let recordingTimerInterval;
+        let mediaFiles = [];
+
+        // Inicialização do App
+        window.onload = function() {
+            loadInitialData();
+            applySettingsUI();
+            lucide.createIcons();
+            switchTab('alunos');
+        };
+
+        // Alternar Menu Mobile Hamburguer
+        function toggleMobileSidebar() {
+            const sidebar = document.getElementById('sidebar-menu');
+            const backdrop = document.getElementById('mobile-sidebar-backdrop');
+            
+            if (sidebar.classList.contains('-translate-x-full')) {
+                sidebar.classList.remove('-translate-x-full');
+                backdrop.classList.remove('hidden');
+            } else {
+                sidebar.classList.add('-translate-x-full');
+                backdrop.classList.add('hidden');
+            }
+        }
+
+        // Alternar Abas
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            const activeTab = document.getElementById(`tab-${tabName}`);
+            if (activeTab) activeTab.classList.remove('hidden');
+
+            // Atualiza o destaque nos itens do Menu Lateral (Sidebar)
+            document.querySelectorAll('.side-nav-item').forEach(btn => {
+                btn.className = 'side-nav-item w-full flex items-center space-x-3 px-4 py-3 rounded-xl font-medium text-xs transition-all text-lilac-100 hover:bg-white/10 hover:text-white';
+            });
+            const activeNav = document.getElementById(`side-nav-${tabName}`);
+            if (activeNav) {
+                activeNav.className = 'side-nav-item w-full flex items-center space-x-3 px-4 py-3 rounded-xl font-semibold text-xs transition-all bg-white text-lilac-900 shadow-lg';
+            }
+
+            // Se o menu mobile estiver aberto, fecha ao clicar no item
+            const sidebar = document.getElementById('sidebar-menu');
+            if (!sidebar.classList.contains('-translate-x-full') && window.innerWidth < 768) {
+                toggleMobileSidebar();
+            }
+
+            // Re-render da aba selecionada
+            if (tabName === 'alunos') renderAlunos();
+            if (tabName === 'agenda') renderAgenda();
+            if (tabName === 'sessoes') renderSessoes();
+            if (tabName === 'financeiro') renderFinanceiro();
+
+            updateSelectDropdowns();
+            updateTopStats();
+            lucide.createIcons();
+        }
+
+        function loadInitialData() {
+            const rawAlunos = localStorage.getItem(STORAGE_ALUNOS);
+            const rawAgenda = localStorage.getItem(STORAGE_AGENDA);
+            const rawSessoes = localStorage.getItem(STORAGE_SESSOES);
+            const rawFinanceiro = localStorage.getItem(STORAGE_FINANCEIRO);
+            const rawSettings = localStorage.getItem(STORAGE_SETTINGS);
+
+            if (rawSettings) {
+                settings = { ...settings, ...JSON.parse(rawSettings) };
+            }
+
+            if (rawAlunos) {
+                alunos = JSON.parse(rawAlunos);
+                agenda = rawAgenda ? JSON.parse(rawAgenda) : [];
+                sessoes = rawSessoes ? JSON.parse(rawSessoes) : [];
+                financeiro = rawFinanceiro ? JSON.parse(rawFinanceiro) : [];
+            } else {
+                alunos = [
+                    {
+                        id: 'aluno-1',
+                        nome: 'Lucas Andrade',
+                        nascimento: '2016-04-12',
+                        ano: '3º Ano Ensino Fundamental',
+                        escola: 'Colégio Dom Bosco',
+                        whatsapp: '19998123456',
+                        historico: 'Desenvolvimento motor adequado. Criança comunicativa e curiosa.',
+                        dificuldades: 'Dificuldade na concentração prolongada e na transição de sílabas complexas.',
+                        objetivos: 'Aprimorar alfabetização, fluência leitora e raciocínio lógico-matemático.'
+                    },
+                    {
+                        id: 'aluno-2',
+                        nome: 'Sophia Martins',
+                        nascimento: '2018-09-25',
+                        ano: '1º Ano Ensino Fundamental',
+                        escola: 'Escola Cecília Meireles',
+                        whatsapp: '19987654321',
+                        historico: 'Iniciando fase de alfabetização. Excelente percepção visual.',
+                        dificuldades: 'Insegurança na escrita de pequenas palavras e cálculo simples.',
+                        objetivos: 'Estimular consciência fonológica e escrita espontânea.'
+                    }
+                ];
+
+                const todayStr = new Date().toISOString().split('T')[0];
+
+                agenda = [
+                    {
+                        id: 'ag-1',
+                        alunoId: 'aluno-1',
+                        tipo: 'Sessão Pedagógica',
+                        titulo: 'Lucas Andrade',
+                        data: todayStr,
+                        hora: '14:00',
+                        obs: 'Trazer jogos de rima e números'
+                    },
+                    {
+                        id: 'ag-2',
+                        alunoId: 'aluno-2',
+                        tipo: 'Sessão Pedagógica',
+                        titulo: 'Sophia Martins',
+                        data: todayStr,
+                        hora: '15:30',
+                        obs: 'Atividade com blocos lógicos'
+                    }
+                ];
+
+                sessoes = [
+                    {
+                        id: 'ses-1',
+                        alunoId: 'aluno-1',
+                        data: `${todayStr}T14:00`,
+                        atividades: 'Jogo da memória das sílabas, leitura de pequeno texto ilustrado.',
+                        objetivos: 'Trabalhar percepção fonética e fixação da família do L e R.',
+                        obs: 'Lucas apresentou ótima evolução na leitura rápida de sílabas compostas.',
+                        audio: null,
+                        mediaFiles: []
+                    }
+                ];
+
+                financeiro = [
+                    {
+                        id: 'fin-1',
+                        alunoId: 'aluno-1',
+                        valorTotal: 400.00,
+                        valorPago: 400.00,
+                        valorRestante: 0.00,
+                        vencimento: `${todayStr}`,
+                        status: 'Pago',
+                        obs: 'Pacote mensal de 4 sessões'
+                    },
+                    {
+                        id: 'fin-2',
+                        alunoId: 'aluno-2',
+                        valorTotal: 350.00,
+                        valorPago: 150.00,
+                        valorRestante: 200.00,
+                        vencimento: `${todayStr}`,
+                        status: 'Parcial',
+                        obs: 'Mês corrente - 1ª parcela paga'
+                    }
+                ];
+
+                saveAllToStorage();
+            }
+        }
+
+        function saveAllToStorage() {
+            localStorage.setItem(STORAGE_ALUNOS, JSON.stringify(alunos));
+            localStorage.setItem(STORAGE_AGENDA, JSON.stringify(agenda));
+            localStorage.setItem(STORAGE_SESSOES, JSON.stringify(sessoes));
+            localStorage.setItem(STORAGE_FINANCEIRO, JSON.stringify(financeiro));
+            localStorage.setItem(STORAGE_SETTINGS, JSON.stringify(settings));
+        }
+
+        // ================= APLICAÇÃO DE CONFIGURAÇÕES E APARÊNCIA =================
+        function applySettingsUI() {
+            // Cor de fundo principal da página
+            document.body.style.backgroundColor = settings.bgColor;
+            document.getElementById('input-bg-color').value = settings.bgColor;
+            document.getElementById('bg-color-hex').textContent = settings.bgColor;
+
+            // Camada de imagem de fundo
+            const overlay = document.getElementById('custom-bg-overlay');
+            if (settings.bgImageUrl) {
+                overlay.style.backgroundImage = `url('${settings.bgImageUrl}')`;
+                overlay.style.opacity = settings.bgOpacity;
+                overlay.style.filter = `blur(${settings.bgBlur}px)`;
+                document.getElementById('bg-image-adjustments').classList.remove('hidden');
+            } else {
+                overlay.style.backgroundImage = 'none';
+                document.getElementById('bg-image-adjustments').classList.add('hidden');
+            }
+
+            document.getElementById('input-bg-opacity').value = settings.bgOpacity;
+            document.getElementById('label-bg-opacity').textContent = Math.round(settings.bgOpacity * 100) + '%';
+            document.getElementById('input-bg-blur').value = settings.bgBlur;
+            document.getElementById('label-bg-blur').textContent = settings.bgBlur + 'px';
+
+            // Logo Personalizada no Menu e Topbar
+            const brandContainer = document.getElementById('sidebar-brand-container');
+            const previewBox = document.getElementById('settings-logo-preview');
+            const btnRemoveLogo = document.getElementById('btn-remove-logo');
+            const mobileLogoPreview = document.getElementById('mobile-logo-preview');
+            const mobileLogoImg = document.getElementById('mobile-logo-img');
+            const extratoLogoContainer = document.getElementById('extrato-logo-container');
+            const extratoLogoImg = document.getElementById('extrato-logo-img');
+
+            if (settings.logoUrl) {
+                brandContainer.innerHTML = `
+                    <div class="w-full flex items-center justify-center p-2 bg-white/10 rounded-2xl border border-white/20 backdrop-blur-md overflow-hidden">
+                        <img src="${settings.logoUrl}" class="max-h-16 max-w-full object-contain">
+                    </div>
+                `;
+                previewBox.innerHTML = `<img src="${settings.logoUrl}" class="w-full h-full object-contain">`;
+                document.getElementById('settings-logo-status').textContent = 'Logo personalizada ativa';
+                btnRemoveLogo.classList.remove('hidden');
+
+                mobileLogoImg.src = settings.logoUrl;
+                mobileLogoPreview.classList.remove('hidden');
+
+                extratoLogoImg.src = settings.logoUrl;
+                extratoLogoContainer.classList.remove('hidden');
+            } else {
+                brandContainer.innerHTML = `
+                    <div id="sidebar-logo-icon" class="w-12 h-12 rounded-2xl bg-white/15 backdrop-blur-md flex items-center justify-center border border-white/20 text-white shadow-inner flex-shrink-0 overflow-hidden">
+                        <i data-lucide="sparkles" class="w-6 h-6 text-lilac-200"></i>
+                    </div>
+                    <div class="overflow-hidden">
+                        <h1 id="sidebar-brand-title" class="text-lg font-bold tracking-tight truncate leading-tight">Stefanie Toledo</h1>
+                        <p id="sidebar-brand-sub" class="text-[11px] text-lilac-200 font-medium uppercase tracking-wider">Pedagoga</p>
+                    </div>
+                `;
+                previewBox.innerHTML = `<i data-lucide="sparkles" class="w-8 h-8 text-lilac-400"></i>`;
+                document.getElementById('settings-logo-status').textContent = 'Padrão do sistema';
+                btnRemoveLogo.classList.add('hidden');
+
+                mobileLogoPreview.classList.add('hidden');
+                extratoLogoContainer.classList.add('hidden');
+            }
+            lucide.createIcons();
+        }
+
+        function handleLogoUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                settings.logoUrl = e.target.result;
+                saveAllToStorage();
+                applySettingsUI();
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function removeCustomLogo() {
+            settings.logoUrl = null;
+            document.getElementById('input-logo-file').value = '';
+            saveAllToStorage();
+            applySettingsUI();
+        }
+
+        function updateBgColor(val) {
+            settings.bgColor = val;
+            saveAllToStorage();
+            applySettingsUI();
+        }
+
+        function handleBgImageUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                settings.bgImageUrl = e.target.result;
+                saveAllToStorage();
+                applySettingsUI();
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function updateBgOpacity(val) {
+            settings.bgOpacity = parseFloat(val);
+            saveAllToStorage();
+            applySettingsUI();
+        }
+
+        function updateBgBlur(val) {
+            settings.bgBlur = parseInt(val);
+            saveAllToStorage();
+            applySettingsUI();
+        }
+
+        function removeCustomBgImage() {
+            settings.bgImageUrl = null;
+            document.getElementById('input-bg-image-file').value = '';
+            saveAllToStorage();
+            applySettingsUI();
+        }
+
+        function resetSettings() {
+            if (confirm('Deseja restaurar as configurações visuais para o padrão lilás original?')) {
+                settings = {
+                    logoUrl: null,
+                    bgColor: '#F8F5FC',
+                    bgImageUrl: null,
+                    bgOpacity: 0.3,
+                    bgBlur: 4
+                };
+                saveAllToStorage();
+                applySettingsUI();
+            }
+        }
+
+        function updateTopStats() {
+            document.getElementById('stat-alunos-count').textContent = alunos.length;
+            const todayStr = new Date().toISOString().split('T')[0];
+            const hojeSessoes = agenda.filter(a => a.data === todayStr).length;
+            document.getElementById('stat-sessoes-count').textContent = hojeSessoes;
+        }
+
+        function updateSelectDropdowns() {
+            const dropdowns = ['agenda-aluno-id', 'sessao-aluno-id', 'filter-sessao-aluno', 'fin-aluno-id'];
+            
+            dropdowns.forEach(id => {
+                const select = document.getElementById(id);
+                if (!select) return;
+                const currentVal = select.value;
+                select.innerHTML = '';
+
+                if (id === 'filter-sessao-aluno') {
+                    const optAll = document.createElement('option');
+                    optAll.value = '';
+                    optAll.textContent = 'Todos os Alunos';
+                    select.appendChild(optAll);
+                }
+
+                alunos.forEach(al => {
+                    const opt = document.createElement('option');
+                    opt.value = al.id;
+                    opt.textContent = al.nome;
+                    select.appendChild(opt);
+                });
+
+                if (currentVal) select.value = currentVal;
+            });
+        }
+
+        // ================= ABA 1: ALUNOS =================
+        function renderAlunos() {
+            const grid = document.getElementById('alunos-grid');
+            const search = document.getElementById('search-aluno').value.toLowerCase();
+            grid.innerHTML = '';
+
+            const filtered = alunos.filter(a => 
+                a.nome.toLowerCase().includes(search) || 
+                (a.escola && a.escola.toLowerCase().includes(search)) ||
+                (a.ano && a.ano.toLowerCase().includes(search))
+            );
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full bg-white/90 backdrop-blur-md p-8 rounded-2xl text-center border border-lilac-100 space-y-2">
+                        <i data-lucide="user-x" class="w-10 h-10 text-lilac-300 mx-auto"></i>
+                        <p class="text-sm font-semibold text-slate-600">Nenhum aluno encontrado.</p>
+                        <p class="text-xs text-slate-400">Cadastre um novo aluno ou ajuste sua busca.</p>
+                    </div>
+                `;
+                lucide.createIcons();
+                return;
+            }
+
+            filtered.forEach(aluno => {
+                const card = document.createElement('div');
+                card.className = 'bg-white/90 backdrop-blur-md rounded-2xl p-5 shadow-sm border border-lilac-100 hover:shadow-md transition-all space-y-4 flex flex-col justify-between';
+
+                card.innerHTML = `
+                    <div class="space-y-3">
+                        <div class="flex items-start justify-between">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 rounded-full bg-lilac-100 text-lilac-700 font-bold flex items-center justify-center text-sm">
+                                    ${aluno.nome.charAt(0)}
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-slate-800 text-sm">${aluno.nome}</h3>
+                                    <span class="text-[11px] bg-lilac-50 text-lilac-700 px-2 py-0.5 rounded-md font-medium border border-lilac-100">
+                                        ${aluno.ano || 'Ano não informado'}
+                                    </span>
+                                </div>
+                            </div>
+                            <button onclick="deleteAluno('${aluno.id}')" class="text-slate-300 hover:text-red-500 transition-colors">
+                                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+
+                        <div class="text-xs text-slate-600 space-y-1 pt-1">
+                            <p class="flex items-center gap-1.5"><i data-lucide="building" class="w-3.5 h-3.5 text-lilac-500"></i> ${aluno.escola || 'Escola não informada'}</p>
+                            <p class="flex items-center gap-1.5"><i data-lucide="cake" class="w-3.5 h-3.5 text-lilac-500"></i> Nasc: ${aluno.nascimento ? formatDateBR(aluno.nascimento) : 'Não informada'}</p>
+                            ${aluno.whatsapp ? `<p class="flex items-center gap-1.5 text-emerald-600 font-medium"><i data-lucide="phone" class="w-3.5 h-3.5"></i> ${aluno.whatsapp}</p>` : ''}
+                        </div>
+                    </div>
+
+                    <div class="border-t border-slate-100 pt-3 flex items-center justify-between gap-2">
+                        <button onclick="openAnamneseView('${aluno.id}')" class="flex-1 py-2 bg-lilac-50 hover:bg-lilac-100 text-lilac-800 font-medium rounded-xl text-xs flex items-center justify-center space-x-1 transition-all">
+                            <i data-lucide="file-text" class="w-3.5 h-3.5"></i>
+                            <span>Ver Anamnese</span>
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+            lucide.createIcons();
+        }
+
+        function saveAluno(e) {
+            e.preventDefault();
+            const id = 'aluno-' + Date.now();
+            const novo = {
+                id,
+                nome: document.getElementById('aluno-nome').value,
+                nascimento: document.getElementById('aluno-nascimento').value,
+                ano: document.getElementById('aluno-ano').value,
+                escola: document.getElementById('aluno-escola').value,
+                whatsapp: document.getElementById('aluno-whatsapp').value,
+                historico: document.getElementById('aluno-anamnese-historico').value,
+                dificuldades: document.getElementById('aluno-anamnese-dificuldades').value,
+                objetivos: document.getElementById('aluno-anamnese-objetivos').value
+            };
+
+            alunos.push(novo);
+            saveAllToStorage();
+            closeModal('modal-aluno');
+            document.getElementById('form-aluno').reset();
+            renderAlunos();
+            updateSelectDropdowns();
+            updateTopStats();
+        }
+
+        function deleteAluno(id) {
+            if (confirm('Deseja realmente remover este aluno?')) {
+                alunos = alunos.filter(a => a.id !== id);
+                saveAllToStorage();
+                renderAlunos();
+                updateSelectDropdowns();
+                updateTopStats();
+            }
+        }
+
+        function openAnamneseView(alunoId) {
+            const aluno = alunos.find(a => a.id === alunoId);
+            if (!aluno) return;
+
+            document.getElementById('view-anamnese-nome').textContent = aluno.nome;
+            document.getElementById('view-anamnese-escola').textContent = `${aluno.ano || ''} - ${aluno.escola || ''}`;
+            document.getElementById('view-anamnese-nasc').textContent = aluno.nascimento ? `${formatDateBR(aluno.nascimento)} (${calculateAge(aluno.nascimento)} anos)` : 'Não informada';
+            document.getElementById('view-anamnese-historico').textContent = aluno.historico || 'Nenhum registro informado.';
+            document.getElementById('view-anamnese-dificuldades').textContent = aluno.dificuldades || 'Nenhum registro informado.';
+            document.getElementById('view-anamnese-objetivos').textContent = aluno.objetivos || 'Nenhum registro informado.';
+
+            openModal('modal-ver-anamnese');
+        }
+
+        // ================= ABA 2: AGENDA =================
+        function renderAgenda() {
+            const container = document.getElementById('agenda-list');
+            const filterDate = document.getElementById('filter-agenda-date').value;
+            container.innerHTML = '';
+
+            let filtered = agenda;
+            if (filterDate) {
+                filtered = agenda.filter(a => a.data === filterDate);
+            }
+
+            filtered.sort((a, b) => (a.data + a.hora).localeCompare(b.data + b.hora));
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="bg-white/90 backdrop-blur-md p-8 rounded-2xl text-center border border-lilac-100">
+                        <i data-lucide="calendar-x" class="w-10 h-10 text-lilac-300 mx-auto mb-2"></i>
+                        <p class="text-xs font-semibold text-slate-600">Nenhum compromisso agendado nesta data.</p>
+                    </div>
+                `;
+                lucide.createIcons();
+                return;
+            }
+
+            filtered.forEach(item => {
+                const aluno = alunos.find(a => a.id === item.alunoId);
+                const nomeDisplay = item.tipo === 'Sessão Pedagógica' && aluno ? aluno.nome : item.titulo;
+
+                const card = document.createElement('div');
+                card.className = 'bg-white/90 backdrop-blur-md p-4 rounded-2xl border border-lilac-100 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:border-lilac-300 transition-all';
+
+                card.innerHTML = `
+                    <div class="flex items-start space-x-3">
+                        <div class="p-2.5 bg-lilac-100 text-lilac-700 rounded-xl flex flex-col items-center justify-center font-bold text-xs min-w-[55px]">
+                            <span>${item.hora}</span>
+                        </div>
+                        <div>
+                            <div class="flex items-center space-x-2">
+                                <h4 class="font-bold text-slate-800 text-sm">${nomeDisplay}</h4>
+                                <span class="text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full font-medium">
+                                    ${item.tipo}
+                                </span>
+                            </div>
+                            <p class="text-xs text-slate-500 mt-0.5 flex items-center gap-1">
+                                <i data-lucide="calendar" class="w-3 h-3 text-lilac-500"></i> ${formatDateBR(item.data)}
+                                ${item.obs ? `• <span class="italic text-slate-400">${item.obs}</span>` : ''}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center space-x-2 self-end sm:self-center">
+                        ${item.tipo === 'Sessão Pedagógica' ? `
+                            <button onclick="setupWhatsAppConfirmation('${item.id}')" class="px-3 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 font-medium rounded-xl text-xs flex items-center space-x-1 transition-all border border-emerald-200">
+                                <i data-lucide="message-square" class="w-3.5 h-3.5"></i>
+                                <span>Confirmar WhatsApp</span>
+                            </button>
+                        ` : ''}
+                        <button onclick="deleteAgenda('${item.id}')" class="p-1.5 text-slate-300 hover:text-red-500 transition-colors">
+                            <i data-lucide="trash-2" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+            lucide.createIcons();
+        }
+
+        function toggleAgendaTipo() {
+            const tipo = document.getElementById('agenda-tipo').value;
+            const containerAluno = document.getElementById('agenda-aluno-container');
+            const containerTitulo = document.getElementById('agenda-titulo-container');
+
+            if (tipo === 'Sessão Pedagógica') {
+                containerAluno.classList.remove('hidden');
+                containerTitulo.classList.add('hidden');
+            } else {
+                containerAluno.classList.add('hidden');
+                containerTitulo.classList.remove('hidden');
+            }
+        }
+
+        function saveAgenda(e) {
+            e.preventDefault();
+            const tipo = document.getElementById('agenda-tipo').value;
+            const alunoId = document.getElementById('agenda-aluno-id').value;
+            const titulo = document.getElementById('agenda-titulo').value;
+            const aluno = alunos.find(a => a.id === alunoId);
+
+            const novo = {
+                id: 'ag-' + Date.now(),
+                tipo,
+                alunoId: tipo === 'Sessão Pedagógica' ? alunoId : null,
+                titulo: tipo === 'Sessão Pedagógica' ? (aluno ? aluno.nome : '') : titulo,
+                data: document.getElementById('agenda-data').value,
+                hora: document.getElementById('agenda-hora').value,
+                obs: document.getElementById('agenda-obs').value
+            };
+
+            agenda.push(novo);
+            saveAllToStorage();
+            closeModal('modal-agenda');
+            document.getElementById('form-agenda').reset();
+            renderAgenda();
+            updateTopStats();
+        }
+
+        function deleteAgenda(id) {
+            if (confirm('Remover este agendamento?')) {
+                agenda = agenda.filter(a => a.id !== id);
+                saveAllToStorage();
+                renderAgenda();
+                updateTopStats();
+            }
+        }
+
+        function setupWhatsAppConfirmation(agendaId) {
+            const item = agenda.find(a => a.id === agendaId);
+            if (!item) return;
+
+            const aluno = alunos.find(a => a.id === item.alunoId);
+            if (!aluno) return;
+
+            const message = `Olá! Aqui é a Stefanie Toledo (Pedagoga). Gostaria de confirmar a nossa sessão pedagógica do(a) *${aluno.nome}* agendada para dia *${formatDateBR(item.data)}* às *${item.hora}h*. Por favor, me confirme respondendo esta mensagem. Obrigado!`;
+            
+            const card = document.getElementById('whatsapp-preview-card');
+            card.innerHTML = `
+                <div class="space-y-2">
+                    <p class="font-bold text-slate-800">Para: ${aluno.nome}</p>
+                    <p class="bg-slate-50 p-2.5 rounded-lg text-slate-600 border border-slate-100 text-[11px] leading-relaxed whitespace-pre-line">${message}</p>
+                </div>
+            `;
+
+            const btnLink = document.getElementById('whatsapp-send-link');
+            const phoneClean = aluno.whatsapp ? aluno.whatsapp.replace(/\D/g, '') : '';
+            const targetPhone = phoneClean ? (phoneClean.startsWith('55') ? phoneClean : `55${phoneClean}`) : '';
+
+            btnLink.href = `https://api.whatsapp.com/send?phone=${targetPhone}&text=${encodeURIComponent(message)}`;
+            btnLink.classList.remove('opacity-50', 'pointer-events-none');
+            lucide.createIcons();
+        }
+
+        // ================= ABA 3: REGISTROS DE SESSÃO =================
+        function renderSessoes() {
+            const container = document.getElementById('sessoes-list');
+            const filterAluno = document.getElementById('filter-sessao-aluno').value;
+            container.innerHTML = '';
+
+            let filtered = sessoes;
+            if (filterAluno) {
+                filtered = sessoes.filter(s => s.alunoId === filterAluno);
+            }
+
+            filtered.sort((a, b) => new Date(b.data) - new Date(a.data));
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="bg-white/90 backdrop-blur-md p-8 rounded-2xl text-center border border-lilac-100">
+                        <i data-lucide="file-x" class="w-10 h-10 text-lilac-300 mx-auto mb-2"></i>
+                        <p class="text-xs font-semibold text-slate-600">Nenhum registro de sessão pedagógica encontrado.</p>
+                    </div>
+                `;
+                lucide.createIcons();
+                return;
+            }
+
+            filtered.forEach(sessao => {
+                const aluno = alunos.find(a => a.id === sessao.alunoId);
+                const dateFormatted = new Date(sessao.data).toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' });
+
+                const card = document.createElement('div');
+                card.className = 'bg-white/90 backdrop-blur-md p-5 rounded-2xl border border-lilac-100 shadow-sm space-y-4';
+
+                let mediaHTML = '';
+                if (sessao.audio) {
+                    mediaHTML += `
+                        <div class="bg-lilac-50 p-3 rounded-xl border border-lilac-100 space-y-1">
+                            <span class="text-[11px] font-semibold text-lilac-800 flex items-center gap-1">
+                                <i data-lucide="mic" class="w-3.5 h-3.5"></i> Gravação de Voz da Sessão
+                            </span>
+                            <audio controls src="${sessao.audio}" class="w-full h-8 mt-1"></audio>
+                        </div>
+                    `;
+                }
+
+                if (sessao.mediaFiles && sessao.mediaFiles.length > 0) {
+                    mediaHTML += `<div class="flex flex-wrap gap-2 pt-1">`;
+                    sessao.mediaFiles.forEach(file => {
+                        if (file.type === 'foto') {
+                            mediaHTML += `<img src="${file.url}" class="w-16 h-16 object-cover rounded-lg border border-lilac-200 shadow-sm" alt="Foto sessão">`;
+                        } else if (file.type === 'video') {
+                            mediaHTML += `<video src="${file.url}" class="w-20 h-16 object-cover rounded-lg border border-lilac-200 shadow-sm" controls></video>`;
+                        }
+                    });
+                    mediaHTML += `</div>`;
+                }
+
+                card.innerHTML = `
+                    <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-9 h-9 rounded-full bg-lilac-600 text-white font-bold flex items-center justify-center text-xs">
+                                ${aluno ? aluno.nome.charAt(0) : 'A'}
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-slate-800 text-sm">${aluno ? aluno.nome : 'Aluno Removido'}</h3>
+                                <p class="text-[11px] text-slate-400 flex items-center gap-1">
+                                    <i data-lucide="clock" class="w-3 h-3"></i> ${dateFormatted}
+                                </p>
+                            </div>
+                        </div>
+                        <button onclick="deleteSessao('${sessao.id}')" class="text-slate-300 hover:text-red-500 transition-colors">
+                            <i data-lucide="trash-2" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+                        <div class="bg-slate-50 p-3 rounded-xl border border-slate-100">
+                            <p class="font-semibold text-lilac-900 mb-1">Atividades Realizadas:</p>
+                            <p class="text-slate-600 whitespace-pre-line">${sessao.atividades}</p>
+                        </div>
+                        <div class="bg-slate-50 p-3 rounded-xl border border-slate-100">
+                            <p class="font-semibold text-lilac-900 mb-1">Objetivos Alcançados:</p>
+                            <p class="text-slate-600 whitespace-pre-line">${sessao.objetivos || 'Não especificado'}</p>
+                        </div>
+                        <div class="bg-slate-50 p-3 rounded-xl border border-slate-100">
+                            <p class="font-semibold text-lilac-900 mb-1">Observações Pedagógicas:</p>
+                            <p class="text-slate-600 whitespace-pre-line">${sessao.obs || 'Nenhuma observação extra'}</p>
+                        </div>
+                    </div>
+
+                    ${mediaHTML}
+                `;
+                container.appendChild(card);
+            });
+            lucide.createIcons();
+        }
+
+        async function toggleAudioRecording() {
+            const btnText = document.getElementById('record-btn-text');
+            const timer = document.getElementById('recording-timer');
+
+            if (!isRecording) {
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    mediaRecorder = new MediaRecorder(stream);
+                    audioChunks = [];
+
+                    mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
+                    mediaRecorder.onstop = () => {
+                        const blob = new Blob(audioChunks, { type: 'audio/webm' });
+                        const reader = new FileReader();
+                        reader.readAsDataURL(blob);
+                        reader.onloadend = () => {
+                            currentAudioBase64 = reader.result;
+                            const audioPreview = document.getElementById('audio-preview');
+                            audioPreview.src = currentAudioBase64;
+                            document.getElementById('audio-preview-container').classList.remove('hidden');
+                        };
+                    };
+
+                    mediaRecorder.start();
+                    isRecording = true;
+                    btnText.textContent = 'Parar Gravação';
+                    timer.classList.remove('hidden');
+
+                    let seconds = 0;
+                    recordingTimerInterval = setInterval(() => {
+                        seconds++;
+                        const mins = String(Math.floor(seconds / 60)).padStart(2, '0');
+                        const secs = String(seconds % 60).padStart(2, '0');
+                        timer.textContent = `${mins}:${secs}`;
+                    }, 1000);
+
+                } catch (err) {
+                    alert('Permissão de microfone negada ou indisponível no dispositivo.');
+                }
+            } else {
+                mediaRecorder.stop();
+                isRecording = false;
+                btnText.textContent = 'Gravar Novamente';
+                clearInterval(recordingTimerInterval);
+            }
+        }
+
+        function handleFileSelect(event, type) {
+            const files = event.target.files;
+            for (let i = 0; i < files.length; i++) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    mediaFiles.push({
+                        type,
+                        url: e.target.result
+                    });
+                    renderMediaBadges();
+                };
+                reader.readAsDataURL(files[i]);
+            }
+        }
+
+        function renderMediaBadges() {
+            const container = document.getElementById('media-badges');
+            container.innerHTML = '';
+            mediaFiles.forEach((file, index) => {
+                const badge = document.createElement('span');
+                badge.className = 'bg-lilac-100 text-lilac-800 text-[10px] px-2 py-1 rounded-md font-medium flex items-center gap-1';
+                badge.innerHTML = `
+                    ${file.type === 'foto' ? 'Foto Anexada' : 'Vídeo Anexado'}
+                    <button type="button" onclick="mediaFiles.splice(${index},1); renderMediaBadges();" class="text-slate-400 hover:text-red-500">×</button>
+                `;
+                container.appendChild(badge);
+            });
+        }
+
+        function saveSessao(e) {
+            e.preventDefault();
+            const novo = {
+                id: 'ses-' + Date.now(),
+                alunoId: document.getElementById('sessao-aluno-id').value,
+                data: document.getElementById('sessao-data').value,
+                atividades: document.getElementById('sessao-atividades').value,
+                objetivos: document.getElementById('sessao-objetivos').value,
+                obs: document.getElementById('sessao-obs').value,
+                audio: currentAudioBase64,
+                mediaFiles: [...mediaFiles]
+            };
+
+            sessoes.push(novo);
+            saveAllToStorage();
+            closeModal('modal-sessao');
+            document.getElementById('form-sessao').reset();
+            currentAudioBase64 = null;
+            mediaFiles = [];
+            document.getElementById('audio-preview-container').classList.add('hidden');
+            renderSessoes();
+        }
+
+        function deleteSessao(id) {
+            if (confirm('Deseja excluir este registro de sessão?')) {
+                sessoes = sessoes.filter(s => s.id !== id);
+                saveAllToStorage();
+                renderSessoes();
+            }
+        }
+
+        // ================= ABA 4: FINANCEIRO =================
+        function renderFinanceiro() {
+            const tableBody = document.getElementById('financeiro-table-body');
+            tableBody.innerHTML = '';
+
+            let totalRecebido = 0;
+            let totalPendente = 0;
+            let totalGeral = 0;
+
+            if (financeiro.length === 0) {
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="7" class="p-8 text-center text-slate-400 italic">
+                            Nenhum registro financeiro cadastrado.
+                        </td>
+                    </tr>
+                `;
+            }
+
+            financeiro.forEach(item => {
+                const aluno = alunos.find(a => a.id === item.alunoId);
+                totalRecebido += parseFloat(item.valorPago || 0);
+                totalPendente += parseFloat(item.valorRestante || 0);
+                totalGeral += parseFloat(item.valorTotal || 0);
+
+                let badgeClass = 'bg-emerald-100 text-emerald-800';
+                if (item.status === 'Pendente') badgeClass = 'bg-rose-100 text-rose-800';
+                if (item.status === 'Parcial') badgeClass = 'bg-amber-100 text-amber-800';
+
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-lilac-50/50 transition-colors';
+                tr.innerHTML = `
+                    <td class="p-3.5 font-semibold text-slate-800">${aluno ? aluno.nome : 'Aluno Removido'}</td>
+                    <td class="p-3.5 text-slate-600">${formatDateBR(item.vencimento)}</td>
+                    <td class="p-3.5 font-medium">R$ ${parseFloat(item.valorTotal).toFixed(2)}</td>
+                    <td class="p-3.5 text-emerald-600 font-medium">R$ ${parseFloat(item.valorPago).toFixed(2)}</td>
+                    <td class="p-3.5 text-rose-600 font-medium">R$ ${parseFloat(item.valorRestante).toFixed(2)}</td>
+                    <td class="p-3.5">
+                        <span class="px-2.5 py-1 rounded-full text-[10px] font-bold ${badgeClass}">
+                            ${item.status}
+                        </span>
+                    </td>
+                    <td class="p-3.5 text-right space-x-1">
+                        <button onclick="openExtratoModal('${item.id}')" class="px-2.5 py-1.5 bg-lilac-100 text-lilac-800 hover:bg-lilac-200 rounded-lg font-medium transition-all">
+                            Extrato
+                        </button>
+                        <button onclick="deleteFinanceiro('${item.id}')" class="p-1 text-slate-300 hover:text-red-500">
+                            <i data-lucide="trash-2" class="w-4 h-4 inline"></i>
+                        </button>
+                    </td>
+                `;
+                tableBody.appendChild(tr);
+            });
+
+            document.getElementById('stat-financeiro-pago').textContent = `R$ ${totalRecebido.toFixed(2)}`;
+            document.getElementById('stat-financeiro-pendente').textContent = `R$ ${totalPendente.toFixed(2)}`;
+            document.getElementById('stat-financeiro-total').textContent = `R$ ${totalGeral.toFixed(2)}`;
+
+            lucide.createIcons();
+        }
+
+        function calcFinanceiroValores() {
+            const total = parseFloat(document.getElementById('fin-valor-total').value || 0);
+            const pago = parseFloat(document.getElementById('fin-valor-pago').value || 0);
+            const restante = Math.max(0, total - pago);
+            document.getElementById('fin-valor-restante').value = restante.toFixed(2);
+        }
+
+        function saveFinanceiro(e) {
+            e.preventDefault();
+            const total = parseFloat(document.getElementById('fin-valor-total').value || 0);
+            const pago = parseFloat(document.getElementById('fin-valor-pago').value || 0);
+            const restante = Math.max(0, total - pago);
+
+            let status = 'Pendente';
+            if (pago >= total) status = 'Pago';
+            else if (pago > 0 && pago < total) status = 'Parcial';
+
+            const novo = {
+                id: 'fin-' + Date.now(),
+                alunoId: document.getElementById('fin-aluno-id').value,
+                valorTotal: total,
+                valorPago: pago,
+                valorRestante: restante,
+                vencimento: document.getElementById('fin-vencimento').value,
+                status,
+                obs: document.getElementById('fin-obs').value
+            };
+
+            financeiro.push(novo);
+            saveAllToStorage();
+            closeModal('modal-financeiro');
+            document.getElementById('form-financeiro').reset();
+            renderFinanceiro();
+        }
+
+        function deleteFinanceiro(id) {
+            if (confirm('Excluir esta cobrança?')) {
+                financeiro = financeiro.filter(f => f.id !== id);
+                saveAllToStorage();
+                renderFinanceiro();
+            }
+        }
+
+        let selectedExtratoItem = null;
+
+        function openExtratoModal(finId) {
+            const item = financeiro.find(f => f.id === finId);
+            if (!item) return;
+
+            selectedExtratoItem = item;
+            const aluno = alunos.find(a => a.id === item.alunoId);
+
+            document.getElementById('extrato-aluno').textContent = aluno ? aluno.nome : 'Aluno Removido';
+            document.getElementById('extrato-vencimento').textContent = formatDateBR(item.vencimento);
+            document.getElementById('extrato-obs').textContent = item.obs || 'Sessões pedagógicas agendadas';
+            document.getElementById('extrato-valor-total').textContent = `R$ ${parseFloat(item.valorTotal).toFixed(2)}`;
+            document.getElementById('extrato-valor-pago').textContent = `R$ ${parseFloat(item.valorPago).toFixed(2)}`;
+            document.getElementById('extrato-valor-restante').textContent = `R$ ${parseFloat(item.valorRestante).toFixed(2)}`;
+
+            openModal('modal-extrato');
+        }
+
+        function copyExtratoWhatsApp() {
+            if (!selectedExtratoItem) return;
+            const aluno = alunos.find(a => a.id === selectedExtratoItem.alunoId);
+
+            const text = `*EXTRATO PEDAGÓGICO - STEFANIE TOLEDO*\n` +
+                `Aluno(a): ${aluno ? aluno.nome : ''}\n` +
+                `Vencimento: ${formatDateBR(selectedExtratoItem.vencimento)}\n` +
+                `Detalhamento: ${selectedExtratoItem.obs || 'Sessões de acompanhamento'}\n\n` +
+                `• Valor Total: R$ ${parseFloat(selectedExtratoItem.valorTotal).toFixed(2)}\n` +
+                `• Valor Pago: R$ ${parseFloat(selectedExtratoItem.valorPago).toFixed(2)}\n` +
+                `• Saldo Pendente: R$ ${parseFloat(selectedExtratoItem.valorRestante).toFixed(2)}\n\n` +
+                `Qualquer dúvida estou à disposição!`;
+
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Extrato copiado para a área de transferência! Cole no chat do WhatsApp.');
+            }).catch(() => {
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                alert('Extrato copiado!');
+            });
+        }
+
+        // ================= UTILS =================
+        function openModal(id) {
+            document.getElementById(id).classList.remove('hidden');
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.add('hidden');
+        }
+
+        function formatDateBR(dateStr) {
+            if (!dateStr) return '';
+            const [year, month, day] = dateStr.split('-');
+            return `${day}/${month}/${year}`;
+        }
+
+        function calculateAge(birthDateStr) {
+            if (!birthDateStr) return '';
+            const today = new Date();
+            const birthDate = new Date(birthDateStr);
+            let age = today.getFullYear() - birthDate.getFullYear();
+            const m = today.getMonth() - birthDate.getMonth();
+            if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+            return age;
+        }
+    </script>
 </body>
 </html>
