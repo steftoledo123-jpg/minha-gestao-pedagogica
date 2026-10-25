@@ -103,7 +103,7 @@
                 </button>
                 <button onclick="switchTab('agenda')" id="nav-agenda" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition text-lilac-100 hover:bg-lilac-800">
                     <i class="fa-solid fa-calendar-days w-5 text-center text-lilac-300"></i>
-                    <span>Agenda Semanal & WhatsApp</span>
+                    <span>Agenda</span>
                 </button>
                 <button onclick="switchTab('registros')" id="nav-registros" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition text-lilac-100 hover:bg-lilac-800">
                     <i class="fa-solid fa-book-open w-5 text-center text-lilac-300"></i>
@@ -131,7 +131,7 @@
         <div class="p-4 border-t border-lilac-800 text-xs text-lilac-300 space-y-1">
             <div class="flex justify-between"><span>Alunos cadastrados:</span><span id="badge-total-alunos" class="font-bold text-white">0</span></div>
             <div class="flex justify-between"><span>Sessões hoje:</span><span id="badge-sessoes-hoje" class="font-bold text-white">0</span></div>
-            <div class="pt-2 text-center text-[10px] text-lilac-400">Painel Pedagógico v5.5</div>
+            <div class="pt-2 text-center text-[10px] text-lilac-400">Painel Pedagógico v6.0</div>
         </div>
     </aside>
 
@@ -153,12 +153,12 @@
             <div id="alunos-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
         </section>
 
-        <!-- ABA 2: AGENDA & WHATSAPP -->
+        <!-- ABA 2: AGENDA -->
         <section id="tab-agenda" class="tab-content space-y-6 hidden">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white p-6 rounded-2xl shadow-sm border border-lilac-100">
                 <div>
-                    <h2 class="text-2xl font-bold text-lilac-900">Agenda Semanal & Confirmações</h2>
-                    <p class="text-sm text-gray-500">Acompanhe a semana, status de confirmação da família e tarefas pendentes.</p>
+                    <h2 class="text-2xl font-bold text-lilac-900">Agenda & Confirmações</h2>
+                    <p class="text-sm text-gray-500">Acompanhe a semana, status de confirmação da família via WhatsApp e tarefas.</p>
                 </div>
                 <button onclick="openModalAgendamento()" class="bg-lilac-700 hover:bg-lilac-800 text-white font-medium px-5 py-2.5 rounded-xl shadow transition flex items-center space-x-2">
                     <i class="fa-solid fa-calendar-plus"></i>
@@ -228,7 +228,7 @@
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white p-6 rounded-2xl shadow-sm border border-lilac-100">
                 <div>
                     <h2 class="text-2xl font-bold text-lilac-900">Avaliação Diagnóstica de Desempenho (1º ao 5º Ano)</h2>
-                    <p class="text-sm text-gray-500">Mapeamento detalhado por pilares da BNCC para planejamento de intervenção.</p>
+                    <p class="text-sm text-gray-500">Mapeamento detalhado por pilares da BNCC incluindo caligrafia e grafomotricidade.</p>
                 </div>
                 <button onclick="openModalAvaliacao()" class="bg-lilac-700 hover:bg-lilac-800 text-white font-medium px-5 py-2.5 rounded-xl shadow transition flex items-center space-x-2">
                     <i class="fa-solid fa-clipboard-question"></i>
@@ -408,7 +408,7 @@
         </div>
     </div>
 
-    <!-- Modal Avaliação Diagnóstica Completa -->
+    <!-- Modal Avaliação Diagnóstica Completa com Caligrafia -->
     <div id="modal-avaliacao" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col">
             <div class="bg-lilac-900 text-white p-4 flex justify-between items-center"><h3 class="font-bold text-lg">Avaliação Diagnóstica de Desempenho</h3><button onclick="closeModalAvaliacao()" class="text-white"><i class="fa-solid fa-xmark text-lg"></i></button></div>
@@ -447,13 +447,19 @@
                 </div>
                 <div><label class="block font-semibold mb-1">Fluência & Compreensão Leitora</label><textarea id="aval-leitura" rows="2" class="w-full border rounded-xl p-3 outline-none" placeholder="Descreva a leitura (silabada, palavra por palavra, com prosódia) e capacidade de interpretação..."></textarea></div>
 
-                <h4 class="font-bold text-lilac-900 uppercase tracking-wide border-b pb-1 pt-2">2. Matemática (Raciocínio & Operações)</h4>
+                <h4 class="font-bold text-lilac-900 uppercase tracking-wide border-b pb-1 pt-2">2. Caligrafia, Grafomotricidade & Coordenação</h4>
+                <div>
+                    <label class="block font-semibold mb-1">Avaliação de Caligrafia & Traçado</label>
+                    <textarea id="aval-caligrafia" rows="2" class="w-full border rounded-xl p-3 outline-none" placeholder="Descreva a preensão do lápis, traçado (letras legíveis/ilegíveis), respeito às linhas/margens, ritmo e espaçamento..."></textarea>
+                </div>
+
+                <h4 class="font-bold text-lilac-900 uppercase tracking-wide border-b pb-1 pt-2">3. Matemática (Raciocínio & Operações)</h4>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <div><label class="block font-semibold mb-1">Sistema Numérico & Operações</label><textarea id="aval-mat" rows="2" class="w-full border rounded-xl p-3 outline-none" placeholder="Domínio de adição, subtração, multiplicação..."></textarea></div>
                     <div><label class="block font-semibold mb-1">Resolução de Situações-Problema</label><textarea id="aval-problemas" rows="2" class="w-full border rounded-xl p-3 outline-none" placeholder="Compreensão de enunciados e lógica..."></textarea></div>
                 </div>
 
-                <h4 class="font-bold text-lilac-900 uppercase tracking-wide border-b pb-1 pt-2">3. Funções Executivas & Comportamento</h4>
+                <h4 class="font-bold text-lilac-900 uppercase tracking-wide border-b pb-1 pt-2">4. Funções Executivas & Comportamento</h4>
                 <div><label class="block font-semibold mb-1">Atenção, Concentração & Autonomia</label><textarea id="aval-atencao" rows="2" class="w-full border rounded-xl p-3 outline-none" placeholder="Sustentação do foco, memória de trabalho e organização..."></textarea></div>
 
                 <div><label class="block font-semibold mb-1">Parecer Diagnóstico & Metas de Intervenção</label><textarea id="aval-parecer" rows="3" class="w-full border rounded-xl p-3 outline-none" placeholder="Escreva o parecer descritivo final..."></textarea></div>
@@ -558,7 +564,7 @@
 
         function toggleMobileMenu() { document.getElementById('sidebar').classList.toggle('hidden'); }
 
-        // --- AGENDA SEMANAL & WHATSAPP ---
+        // --- AGENDA & WHATSAPP ---
         function getSegundaFeira(d) {
             const date = new Date(d);
             const day = date.getDay();
@@ -815,6 +821,7 @@
                 escrita: document.getElementById('aval-escrita').value,
                 fonologica: document.getElementById('aval-fonologica').value,
                 leitura: document.getElementById('aval-leitura').value,
+                caligrafia: document.getElementById('aval-caligrafia').value,
                 mat: document.getElementById('aval-mat').value,
                 problemas: document.getElementById('aval-problemas').value,
                 atencao: document.getElementById('aval-atencao').value,
@@ -839,6 +846,7 @@
                         <p><strong>Hipótese de Escrita:</strong> ${av.escrita}</p>
                         <p><strong>Consciência Fonológica:</strong> ${av.fonologica}</p>
                         <p><strong>Fluência e Leitura:</strong> ${av.leitura || 'N/A'}</p>
+                        <p><strong>Caligrafia & Grafomotricidade:</strong> ${av.caligrafia || 'N/A'}</p>
                         <p><strong>Matemática:</strong> ${av.mat || 'N/A'}</p>
                         <p><strong>Funções Executivas / Atenção:</strong> ${av.atencao || 'N/A'}</p>
                         <p class="pt-2 font-semibold text-lilac-900">Parecer Diagnóstico:</p>
