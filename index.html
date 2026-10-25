@@ -31,6 +31,40 @@ button.danger{background:#fff0f2;color:var(--danger);border:0;border-radius:10px
 .colorrow{display:flex;gap:9px;flex-wrap:wrap;margin:8px 0 14px}.swatch{width:32px;height:32px;border-radius:50%;border:3px solid white;box-shadow:0 0 0 1px #ddd;cursor:pointer}.swatch.selected{box-shadow:0 0 0 2px var(--ink)}
 footer{text-align:center;font-size:11px;color:var(--muted);padding:20px}
 @media(min-width:650px){main{padding:20px}.grid{grid-template-columns:repeat(4,minmax(0,1fr))}header{padding-left:max(22px,calc((100vw - 810px)/2));padding-right:max(22px,calc((100vw - 810px)/2))}}
+
+/* Tema lilás Minha Gestão Pedagógica */
+:root {
+  --lilas-claro: #F8F2FF;
+  --lilas-fundo: #F3E8FF;
+  --lilas-medio: #DCC2F5;
+  --lilas-principal: #B57AE8;
+  --lilas-escuro: #7541A6;
+}
+
+body {
+  background-color: var(--lilas-fundo) !important;
+}
+
+header, nav, aside {
+  background-color: var(--lilas-principal) !important;
+}
+
+button {
+  background-color: var(--lilas-principal);
+  border-color: var(--lilas-principal);
+}
+
+button:hover {
+  background-color: var(--lilas-escuro);
+}
+
+input, select, textarea {
+  border-color: var(--lilas-medio);
+}
+
+.card, .panel, section {
+  border-color: var(--lilas-medio);
+}
 </style>
 </head>
 <link rel="manifest" href="./manifest.webmanifest">
