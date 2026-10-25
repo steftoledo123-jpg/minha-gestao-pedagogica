@@ -33,6 +33,11 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
         body { font-family: 'Poppins', sans-serif; }
+        @media print {
+            body * { visibility: hidden; }
+            #printable-area, #printable-area * { visibility: visible; }
+            #printable-area { position: absolute; left: 0; top: 0; width: 100%; }
+        }
     </style>
 </head>
 <body id="app-body" class="bg-lilac-50 text-gray-800 min-h-screen flex flex-col md:flex-row relative">
@@ -40,7 +45,7 @@
     <!-- Fundo Personalizado Overlay -->
     <div id="custom-bg-overlay" class="absolute inset-0 bg-lilac-50/90 pointer-events-none z-0"></div>
 
-    <!-- Tela de Confirmação Externa (Caso a família acesse via Link) -->
+    <!-- Tela de Confirmação Externa (Link Família) -->
     <div id="view-confirmacao-familia" class="absolute inset-0 bg-lilac-900 z-50 hidden flex flex-col items-center justify-center p-6 text-white text-center">
         <div class="bg-white text-gray-800 p-8 rounded-3xl shadow-2xl max-w-md w-full space-y-6">
             <div class="w-16 h-16 bg-lilac-100 text-lilac-700 rounded-full flex items-center justify-center mx-auto text-3xl">
@@ -50,9 +55,7 @@
                 <h2 class="text-xl font-bold text-lilac-900">Stefanie Toledo • Pedagoga</h2>
                 <p class="text-xs text-gray-500 mt-1">Confirmação de Sessão Pedagógica</p>
             </div>
-            <div id="detalhes-sessao-familia" class="bg-lilac-50 p-4 rounded-2xl text-sm text-gray-700 space-y-2 border border-lilac-100">
-                <!-- Preenchido via JS -->
-            </div>
+            <div id="detalhes-sessao-familia" class="bg-lilac-50 p-4 rounded-2xl text-sm text-gray-700 space-y-2 border border-lilac-100"></div>
             <div class="space-y-3 pt-2">
                 <button onclick="responderConfirmacaoFamilia('Confirmado')" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 rounded-xl shadow transition flex items-center justify-center space-x-2">
                     <i class="fa-solid fa-check text-lg"></i>
@@ -77,15 +80,12 @@
                 <p class="text-xs text-lilac-200">Pedagoga</p>
             </div>
         </div>
-        <button onclick="toggleMobileMenu()" class="text-white focus:outline-none text-xl p-2">
-            <i class="fa-solid fa-bars"></i>
-        </button>
+        <button onclick="toggleMobileMenu()" class="text-white focus:outline-none text-xl p-2"><i class="fa-solid fa-bars"></i></button>
     </div>
 
-    <!-- Menu Lateral Fixo (Sidebar) -->
+    <!-- Menu Lateral (Sidebar) -->
     <aside id="sidebar" class="bg-lilac-900 text-white w-full md:w-72 flex-shrink-0 flex flex-col justify-between transition-all duration-300 z-20 shadow-xl hidden md:flex relative">
         <div>
-            <!-- Topo do Menu -->
             <div class="p-6 border-b border-lilac-800 flex items-center space-x-4">
                 <div id="sidebar-logo-container" class="w-12 h-12 rounded-full bg-lilac-200 flex items-center justify-center text-lilac-900 font-bold text-xl overflow-hidden shadow-inner flex-shrink-0">
                     <i class="fa-solid fa-graduation-cap text-lilac-800"></i>
@@ -96,7 +96,6 @@
                 </div>
             </div>
 
-            <!-- Botões de Navegação -->
             <nav class="p-4 space-y-2">
                 <button onclick="switchTab('alunos')" id="nav-alunos" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition text-lilac-100 hover:bg-lilac-800 bg-lilac-800 text-white">
                     <i class="fa-solid fa-users w-5 text-center text-lilac-300"></i>
@@ -112,7 +111,7 @@
                 </button>
                 <button onclick="switchTab('avaliacoes')" id="nav-avaliacoes" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition text-lilac-100 hover:bg-lilac-800">
                     <i class="fa-solid fa-clipboard-check w-5 text-center text-lilac-300"></i>
-                    <span>Avaliações Escolares</span>
+                    <span>Avaliação Diagnóstica</span>
                 </button>
                 <button onclick="switchTab('aba')" id="nav-aba" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition text-lilac-100 hover:bg-lilac-800">
                     <i class="fa-solid fa-brain w-5 text-center text-lilac-300"></i>
@@ -129,41 +128,32 @@
             </nav>
         </div>
 
-        <!-- Rodapé Lateral -->
         <div class="p-4 border-t border-lilac-800 text-xs text-lilac-300 space-y-1">
-            <div class="flex justify-between">
-                <span>Alunos cadastrados:</span>
-                <span id="badge-total-alunos" class="font-bold text-white">0</span>
-            </div>
-            <div class="flex justify-between">
-                <span>Sessões hoje:</span>
-                <span id="badge-sessoes-hoje" class="font-bold text-white">0</span>
-            </div>
-            <div class="pt-2 text-center text-[10px] text-lilac-400">
-                Painel Pedagógico v5.0
-            </div>
+            <div class="flex justify-between"><span>Alunos cadastrados:</span><span id="badge-total-alunos" class="font-bold text-white">0</span></div>
+            <div class="flex justify-between"><span>Sessões hoje:</span><span id="badge-sessoes-hoje" class="font-bold text-white">0</span></div>
+            <div class="pt-2 text-center text-[10px] text-lilac-400">Painel Pedagógico v5.5</div>
         </div>
     </aside>
 
-    <!-- Conteúdo Das Abas -->
+    <!-- Conteúdo Principal -->
     <main class="flex-1 p-4 md:p-8 overflow-y-auto z-10 relative">
 
-        <!-- ABA 1: ALUNOS -->
+        <!-- ABA 1: ALUNOS & ANAMNESE -->
         <section id="tab-alunos" class="tab-content space-y-6">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white p-6 rounded-2xl shadow-sm border border-lilac-100">
                 <div>
-                    <h2 class="text-2xl font-bold text-lilac-900">Cadastro de Alunos & Anamnese</h2>
-                    <p class="text-sm text-gray-500">Gerencie o perfil e as informações essenciais de cada estudante.</p>
+                    <h2 class="text-2xl font-bold text-lilac-900">Cadastro de Alunos & Anamnese Pedagógica</h2>
+                    <p class="text-sm text-gray-500">Mapeamento completo do perfil, rotina e histórico familiar do estudante.</p>
                 </div>
                 <button onclick="openModalAluno()" class="bg-lilac-700 hover:bg-lilac-800 text-white font-medium px-5 py-2.5 rounded-xl shadow transition flex items-center space-x-2">
                     <i class="fa-solid fa-user-plus"></i>
-                    <span>Novo Aluno</span>
+                    <span>Nova Anamnese / Aluno</span>
                 </button>
             </div>
             <div id="alunos-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
         </section>
 
-        <!-- ABA 2: AGENDA SEMANAL & WHATSAPP -->
+        <!-- ABA 2: AGENDA & WHATSAPP -->
         <section id="tab-agenda" class="tab-content space-y-6 hidden">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white p-6 rounded-2xl shadow-sm border border-lilac-100">
                 <div>
@@ -189,34 +179,26 @@
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <!-- Lista de Afazeres -->
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-lilac-100 space-y-4">
                     <h3 class="font-bold text-lg text-lilac-900 flex items-center space-x-2">
                         <i class="fa-solid fa-list-check text-lilac-600"></i>
                         <span>Lista de Afazeres</span>
                     </h3>
                     <div class="flex space-x-2">
-                        <input type="text" id="novo-afazer" class="flex-1 border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-lilac-500" placeholder="Ex: Preparar jogo de leitura...">
+                        <input type="text" id="novo-afazer" class="flex-1 border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" placeholder="Ex: Preparar jogo de leitura...">
                         <button onclick="adicionarAfazer()" class="bg-lilac-700 text-white px-4 py-2 rounded-xl text-sm font-medium">Adicionar</button>
                     </div>
                     <ul id="lista-afazeres" class="space-y-2 pt-2"></ul>
                 </div>
 
-                <!-- WhatsApp com Link Dinâmico -->
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-lilac-100 space-y-4">
                     <h3 class="font-bold text-lg text-lilac-900 flex items-center space-x-2">
                         <i class="fa-brands fa-whatsapp text-emerald-600"></i>
                         <span>Envio de Link de Confirmação</span>
                     </h3>
                     <div class="space-y-3">
-                        <div>
-                            <label class="block text-xs font-semibold text-gray-600 mb-1">WhatsApp da Família (Ex: 19999999999)</label>
-                            <input type="text" id="whats-numero" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" placeholder="DDD + Número">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-gray-600 mb-1">Selecionar Sessão Agendada</label>
-                            <select id="whats-sessao-select" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none"></select>
-                        </div>
+                        <input type="text" id="whats-numero" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" placeholder="DDD + Número (Ex: 19999999999)">
+                        <select id="whats-sessao-select" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none"></select>
                         <button onclick="enviarLinkConfirmacaoWhatsApp()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2.5 rounded-xl shadow transition flex items-center justify-center space-x-2 text-sm">
                             <i class="fa-brands fa-whatsapp text-lg"></i>
                             <span>Enviar Link no WhatsApp</span>
@@ -241,16 +223,16 @@
             <div id="registros-lista" class="space-y-4"></div>
         </section>
 
-        <!-- ABA 4: AVALIAÇÕES APROFUNDADAS -->
+        <!-- ABA 4: AVALIAÇÃO DIAGNÓSTICA -->
         <section id="tab-avaliacoes" class="tab-content space-y-6 hidden">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white p-6 rounded-2xl shadow-sm border border-lilac-100">
                 <div>
-                    <h2 class="text-2xl font-bold text-lilac-900">Avaliações de Desempenho Escolar Detalhadas</h2>
-                    <p class="text-sm text-gray-500">Acompanhamento completo por pilares psicopedagógicos (1º ao 5º ano).</p>
+                    <h2 class="text-2xl font-bold text-lilac-900">Avaliação Diagnóstica de Desempenho (1º ao 5º Ano)</h2>
+                    <p class="text-sm text-gray-500">Mapeamento detalhado por pilares da BNCC para planejamento de intervenção.</p>
                 </div>
                 <button onclick="openModalAvaliacao()" class="bg-lilac-700 hover:bg-lilac-800 text-white font-medium px-5 py-2.5 rounded-xl shadow transition flex items-center space-x-2">
                     <i class="fa-solid fa-clipboard-question"></i>
-                    <span>Nova Avaliação Detalhada</span>
+                    <span>Nova Avaliação Diagnóstica</span>
                 </button>
             </div>
             <div id="avaliacoes-lista" class="space-y-4"></div>
@@ -263,12 +245,8 @@
                     <i class="fa-solid fa-brain"></i>
                 </div>
                 <h2 class="text-2xl font-bold text-lilac-900">Módulo ABA (Análise do Comportamento)</h2>
-                <p class="text-sm text-gray-600 leading-relaxed">
-                    Espaço reservado para o cadastro de programas comportamentais e registro de habilidades ABA.
-                </p>
-                <div class="inline-block bg-lilac-50 text-lilac-800 px-4 py-2 rounded-xl text-xs font-semibold border border-lilac-200">
-                    Em breve • Recurso em desenvolvimento
-                </div>
+                <p class="text-sm text-gray-600 leading-relaxed">Espaço reservado para o cadastro de programas comportamentais e registro de habilidades ABA.</p>
+                <div class="inline-block bg-lilac-50 text-lilac-800 px-4 py-2 rounded-xl text-xs font-semibold border border-lilac-200">Em breve • Recurso em desenvolvimento</div>
             </div>
         </section>
 
@@ -286,18 +264,9 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div class="bg-white p-5 rounded-2xl border border-lilac-100 shadow-sm">
-                    <p class="text-xs font-semibold text-gray-500">Total Recebido</p>
-                    <h3 id="fin-total-recebido" class="text-2xl font-bold text-emerald-600 mt-1">R$ 0,00</h3>
-                </div>
-                <div class="bg-white p-5 rounded-2xl border border-lilac-100 shadow-sm">
-                    <p class="text-xs font-semibold text-gray-500">Total Pendente</p>
-                    <h3 id="fin-total-pendente" class="text-2xl font-bold text-amber-600 mt-1">R$ 0,00</h3>
-                </div>
-                <div class="bg-white p-5 rounded-2xl border border-lilac-100 shadow-sm">
-                    <p class="text-xs font-semibold text-gray-500">Mensalidades Registradas</p>
-                    <h3 id="fin-total-qtd" class="text-2xl font-bold text-lilac-700 mt-1">0</h3>
-                </div>
+                <div class="bg-white p-5 rounded-2xl border border-lilac-100 shadow-sm"><p class="text-xs font-semibold text-gray-500">Total Recebido</p><h3 id="fin-total-recebido" class="text-2xl font-bold text-emerald-600 mt-1">R$ 0,00</h3></div>
+                <div class="bg-white p-5 rounded-2xl border border-lilac-100 shadow-sm"><p class="text-xs font-semibold text-gray-500">Total Pendente</p><h3 id="fin-total-pendente" class="text-2xl font-bold text-amber-600 mt-1">R$ 0,00</h3></div>
+                <div class="bg-white p-5 rounded-2xl border border-lilac-100 shadow-sm"><p class="text-xs font-semibold text-gray-500">Mensalidades Registradas</p><h3 id="fin-total-qtd" class="text-2xl font-bold text-lilac-700 mt-1">0</h3></div>
             </div>
 
             <div class="bg-white rounded-2xl shadow-sm border border-lilac-100 overflow-hidden">
@@ -327,30 +296,20 @@
                 <h2 class="text-2xl font-bold text-lilac-900">Configurações Visual & Personalização</h2>
                 <p class="text-sm text-gray-500">Personalize a logomarca e as cores de fundo do seu aplicativo.</p>
             </div>
-
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-lilac-100 space-y-4">
                     <h3 class="font-bold text-lg text-lilac-900">Logomarca do App</h3>
                     <div class="flex items-center space-x-4">
-                        <div id="config-logo-preview" class="w-16 h-16 rounded-full bg-lilac-100 flex items-center justify-center overflow-hidden border border-lilac-200">
-                            <i class="fa-solid fa-graduation-cap text-lilac-700 text-xl"></i>
-                        </div>
+                        <div id="config-logo-preview" class="w-16 h-16 rounded-full bg-lilac-100 flex items-center justify-center overflow-hidden border border-lilac-200"><i class="fa-solid fa-graduation-cap text-lilac-700 text-xl"></i></div>
                         <input type="file" id="input-logo-file" accept="image/*" onchange="carregarLogoCustomizada(event)" class="text-xs text-gray-500">
                     </div>
                     <button onclick="removerLogoCustomizada()" class="text-xs text-red-600 hover:underline">Restaurar logo padrão</button>
                 </div>
-
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-lilac-100 space-y-4">
                     <h3 class="font-bold text-lg text-lilac-900">Plano de Fundo</h3>
                     <div class="space-y-3">
-                        <div>
-                            <label class="block text-xs font-semibold text-gray-600 mb-1">Cor Sólida</label>
-                            <input type="color" id="input-cor-fundo" value="#f5f3ff" onchange="mudarCorFundo(this.value)" class="w-10 h-10 rounded-lg cursor-pointer border-0">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-gray-600 mb-1">Imagem de Fundo</label>
-                            <input type="file" id="input-bg-file" accept="image/*" onchange="carregarFundoImagem(event)" class="text-xs text-gray-500">
-                        </div>
+                        <div><label class="block text-xs font-semibold text-gray-600 mb-1">Cor Sólida</label><input type="color" id="input-cor-fundo" value="#f5f3ff" onchange="mudarCorFundo(this.value)" class="w-10 h-10 rounded-lg cursor-pointer border-0"></div>
+                        <div><label class="block text-xs font-semibold text-gray-600 mb-1">Imagem de Fundo</label><input type="file" id="input-bg-file" accept="image/*" onchange="carregarFundoImagem(event)" class="text-xs text-gray-500"></div>
                         <button onclick="restaurarPadraoVisual()" class="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 py-2 rounded-xl text-xs transition">Restaurar Visual Padrão</button>
                     </div>
                 </div>
@@ -361,29 +320,24 @@
 
     <!-- MODAIS DO SISTEMA -->
 
-    <!-- Modal Aluno -->
+    <!-- Modal Aluno & Anamnese Completa -->
     <div id="modal-aluno" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white w-full max-w-xl rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col">
+        <div class="bg-white w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col">
             <div class="bg-lilac-900 text-white p-4 flex justify-between items-center">
-                <h3 class="font-bold text-lg">Cadastrar Aluno & Anamnese</h3>
+                <h3 class="font-bold text-lg">Anamnese Pedagógica & Cadastro</h3>
                 <button onclick="closeModalAluno()" class="text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
-            <div class="p-6 overflow-y-auto space-y-4 flex-1">
+            <div class="p-6 overflow-y-auto space-y-4 flex-1 text-xs">
                 <input type="hidden" id="aluno-id">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-semibold text-gray-600 mb-1">Nome Completo</label>
-                        <input type="text" id="aluno-nome" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-gray-600 mb-1">Data de Nascimento</label>
-                        <input type="date" id="aluno-nascimento" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none">
-                    </div>
+                
+                <h4 class="font-bold text-lilac-900 uppercase tracking-wide border-b pb-1">1. Dados Básicos & Escolares</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div><label class="block font-semibold mb-1">Nome Completo</label><input type="text" id="aluno-nome" class="w-full border rounded-xl px-3 py-2 outline-none"></div>
+                    <div><label class="block font-semibold mb-1">Data de Nascimento</label><input type="date" id="aluno-nascimento" class="w-full border rounded-xl px-3 py-2 outline-none"></div>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-semibold text-gray-600 mb-1">Ano Escolar</label>
-                        <select id="aluno-ano" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div><label class="block font-semibold mb-1">Ano Escolar</label>
+                        <select id="aluno-ano" class="w-full border rounded-xl px-3 py-2 outline-none">
                             <option value="1º Ano Fundamental">1º Ano Fundamental</option>
                             <option value="2º Ano Fundamental">2º Ano Fundamental</option>
                             <option value="3º Ano Fundamental">3º Ano Fundamental</option>
@@ -392,19 +346,25 @@
                             <option value="Educação Infantil">Educação Infantil</option>
                         </select>
                     </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-gray-600 mb-1">Escola</label>
-                        <input type="text" id="aluno-escola" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none">
-                    </div>
+                    <div><label class="block font-semibold mb-1">Escola em que Estuda</label><input type="text" id="aluno-escola" class="w-full border rounded-xl px-3 py-2 outline-none"></div>
                 </div>
-                <div class="border-t pt-3">
-                    <label class="block text-xs font-semibold text-gray-600 mb-1">Anamnese / Queixa Principal</label>
-                    <textarea id="anamnese-queixa" rows="3" class="w-full border border-gray-200 rounded-xl p-3 text-sm outline-none"></textarea>
+
+                <h4 class="font-bold text-lilac-900 uppercase tracking-wide border-b pb-1 pt-2">2. Queixa Principal & Histórico</h4>
+                <div><label class="block font-semibold mb-1">Queixa Principal / Motivo do Atendimento</label><textarea id="anamnese-queixa" rows="2" class="w-full border rounded-xl p-3 outline-none"></textarea></div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div><label class="block font-semibold mb-1">Histórico de Desenvolvimento (Fala/Saúde/Sono)</label><textarea id="anamnese-desenvolvimento" rows="2" class="w-full border rounded-xl p-3 outline-none"></textarea></div>
+                    <div><label class="block font-semibold mb-1">Vida Escolar Anterior / Adaptação</label><textarea id="anamnese-escolar" rows="2" class="w-full border rounded-xl p-3 outline-none"></textarea></div>
+                </div>
+
+                <h4 class="font-bold text-lilac-900 uppercase tracking-wide border-b pb-1 pt-2">3. Rotina, Comportamento & Interesses</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div><label class="block font-semibold mb-1">Como é a rotina e o dever de casa em casa?</label><textarea id="anamnese-rotina" rows="2" class="w-full border rounded-xl p-3 outline-none"></textarea></div>
+                    <div><label class="block font-semibold mb-1">Pontos Fortes, Habilidades & Interesses</label><textarea id="anamnese-interesses" rows="2" class="w-full border rounded-xl p-3 outline-none" placeholder="O que a criança mais gosta de fazer?"></textarea></div>
                 </div>
             </div>
             <div class="p-4 bg-gray-50 border-t flex justify-end space-x-3">
                 <button onclick="closeModalAluno()" class="px-4 py-2 text-sm text-gray-600">Cancelar</button>
-                <button onclick="salvarAluno()" class="px-5 py-2 text-sm bg-lilac-700 text-white font-medium rounded-xl">Salvar Aluno</button>
+                <button onclick="salvarAluno()" class="px-5 py-2 text-sm bg-lilac-700 text-white font-medium rounded-xl">Salvar Anamnese</button>
             </div>
         </div>
     </div>
@@ -412,29 +372,14 @@
     <!-- Modal Agendamento -->
     <div id="modal-agendamento" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-md rounded-2xl shadow-2xl overflow-hidden flex flex-col">
-            <div class="bg-lilac-900 text-white p-4 flex justify-between items-center">
-                <h3 class="font-bold text-lg">Novo Agendamento</h3>
-                <button onclick="closeModalAgendamento()" class="text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
-            </div>
-            <div class="p-6 space-y-4 flex-1">
-                <div>
-                    <label class="block text-xs font-semibold text-gray-600 mb-1">Aluno</label>
-                    <select id="agenda-aluno-id" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none"></select>
+            <div class="bg-lilac-900 text-white p-4 flex justify-between items-center"><h3 class="font-bold text-lg">Novo Agendamento</h3><button onclick="closeModalAgendamento()" class="text-white"><i class="fa-solid fa-xmark text-lg"></i></button></div>
+            <div class="p-6 space-y-4 flex-1 text-xs">
+                <div><label class="block font-semibold mb-1">Aluno</label><select id="agenda-aluno-id" class="w-full border rounded-xl px-3 py-2 outline-none"></select></div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div><label class="block font-semibold mb-1">Data</label><input type="date" id="agenda-data" class="w-full border rounded-xl px-3 py-2 outline-none"></div>
+                    <div><label class="block font-semibold mb-1">Horário</label><input type="time" id="agenda-horario" class="w-full border rounded-xl px-3 py-2 outline-none"></div>
                 </div>
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-semibold text-gray-600 mb-1">Data</label>
-                        <input type="date" id="agenda-data" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-gray-600 mb-1">Horário</label>
-                        <input type="time" id="agenda-horario" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none">
-                    </div>
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-gray-600 mb-1">Assunto / Tipo</label>
-                    <input type="text" id="agenda-tipo" value="Sessão Pedagógica" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none">
-                </div>
+                <div><label class="block font-semibold mb-1">Assunto / Tipo</label><input type="text" id="agenda-tipo" value="Sessão Pedagógica" class="w-full border rounded-xl px-3 py-2 outline-none"></div>
             </div>
             <div class="p-4 bg-gray-50 border-t flex justify-end space-x-3">
                 <button onclick="closeModalAgendamento()" class="px-4 py-2 text-sm text-gray-600">Cancelar</button>
@@ -446,33 +391,15 @@
     <!-- Modal Registro -->
     <div id="modal-registro" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-xl rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col">
-            <div class="bg-lilac-900 text-white p-4 flex justify-between items-center">
-                <h3 class="font-bold text-lg">Registro de Sessão</h3>
-                <button onclick="closeModalRegistro()" class="text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
-            </div>
-            <div class="p-6 overflow-y-auto space-y-4 flex-1">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-semibold text-gray-600 mb-1">Aluno</label>
-                        <select id="reg-aluno-id" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none"></select>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-gray-600 mb-1">Data</label>
-                        <input type="date" id="reg-data" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none">
-                    </div>
+            <div class="bg-lilac-900 text-white p-4 flex justify-between items-center"><h3 class="font-bold text-lg">Registro de Sessão</h3><button onclick="closeModalRegistro()" class="text-white"><i class="fa-solid fa-xmark text-lg"></i></button></div>
+            <div class="p-6 overflow-y-auto space-y-4 flex-1 text-xs">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div><label class="block font-semibold mb-1">Aluno</label><select id="reg-aluno-id" class="w-full border rounded-xl px-3 py-2 outline-none"></select></div>
+                    <div><label class="block font-semibold mb-1">Data</label><input type="date" id="reg-data" class="w-full border rounded-xl px-3 py-2 outline-none"></div>
                 </div>
-                <div>
-                    <label class="block text-xs font-semibold text-gray-600 mb-1">Objetivos</label>
-                    <textarea id="reg-objetivos" rows="2" class="w-full border border-gray-200 rounded-xl p-3 text-sm outline-none"></textarea>
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-gray-600 mb-1">Atividades Realizadas</label>
-                    <textarea id="reg-atividades" rows="2" class="w-full border border-gray-200 rounded-xl p-3 text-sm outline-none"></textarea>
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-gray-600 mb-1">Observações</label>
-                    <textarea id="reg-observacoes" rows="2" class="w-full border border-gray-200 rounded-xl p-3 text-sm outline-none"></textarea>
-                </div>
+                <div><label class="block font-semibold mb-1">Objetivos da Sessão</label><textarea id="reg-objetivos" rows="2" class="w-full border rounded-xl p-3 outline-none"></textarea></div>
+                <div><label class="block font-semibold mb-1">Atividades Realizadas</label><textarea id="reg-atividades" rows="2" class="w-full border rounded-xl p-3 outline-none"></textarea></div>
+                <div><label class="block font-semibold mb-1">Observações e Avanços</label><textarea id="reg-observacoes" rows="2" class="w-full border rounded-xl p-3 outline-none"></textarea></div>
             </div>
             <div class="p-4 bg-gray-50 border-t flex justify-end space-x-3">
                 <button onclick="closeModalRegistro()" class="px-4 py-2 text-sm text-gray-600">Cancelar</button>
@@ -481,22 +408,15 @@
         </div>
     </div>
 
-    <!-- Modal Avaliação Aprofundada -->
+    <!-- Modal Avaliação Diagnóstica Completa -->
     <div id="modal-avaliacao" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col">
-            <div class="bg-lilac-900 text-white p-4 flex justify-between items-center">
-                <h3 class="font-bold text-lg">Avaliação Pedagógica Detalhada</h3>
-                <button onclick="closeModalAvaliacao()" class="text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
-            </div>
-            <div class="p-6 overflow-y-auto space-y-4 flex-1">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-semibold text-gray-600 mb-1">Aluno</label>
-                        <select id="aval-aluno-id" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none"></select>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-gray-600 mb-1">Ano / Faixa</label>
-                        <select id="aval-ano-escolar" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none">
+            <div class="bg-lilac-900 text-white p-4 flex justify-between items-center"><h3 class="font-bold text-lg">Avaliação Diagnóstica de Desempenho</h3><button onclick="closeModalAvaliacao()" class="text-white"><i class="fa-solid fa-xmark text-lg"></i></button></div>
+            <div class="p-6 overflow-y-auto space-y-4 flex-1 text-xs">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div><label class="block font-semibold mb-1">Aluno</label><select id="aval-aluno-id" class="w-full border rounded-xl px-3 py-2 outline-none"></select></div>
+                    <div><label class="block font-semibold mb-1">Ano Escolar Avaliado</label>
+                        <select id="aval-ano-escolar" class="w-full border rounded-xl px-3 py-2 outline-none">
                             <option value="1º Ano">1º Ano Fundamental</option>
                             <option value="2º Ano">2º Ano Fundamental</option>
                             <option value="3º Ano">3º Ano Fundamental</option>
@@ -506,39 +426,37 @@
                     </div>
                 </div>
 
-                <div class="space-y-3 border-t pt-3">
-                    <h4 class="font-bold text-xs text-lilac-900 uppercase tracking-wide">1. Consciência Fonológica & Hipótese de Escrita</h4>
-                    <select id="aval-fonologica" class="w-full border rounded-xl p-2 text-xs">
-                        <option value="Pré-silábica">Hipótese: Pré-silábica</option>
-                        <option value="Silábica sem valor sonoro">Hipótese: Silábica sem valor sonoro</option>
-                        <option value="Silábica com valor sonoro">Hipótese: Silábica com valor sonoro</option>
-                        <option value="Silábico-alfabética">Hipótese: Silábico-alfabética</option>
-                        <option value="Alfabética consolidada">Hipótese: Alfabética consolidada</option>
-                    </select>
+                <h4 class="font-bold text-lilac-900 uppercase tracking-wide border-b pb-1 pt-2">1. Língua Portuguesa (Alfabetização & Leitura)</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div><label class="block font-semibold mb-1">Hipótese de Escrita</label>
+                        <select id="aval-escrita" class="w-full border rounded-xl p-2 outline-none">
+                            <option value="Pré-silábica">Pré-silábica</option>
+                            <option value="Silábica sem valor sonoro">Silábica sem valor sonoro</option>
+                            <option value="Silábica com valor sonoro">Silábica com valor sonoro</option>
+                            <option value="Silábico-alfabética">Silábico-alfabética</option>
+                            <option value="Alfabética consolidada">Alfabética consolidada</option>
+                        </select>
+                    </div>
+                    <div><label class="block font-semibold mb-1">Consciência Fonológica</label>
+                        <select id="aval-fonologica" class="w-full border rounded-xl p-2 outline-none">
+                            <option value="Em desenvolvimento inicial (Rimas/Aliteração)">Em desenvolvimento inicial (Rimas/Aliteração)</option>
+                            <option value="Boa manipulação silábica">Boa manipulação silábica</option>
+                            <option value="Consolidada (Manipula fonemas com autonomia)">Consolidada (Manipula fonemas com autonomia)</option>
+                        </select>
+                    </div>
+                </div>
+                <div><label class="block font-semibold mb-1">Fluência & Compreensão Leitora</label><textarea id="aval-leitura" rows="2" class="w-full border rounded-xl p-3 outline-none" placeholder="Descreva a leitura (silabada, palavra por palavra, com prosódia) e capacidade de interpretação..."></textarea></div>
+
+                <h4 class="font-bold text-lilac-900 uppercase tracking-wide border-b pb-1 pt-2">2. Matemática (Raciocínio & Operações)</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div><label class="block font-semibold mb-1">Sistema Numérico & Operações</label><textarea id="aval-mat" rows="2" class="w-full border rounded-xl p-3 outline-none" placeholder="Domínio de adição, subtração, multiplicação..."></textarea></div>
+                    <div><label class="block font-semibold mb-1">Resolução de Situações-Problema</label><textarea id="aval-problemas" rows="2" class="w-full border rounded-xl p-3 outline-none" placeholder="Compreensão de enunciados e lógica..."></textarea></div>
                 </div>
 
-                <div class="space-y-3 border-t pt-3">
-                    <h4 class="font-bold text-xs text-lilac-900 uppercase tracking-wide">2. Fluência Leitora & Compreensão</h4>
-                    <select id="aval-leitura" class="w-full border rounded-xl p-2 text-xs">
-                        <option value="Leitura silabada palavra a palavra">Leitura silabada palavra a palavra</option>
-                        <option value="Leitura fluente com apoio">Leitura fluente com apoio</option>
-                        <option value="Leitura fluente autônoma com boa compreensão">Leitura fluente autônoma com boa compreensão</option>
-                    </select>
-                </div>
+                <h4 class="font-bold text-lilac-900 uppercase tracking-wide border-b pb-1 pt-2">3. Funções Executivas & Comportamento</h4>
+                <div><label class="block font-semibold mb-1">Atenção, Concentração & Autonomia</label><textarea id="aval-atencao" rows="2" class="w-full border rounded-xl p-3 outline-none" placeholder="Sustentação do foco, memória de trabalho e organização..."></textarea></div>
 
-                <div class="space-y-3 border-t pt-3">
-                    <h4 class="font-bold text-xs text-lilac-900 uppercase tracking-wide">3. Raciocínio Lógico-Matemático</h4>
-                    <select id="aval-matematica" class="w-full border rounded-xl p-2 text-xs">
-                        <option value="Dificuldade na noção numérica básica">Dificuldade na noção numérica básica</option>
-                        <option value="Compreende operações simples com material concreto">Compreende operações simples com material concreto</option>
-                        <option value="Bom raciocínio lógico e resolução de problemas">Bom raciocínio lógico e resolução de problemas</option>
-                    </select>
-                </div>
-
-                <div class="border-t pt-3">
-                    <label class="block text-xs font-semibold text-gray-600 mb-1">Parecer Descritivo Detalhado & Metas</label>
-                    <textarea id="aval-parecer" rows="3" class="w-full border border-gray-200 rounded-xl p-3 text-sm outline-none" placeholder="Escreva o parecer descritivo detalhado..."></textarea>
-                </div>
+                <div><label class="block font-semibold mb-1">Parecer Diagnóstico & Metas de Intervenção</label><textarea id="aval-parecer" rows="3" class="w-full border rounded-xl p-3 outline-none" placeholder="Escreva o parecer descritivo final..."></textarea></div>
             </div>
             <div class="p-4 bg-gray-50 border-t flex justify-end space-x-3">
                 <button onclick="closeModalAvaliacao()" class="px-4 py-2 text-sm text-gray-600">Cancelar</button>
@@ -550,42 +468,21 @@
     <!-- Modal Financeiro -->
     <div id="modal-financeiro" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-md rounded-2xl shadow-2xl overflow-hidden flex flex-col">
-            <div class="bg-lilac-900 text-white p-4 flex justify-between items-center">
-                <h3 class="font-bold text-lg">Lançamento Financeiro</h3>
-                <button onclick="closeModalFinanceiro()" class="text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
-            </div>
-            <div class="p-6 space-y-4 flex-1">
-                <div>
-                    <label class="block text-xs font-semibold text-gray-600 mb-1">Aluno</label>
-                    <select id="fin-aluno-id" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none"></select>
+            <div class="bg-lilac-900 text-white p-4 flex justify-between items-center"><h3 class="font-bold text-lg">Lançamento Financeiro</h3><button onclick="closeModalFinanceiro()" class="text-white"><i class="fa-solid fa-xmark text-lg"></i></button></div>
+            <div class="p-6 space-y-4 flex-1 text-xs">
+                <div><label class="block font-semibold mb-1">Aluno</label><select id="fin-aluno-id" class="w-full border rounded-xl px-3 py-2 outline-none"></select></div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div><label class="block font-semibold mb-1">Valor Total (R$)</label><input type="number" step="0.01" id="fin-valor" class="w-full border rounded-xl px-3 py-2 outline-none"></div>
+                    <div><label class="block font-semibold mb-1">Valor Pago (R$)</label><input type="number" step="0.01" id="fin-pago" class="w-full border rounded-xl px-3 py-2 outline-none"></div>
                 </div>
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-semibold text-gray-600 mb-1">Valor Total (R$)</label>
-                        <input type="number" step="0.01" id="fin-valor" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-gray-600 mb-1">Valor Pago (R$)</label>
-                        <input type="number" step="0.01" id="fin-pago" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none">
-                    </div>
-                </div>
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-semibold text-gray-600 mb-1">Data Vencimento</label>
-                        <input type="date" id="fin-vencimento" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-gray-600 mb-1">Status</label>
-                        <select id="fin-status" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none">
-                            <option value="Pendente">Pendente</option>
-                            <option value="Pago">Pago Integral</option>
-                        </select>
-                    </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div><label class="block font-semibold mb-1">Vencimento</label><input type="date" id="fin-vencimento" class="w-full border rounded-xl px-3 py-2 outline-none"></div>
+                    <div><label class="block font-semibold mb-1">Status</label><select id="fin-status" class="w-full border rounded-xl px-3 py-2 outline-none"><option value="Pendente">Pendente</option><option value="Pago">Pago Integral</option></select></div>
                 </div>
             </div>
             <div class="p-4 bg-gray-50 border-t flex justify-end space-x-3">
                 <button onclick="closeModalFinanceiro()" class="px-4 py-2 text-sm text-gray-600">Cancelar</button>
-                <button onclick="salvarFinanceiro()" class="px-5 py-2 text-sm bg-lilac-700 text-white font-medium rounded-xl">Salvar Lançamento</button>
+                <button onclick="salvarFinanceiro()" class="px-5 py-2 text-sm bg-lilac-700 text-white font-medium rounded-xl">Salvar</button>
             </div>
         </div>
     </div>
@@ -616,7 +513,6 @@
             atualizarSelectsAlunos();
         };
 
-        // Verificar se a familia abriu o link de confirmacao
         function verificarLinkConfirmacaoURL() {
             const hash = window.location.hash;
             if(hash.includes('sessao=')) {
@@ -624,7 +520,6 @@
                 sessaoRespondendoId = Number(idSessao);
                 const ag = agendamentos.find(a => a.id === sessaoRespondendoId);
                 const aluno = ag ? alunos.find(a => a.id === ag.alunoId) : null;
-
                 if(ag) {
                     document.getElementById('detalhes-sessao-familia').innerHTML = `
                         <p><strong>Aluno(a):</strong> ${aluno ? aluno.nome : 'Estudante'}</p>
@@ -639,10 +534,7 @@
         function responderConfirmacaoFamilia(status) {
             if(sessaoRespondendoId) {
                 const ag = agendamentos.find(a => a.id === sessaoRespondendoId);
-                if(ag) {
-                    ag.statusConfirmacao = status; // 'Confirmado' ou 'Cancelado'
-                    localStorage.setItem('st_agendamentos', JSON.stringify(agendamentos));
-                }
+                if(ag) { ag.statusConfirmacao = status; localStorage.setItem('st_agendamentos', JSON.stringify(agendamentos)); }
             }
             alert('Obrigado! Sua resposta foi registrada com sucesso.');
             window.location.hash = '';
@@ -666,7 +558,7 @@
 
         function toggleMobileMenu() { document.getElementById('sidebar').classList.toggle('hidden'); }
 
-        // --- AGENDA SEMANAL & WHATSAPP LINK ---
+        // --- AGENDA SEMANAL & WHATSAPP ---
         function getSegundaFeira(d) {
             const date = new Date(d);
             const day = date.getDay();
@@ -674,21 +566,12 @@
             return new Date(date.setDate(diff));
         }
 
-        function mudarSemana(offset) {
-            dataSemanaAtual.setDate(dataSemanaAtual.getDate() + (offset * 7));
-            renderAgendaSemanal();
-        }
-
-        function irParaSemanaAtual() {
-            dataSemanaAtual = new Date();
-            renderAgendaSemanal();
-        }
+        function mudarSemana(offset) { dataSemanaAtual.setDate(dataSemanaAtual.getDate() + (offset * 7)); renderAgendaSemanal(); }
+        function irParaSemanaAtual() { dataSemanaAtual = new Date(); renderAgendaSemanal(); }
 
         function renderAgendaSemanal() {
             const segunda = getSegundaFeira(dataSemanaAtual);
-            const domingo = new Date(segunda);
-            domingo.setDate(segunda.getDate() + 6);
-
+            const domingo = new Date(segunda); domingo.setDate(segunda.getDate() + 6);
             document.getElementById('semana-rotulo').innerText = `${segunda.toLocaleDateString('pt-BR', {day:'numeric', month:'short'})} - ${domingo.toLocaleDateString('pt-BR', {day:'numeric', month:'short'})}`;
 
             const grade = document.getElementById('grade-semanal');
@@ -696,8 +579,7 @@
             const diasSemana = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'];
 
             for(let i = 0; i < 7; i++) {
-                const dia = new Date(segunda);
-                dia.setDate(segunda.getDate() + i);
+                const dia = new Date(segunda); dia.setDate(segunda.getDate() + i);
                 const isoDate = dia.toISOString().split('T')[0];
                 const isHoje = isoDate === new Date().toISOString().split('T')[0];
                 const agsDia = agendamentos.filter(a => a.data === isoDate);
@@ -712,8 +594,7 @@
                             ${agsDia.length === 0 ? '<p class="text-[10px] text-gray-400 text-center py-2">Sem horários</p>' : 
                                 agsDia.map(ag => {
                                     const aluno = alunos.find(a => a.id === ag.alunoId);
-                                    let badgeColor = 'bg-gray-100 text-gray-700';
-                                    let badgeText = 'Pendente';
+                                    let badgeColor = 'bg-gray-100 text-gray-700'; let badgeText = 'Pendente';
                                     if(ag.statusConfirmacao === 'Confirmado') { badgeColor = 'bg-emerald-100 text-emerald-800'; badgeText = 'Confirmado'; }
                                     if(ag.statusConfirmacao === 'Cancelado') { badgeColor = 'bg-red-100 text-red-800'; badgeText = 'Cancelado'; }
 
@@ -743,44 +624,27 @@
         function enviarLinkConfirmacaoWhatsApp() {
             const numero = document.getElementById('whats-numero').value.trim();
             const sessaoId = document.getElementById('whats-sessao-select').value;
-
             if(!numero || !sessaoId) { alert('Informe o número e selecione uma sessão.'); return; }
-
             const ag = agendamentos.find(a => a.id == sessaoId);
             const aluno = alunos.find(a => a.id === ag.alunoId);
             const nomeAluno = aluno ? aluno.nome : 'o(a) aluno(a)';
             const dataF = new Date(ag.data + 'T00:00:00').toLocaleDateString('pt-BR');
-
-            // Gerar link com hash da sessao
             const urlBase = window.location.href.split('#')[0];
             const linkConfirmacao = `${urlBase}#sessao=${ag.id}`;
-
-            const mensagem = `Olá! Aqui é a Professora Stefanie Toledo. Gostaríamos de confirmar a nossa sessão pedagógica com ${nomeAluno} marcada para o dia *${dataF}* às *${ag.horario}*.\n\nPor favor, clique no link abaixo para confirmar ou cancelar sua presença:\n${linkConfirmacao}`;
+            const mensagem = `Olá! Aqui é a Professora Stefanie Toledo. Gostaríamos de confirmar a nossa sessão pedagógica com ${nomeAluno} marcada para o dia *${dataF}* às *${ag.horario}*.\n\nPor favor, clique no link abaixo para confirmar ou cancelar:\n${linkConfirmacao}`;
             window.open(`https://api.whatsapp.com/send?phone=55${numero}&text=${encodeURIComponent(mensagem)}`, '_blank');
         }
 
         // --- AFAZERES ---
         function adicionarAfazer() {
-            const input = document.getElementById('novo-afazer');
-            const texto = input.value.trim();
+            const input = document.getElementById('novo-afazer'); const texto = input.value.trim();
             if(!texto) return;
             afazeres.push({ id: Date.now(), texto, concluido: false });
             localStorage.setItem('st_afazeres', JSON.stringify(afazeres));
-            input.value = '';
-            renderAfazeres();
+            input.value = ''; renderAfazeres();
         }
-
-        function toggleAfazer(id) {
-            const item = afazeres.find(a => a.id === id);
-            if(item) { item.concluido = !item.concluido; localStorage.setItem('st_afazeres', JSON.stringify(afazeres)); renderAfazeres(); }
-        }
-
-        function deletarAfazer(id) {
-            afazeres = afazeres.filter(a => a.id !== id);
-            localStorage.setItem('st_afazeres', JSON.stringify(afazeres));
-            renderAfazeres();
-        }
-
+        function toggleAfazer(id) { const item = afazeres.find(a => a.id === id); if(item) { item.concluido = !item.concluido; localStorage.setItem('st_afazeres', JSON.stringify(afazeres)); renderAfazeres(); } }
+        function deletarAfazer(id) { afazeres = afazeres.filter(a => a.id !== id); localStorage.setItem('st_afazeres', JSON.stringify(afazeres)); renderAfazeres(); }
         function renderAfazeres() {
             const lista = document.getElementById('lista-afazeres');
             if(afazeres.length === 0) { lista.innerHTML = `<li class="text-xs text-gray-400 text-center py-2">Nenhum afazer pendente.</li>`; return; }
@@ -795,13 +659,18 @@
             `).join('');
         }
 
-        // --- ALUNOS ---
+        // --- ALUNOS & ANAMNESE ---
         function openModalAluno(id = null) {
             document.getElementById('aluno-id').value = '';
             document.getElementById('aluno-nome').value = '';
             document.getElementById('aluno-nascimento').value = '';
             document.getElementById('aluno-escola').value = '';
             document.getElementById('anamnese-queixa').value = '';
+            document.getElementById('anamnese-desenvolvimento').value = '';
+            document.getElementById('anamnese-escolar').value = '';
+            document.getElementById('anamnese-rotina').value = '';
+            document.getElementById('anamnese-interesses').value = '';
+
             if(id) {
                 const a = alunos.find(item => item.id === id);
                 if(a) {
@@ -811,6 +680,10 @@
                     document.getElementById('aluno-ano').value = a.ano;
                     document.getElementById('aluno-escola').value = a.escola;
                     document.getElementById('anamnese-queixa').value = a.queixa || '';
+                    document.getElementById('anamnese-desenvolvimento').value = a.desenvolvimento || '';
+                    document.getElementById('anamnese-escolar').value = a.historicoEscolar || '';
+                    document.getElementById('anamnese-rotina').value = a.rotina || '';
+                    document.getElementById('anamnese-interesses').value = a.interesses || '';
                 }
             }
             document.getElementById('modal-aluno').classList.remove('hidden');
@@ -828,7 +701,11 @@
                 nascimento: document.getElementById('aluno-nascimento').value,
                 ano: document.getElementById('aluno-ano').value,
                 escola: document.getElementById('aluno-escola').value,
-                queixa: document.getElementById('anamnese-queixa').value
+                queixa: document.getElementById('anamnese-queixa').value,
+                desenvolvimento: document.getElementById('anamnese-desenvolvimento').value,
+                historicoEscolar: document.getElementById('anamnese-escolar').value,
+                rotina: document.getElementById('anamnese-rotina').value,
+                interesses: document.getElementById('anamnese-interesses').value
             };
             if(id) { const i = alunos.findIndex(a => a.id == id); if(i !== -1) alunos[i] = dados; }
             else { alunos.push(dados); }
@@ -840,7 +717,7 @@
         }
 
         function deletarAluno(id) {
-            if(confirm('Excluir este aluno?')) {
+            if(confirm('Excluir este aluno e sua anamnese?')) {
                 alunos = alunos.filter(a => a.id !== id);
                 localStorage.setItem('st_alunos', JSON.stringify(alunos));
                 renderAlunos();
@@ -856,7 +733,7 @@
                 return;
             }
             grid.innerHTML = alunos.map(a => `
-                <div class="bg-white rounded-2xl p-6 shadow-sm border border-lilac-100 space-y-4">
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-lilac-100 space-y-3">
                     <div class="flex justify-between items-start">
                         <div>
                             <h3 class="font-bold text-lg text-lilac-900">${a.nome}</h3>
@@ -867,9 +744,10 @@
                             <button onclick="deletarAluno(${a.id})" class="text-red-400 hover:text-red-600 p-1"><i class="fa-solid fa-trash"></i></button>
                         </div>
                     </div>
-                    <div class="text-xs text-gray-600 space-y-1">
+                    <div class="text-xs text-gray-600 space-y-1 pt-2 border-t">
                         <p><strong>Escola:</strong> ${a.escola || 'Não informada'}</p>
-                        <p><strong>Anamnese:</strong> ${a.queixa || 'Sem registro'}</p>
+                        <p><strong>Queixa Principal:</strong> ${a.queixa || 'Não informada'}</p>
+                        <p><strong>Pontos Fortes/Interesses:</strong> ${a.interesses || 'Não informados'}</p>
                     </div>
                 </div>
             `).join('');
@@ -880,9 +758,7 @@
             document.getElementById('agenda-horario').value = '14:00';
             document.getElementById('modal-agendamento').classList.remove('hidden');
         }
-
         function closeModalAgendamento() { document.getElementById('modal-agendamento').classList.add('hidden'); }
-
         function salvarAgendamento() {
             const alunoId = document.getElementById('agenda-aluno-id').value;
             const data = document.getElementById('agenda-data').value;
@@ -890,9 +766,7 @@
             if(!alunoId || !data || !horario) return;
             agendamentos.push({ id: Date.now(), alunoId: Number(alunoId), data, horario, tipo: document.getElementById('agenda-tipo').value, statusConfirmacao: 'Pendente' });
             localStorage.setItem('st_agendamentos', JSON.stringify(agendamentos));
-            closeModalAgendamento();
-            renderAgendaSemanal();
-            atualizarContadoresMenu();
+            closeModalAgendamento(); renderAgendaSemanal(); atualizarContadoresMenu();
         }
 
         // --- REGISTROS ---
@@ -909,10 +783,8 @@
                 observacoes: document.getElementById('reg-observacoes').value
             });
             localStorage.setItem('st_registros', JSON.stringify(registros));
-            closeModalRegistro();
-            renderRegistros();
+            closeModalRegistro(); renderRegistros();
         }
-
         function renderRegistros() {
             const lista = document.getElementById('registros-lista');
             if(registros.length === 0) { lista.innerHTML = `<div class="text-center py-12 text-gray-400 bg-white rounded-2xl border p-8"><p>Nenhum registro.</p></div>`; return; }
@@ -929,7 +801,7 @@
             }).join('');
         }
 
-        // --- AVALIAÇÕES APROFUNDADAS ---
+        // --- AVALIAÇÃO DIAGNÓSTICA ---
         function openModalAvaliacao() { document.getElementById('modal-avaliacao').classList.remove('hidden'); }
         function closeModalAvaliacao() { document.getElementById('modal-avaliacao').classList.add('hidden'); }
 
@@ -940,29 +812,37 @@
                 id: Date.now(),
                 alunoId: Number(alunoId),
                 ano: document.getElementById('aval-ano-escolar').value,
+                escrita: document.getElementById('aval-escrita').value,
                 fonologica: document.getElementById('aval-fonologica').value,
                 leitura: document.getElementById('aval-leitura').value,
-                matematica: document.getElementById('aval-matematica').value,
+                mat: document.getElementById('aval-mat').value,
+                problemas: document.getElementById('aval-problemas').value,
+                atencao: document.getElementById('aval-atencao').value,
                 parecer: document.getElementById('aval-parecer').value,
                 data: new Date().toISOString().split('T')[0]
             });
             localStorage.setItem('st_avaliacoes', JSON.stringify(avaliacoes));
-            closeModalAvaliacao();
-            renderAvaliacoes();
+            closeModalAvaliacao(); renderAvaliacoes();
         }
 
         function renderAvaliacoes() {
             const lista = document.getElementById('avaliacoes-lista');
-            if(avaliacoes.length === 0) { lista.innerHTML = `<div class="text-center py-12 text-gray-400 bg-white rounded-2xl border p-8"><p>Nenhuma avaliação detalhada.</p></div>`; return; }
+            if(avaliacoes.length === 0) { lista.innerHTML = `<div class="text-center py-12 text-gray-400 bg-white rounded-2xl border p-8"><p>Nenhuma avaliação diagnóstica cadastrada.</p></div>`; return; }
             lista.innerHTML = avaliacoes.map(av => {
                 const aluno = alunos.find(a => a.id === av.alunoId);
                 return `
                     <div class="bg-white rounded-2xl p-6 shadow-sm border text-xs space-y-2">
-                        <h3 class="font-bold text-base text-lilac-900">${aluno ? aluno.nome : 'Aluno'} (${av.ano})</h3>
-                        <p><strong>Consciência Fonológica / Escrita:</strong> ${av.fonologica}</p>
-                        <p><strong>Fluência Leitora:</strong> ${av.leitura}</p>
-                        <p><strong>Raciocínio Matemático:</strong> ${av.matematica}</p>
-                        <p class="pt-1"><strong>Parecer Descritivo:</strong> ${av.parecer || 'N/A'}</p>
+                        <div class="flex justify-between items-center border-b pb-2">
+                            <h3 class="font-bold text-base text-lilac-900">${aluno ? aluno.nome : 'Aluno'} (${av.ano})</h3>
+                            <button onclick="window.print()" class="bg-lilac-100 hover:bg-lilac-200 text-lilac-800 px-3 py-1.5 rounded-lg font-semibold"><i class="fa-solid fa-print mr-1"></i> Imprimir Relatório</button>
+                        </div>
+                        <p><strong>Hipótese de Escrita:</strong> ${av.escrita}</p>
+                        <p><strong>Consciência Fonológica:</strong> ${av.fonologica}</p>
+                        <p><strong>Fluência e Leitura:</strong> ${av.leitura || 'N/A'}</p>
+                        <p><strong>Matemática:</strong> ${av.mat || 'N/A'}</p>
+                        <p><strong>Funções Executivas / Atenção:</strong> ${av.atencao || 'N/A'}</p>
+                        <p class="pt-2 font-semibold text-lilac-900">Parecer Diagnóstico:</p>
+                        <p class="bg-lilac-50 p-3 rounded-xl">${av.parecer || 'N/A'}</p>
                     </div>
                 `;
             }).join('');
@@ -978,8 +858,7 @@
             if(!alunoId || !valor) return;
             financeiro.push({ id: Date.now(), alunoId: Number(alunoId), valor, pago, vencimento: document.getElementById('fin-vencimento').value, status: document.getElementById('fin-status').value });
             localStorage.setItem('st_financeiro', JSON.stringify(financeiro));
-            closeModalFinanceiro();
-            renderFinanceiro();
+            closeModalFinanceiro(); renderFinanceiro();
         }
 
         function renderFinanceiro() {
@@ -988,8 +867,7 @@
             if(financeiro.length === 0) { corpo.innerHTML = `<tr><td colspan="7" class="p-6 text-center text-gray-400">Nenhum lançamento.</td></tr>`; return; }
             corpo.innerHTML = financeiro.map(f => {
                 const aluno = alunos.find(a => a.id === f.alunoId);
-                const falta = f.valor - f.pago;
-                rec += f.pago; pen += falta > 0 ? falta : 0;
+                const falta = f.valor - f.pago; rec += f.pago; pen += falta > 0 ? falta : 0;
                 return `
                     <tr class="border-b text-xs">
                         <td class="p-3 font-medium">${aluno ? aluno.nome : 'Aluno'}</td>
