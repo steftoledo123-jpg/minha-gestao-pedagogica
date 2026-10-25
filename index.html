@@ -1,4 +1,129 @@
-house w-5 text-center text-theme-300"></i>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stefanie Toledo | Gestão Pedagógica</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        theme: {
+                            50: 'var(--color-50)',
+                            100: 'var(--color-100)',
+                            200: 'var(--color-200)',
+                            300: 'var(--color-300)',
+                            400: 'var(--color-400)',
+                            500: 'var(--color-500)',
+                            600: 'var(--color-600)',
+                            700: 'var(--color-700)',
+                            800: 'var(--color-800)',
+                            900: 'var(--color-900)',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            /* Tema Padrão: Rosa Claro */
+            --color-50: #fdf2f4;
+            --color-100: #fce7eb;
+            --color-200: #f7d1d9;
+            --color-300: #f2abbb;
+            --color-400: #e87891;
+            --color-500: #dc4a6b;
+            --color-600: #c52a4e;
+            --color-700: #a71f3f;
+            --color-800: #8c1d37;
+            --color-900: #751c32;
+        }
+
+        body { font-family: 'Poppins', sans-serif; }
+        
+        @media print {
+            body * { visibility: hidden !important; }
+            #area-impressao-pdf, #area-impressao-pdf * { visibility: visible !important; }
+            #area-impressao-pdf { position: absolute; left: 0; top: 0; width: 100%; }
+        }
+    </style>
+</head>
+<body id="app-body" class="bg-theme-50 text-gray-800 min-h-screen flex flex-col md:flex-row relative transition-colors duration-300">
+
+    <!-- Area Oculta para Gerar PDF / Impressao -->
+    <div id="area-impressao-pdf" class="p-8 bg-white hidden"></div>
+
+    <!-- Fundo Personalizado Overlay -->
+    <div id="custom-bg-overlay" class="absolute inset-0 bg-theme-50/90 pointer-events-none z-0"></div>
+
+    <!-- TELA DE LOGIN / AUTENTICAÇÃO -->
+    <div id="view-login" class="fixed inset-0 bg-theme-900 z-50 flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-md rounded-3xl shadow-2xl p-8 space-y-6 text-gray-800">
+            <div class="text-center space-y-2">
+                <div class="w-16 h-16 bg-theme-100 text-theme-700 rounded-full flex items-center justify-center mx-auto text-2xl shadow-inner">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <h1 class="text-xl font-bold text-theme-900">Stefanie Toledo</h1>
+                <p class="text-xs text-gray-500">Painel Pedagógico Restrito</p>
+            </div>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">E-mail de Acesso</label>
+                    <input type="email" id="login-email" class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-theme-600" placeholder="seu@email.com">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Senha</label>
+                    <input type="password" id="login-senha" class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-theme-600" placeholder="••••••••">
+                </div>
+                <button onclick="realizarLogin()" class="w-full bg-theme-700 hover:bg-theme-800 text-white font-semibold py-3 rounded-xl shadow transition text-sm">
+                    Entrar no Sistema
+                </button>
+                <div class="text-center pt-2">
+                    <button onclick="criarContaDemo()" class="text-xs text-theme-700 hover:underline font-medium">Primeiro acesso? Clique aqui para criar sua senha</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Topo Mobile -->
+    <div class="md:hidden bg-theme-800 text-white p-4 flex justify-between items-center z-20 relative">
+        <div class="flex items-center space-x-3">
+            <div id="mobile-logo-container" class="w-10 h-10 rounded-full bg-theme-200 flex items-center justify-center text-theme-900 font-bold overflow-hidden shadow">
+                <i class="fa-solid fa-graduation-cap text-theme-800"></i>
+            </div>
+            <div>
+                <h1 class="font-bold text-lg leading-tight">Stefanie Toledo</h1>
+                <p class="text-xs text-theme-200">Pedagoga</p>
+            </div>
+        </div>
+        <button onclick="toggleMobileMenu()" class="text-white focus:outline-none text-xl p-2"><i class="fa-solid fa-bars"></i></button>
+    </div>
+
+    <!-- Menu Lateral (Sidebar Limpo) -->
+    <aside id="sidebar" class="bg-theme-900 text-white w-full md:w-72 flex-shrink-0 flex flex-col justify-between transition-all duration-300 z-20 shadow-xl hidden md:flex relative">
+        <div>
+            <div class="p-6 border-b border-theme-800 flex items-center space-x-4">
+                <div id="sidebar-logo-container" class="w-12 h-12 rounded-full bg-theme-200 flex items-center justify-center text-theme-900 font-bold text-xl overflow-hidden shadow-inner flex-shrink-0">
+                    <i class="fa-solid fa-graduation-cap text-theme-800"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg leading-snug">Stefanie Toledo</h1>
+                    <p class="text-xs text-theme-300 font-medium">Pedagoga • Aulas Particulares</p>
+                </div>
+            </div>
+
+            <nav class="p-4 space-y-1.5 overflow-y-auto">
+                <button onclick="switchTab('inicio')" id="nav-inicio" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition text-theme-100 hover:bg-theme-800 bg-theme-800 text-white">
+                    <i class="fa-solid fa-house w-5 text-center text-theme-300"></i>
                     <span>Início</span>
                 </button>
                 <button onclick="switchTab('agenda')" id="nav-agenda" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition text-theme-100 hover:bg-theme-800">
@@ -58,10 +183,11 @@ house w-5 text-center text-theme-300"></i>
             <div id="inicio-alunos-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
         </section>
 
-        <!-- ABA PERFIL INDIVIDUAL DO ALUNO -->
+        <!-- ABA PERFIL INDIVIDUAL DO ALUNO (DINÂMICA) -->
         <section id="tab-perfil-aluno" class="tab-content space-y-6 hidden">
             <div id="perfil-header-container" class="bg-white p-6 rounded-2xl shadow-sm border border-theme-100 flex flex-col md:flex-row justify-between items-start md:items-center gap-4"></div>
 
+            <!-- Sub-abas do Perfil do Aluno -->
             <div class="flex space-x-2 border-b border-theme-200 pb-2 overflow-x-auto text-xs font-semibold">
                 <button onclick="switchPerfilSubTab('planejamentos')" id="btn-psub-planejamentos" class="psub-btn px-4 py-2 rounded-xl bg-theme-700 text-white transition">📝 Planejamento de Aulas</button>
                 <button onclick="switchPerfilSubTab('registros')" id="btn-psub-registros" class="psub-btn px-4 py-2 rounded-xl bg-theme-100 text-theme-800 transition">📖 Diário de Sessões & PDF</button>
@@ -71,6 +197,7 @@ house w-5 text-center text-theme-300"></i>
                 <button onclick="switchPerfilSubTab('financeiro')" id="btn-psub-financeiro" class="psub-btn px-4 py-2 rounded-xl bg-theme-100 text-theme-800 transition">💰 Extrato Financeiro & PIX</button>
             </div>
 
+            <!-- Conteúdos das Sub-abas -->
             <div id="psub-content-planejamentos" class="psub-content space-y-4"></div>
             <div id="psub-content-registros" class="psub-content space-y-4 hidden"></div>
             <div id="psub-content-anamnese" class="psub-content space-y-4 hidden"></div>
@@ -233,8 +360,8 @@ house w-5 text-center text-theme-300"></i>
         <!-- ABA 6: CONFIGURAÇÕES & SELETOR DE TEMAS CORES -->
         <section id="tab-configuracoes" class="tab-content space-y-6 hidden">
             <div class="bg-white p-6 rounded-2xl shadow-sm border border-theme-100">
-                <h2 class="text-2xl font-bold text-theme-900">Configurações, Temas & Nuvem</h2>
-                <p class="text-sm text-gray-500">Escolha a cor do seu sistema e sincronize com seu celular/computador.</p>
+                <h2 class="text-2xl font-bold text-theme-900">Configurações & Temas</h2>
+                <p class="text-sm text-gray-500">Escolha a cor do seu sistema e gerencie backups.</p>
             </div>
 
             <!-- Seletor de Cores -->
@@ -277,29 +404,18 @@ house w-5 text-center text-theme-300"></i>
                 </div>
             </div>
 
-            <!-- Backup & Sincronização em Nuvem -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-theme-100 space-y-4">
-                    <h3 class="font-bold text-lg text-theme-900">Sincronização Nuvem (Celular + PC)</h3>
-                    <p class="text-xs text-gray-500">Mantenha todos os cadastros atualizados entre seu computador e celular automaticamente.</p>
-                    <button onclick="exportarBackupJSON()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 rounded-xl text-xs transition flex items-center justify-center space-x-2">
-                        <i class="fa-solid fa-cloud-arrow-up"></i>
-                        <span>Sincronizar com a Nuvem</span>
+            <!-- Backup & Segurança -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-theme-100 space-y-4">
+                <h3 class="font-bold text-lg text-theme-900">Backup & Segurança dos Dados</h3>
+                <p class="text-xs text-gray-500">Baixe uma cópia de segurança (`.json`) ou restaure seus dados a qualquer momento para levar para outro aparelho.</p>
+                <div class="flex space-x-2 max-w-md">
+                    <button onclick="exportarBackupJSON()" class="flex-1 bg-theme-700 hover:bg-theme-800 text-white py-2.5 rounded-xl text-xs font-semibold">
+                        <i class="fa-solid fa-download mr-1"></i> Baixar Backup
                     </button>
-                </div>
-
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-theme-100 space-y-4">
-                    <h3 class="font-bold text-lg text-theme-900">Backup & Segurança dos Dados</h3>
-                    <p class="text-xs text-gray-500">Baixe uma cópia de segurança (`.json`) ou restaure seus dados a qualquer momento.</p>
-                    <div class="flex space-x-2">
-                        <button onclick="exportarBackupJSON()" class="flex-1 bg-theme-700 hover:bg-theme-800 text-white py-2.5 rounded-xl text-xs font-semibold">
-                            <i class="fa-solid fa-download mr-1"></i> Baixar Backup
-                        </button>
-                        <label class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 py-2.5 rounded-xl text-xs font-semibold text-center cursor-pointer">
-                            <i class="fa-solid fa-upload mr-1"></i> Restaurar
-                            <input type="file" accept=".json" onchange="importarBackupJSON(event)" class="hidden">
-                        </label>
-                    </div>
+                    <label class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 py-2.5 rounded-xl text-xs font-semibold text-center cursor-pointer">
+                        <i class="fa-solid fa-upload mr-1"></i> Restaurar
+                        <input type="file" accept=".json" onchange="importarBackupJSON(event)" class="hidden">
+                    </label>
                 </div>
             </div>
         </section>
@@ -333,7 +449,7 @@ house w-5 text-center text-theme-300"></i>
         </div>
     </div>
 
-    <!-- Modal Executar Planejamento -->
+    <!-- Modal Executar Planejamento (Preencher Desempenho) -->
     <div id="modal-executar-plan" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-xl rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col">
             <div class="bg-emerald-800 text-white p-4 flex justify-between items-center"><h3 class="font-bold text-lg">Registrar Desempenho & Concluir Aula</h3><button onclick="closeModalExecutarPlan()" class="text-white"><i class="fa-solid fa-xmark text-lg"></i></button></div>
@@ -472,7 +588,6 @@ house w-5 text-center text-theme-300"></i>
 
     <!-- JAVASCRIPT COMPLETO -->
     <script>
-        // --- CORES DE TEMAS ---
         const PALETAS_CORES = {
             rosaClaro: { 50:'#fdf2f4', 100:'#fce7eb', 200:'#f7d1d9', 300:'#f2abbb', 400:'#e87891', 500:'#dc4a6b', 600:'#c52a4e', 700:'#a71f3f', 800:'#8c1d37', 900:'#751c32' },
             rosaPink: { 50:'#fdf2f8', 100:'#fce7f3', 200:'#fbcfe8', 300:'#f9a8d4', 400:'#f472b6', 500:'#ec4899', 600:'#db2777', 700:'#be185d', 800:'#9d174d', 900:'#831843' },
@@ -671,7 +786,10 @@ house w-5 text-center text-theme-300"></i>
                 </div>
                 <div class="flex space-x-2">
                     <button onclick="openModalAluno(${aluno.id})" class="bg-theme-100 hover:bg-theme-200 text-theme-800 font-semibold px-4 py-2 rounded-xl text-xs transition"><i class="fa-solid fa-pen mr-1"></i> Editar Cadastro</button>
-                    <button onclick="deletarAluno(${aluno.id}); switchTab('inicio');" class="bg-red-50 hover:bg-red-100 text-red-600 font-semibold px-3 py-2 rounded-xl text-xs transition"><i class="fa-solid fa-trash"></i></button>
+                    <button onclick="deletarAluno(${aluno.id}); switchTab('inicio');" class="bg-red-50 hover:bg-red-100 text-red-600 font-semibold px-3 py-2 rounded-xl text-xs transition flex items-center space-x-1">
+                        <i class="fa-solid fa-trash"></i>
+                        <span>Excluir Aluno</span>
+                    </button>
                 </div>
             `;
 
@@ -692,10 +810,12 @@ house w-5 text-center text-theme-300"></i>
                             <div class="bg-theme-50 p-4 rounded-2xl border border-theme-200 space-y-3">
                                 <div class="flex justify-between items-center border-b pb-2">
                                     <span class="font-bold text-sm text-theme-900"><i class="fa-regular fa-calendar mr-1"></i> Data: ${new Date(p.data + 'T00:00:00').toLocaleDateString('pt-BR')}</span>
-                                    <div class="space-x-2">
+                                    <div class="space-x-2 flex items-center">
                                         ${p.concluido ? '<span class="bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-lg font-bold text-[10px]">✓ Concluída & Registrada</span>' :
                                             `<button onclick="openModalExecutarPlanejamento(${p.id})" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-lg font-semibold"><i class="fa-solid fa-check mr-1"></i> Registrar Desempenho / Concluir</button>`}
-                                        <button onclick="deletarPlanejamento(${p.id}, ${aluno.id})" class="text-red-400 hover:text-red-600 p-1"><i class="fa-solid fa-trash"></i></button>
+                                        <button onclick="deletarPlanejamento(${p.id}, ${aluno.id})" class="bg-red-100 text-red-600 hover:bg-red-200 px-2 py-1 rounded-lg transition" title="Excluir Planejamento">
+                                            <i class="fa-solid fa-trash"></i>
+                                        </button>
                                     </div>
                                 </div>
                                 <p><strong>Objetivo Geral:</strong> ${p.objetivo}</p>
@@ -711,7 +831,7 @@ house w-5 text-center text-theme-300"></i>
                 </div>
             `;
 
-            // Diário & PDF
+            // Diário & PDF com opção de exclusão
             const regAluno = registros.filter(r => r.alunoId == id);
             document.getElementById('psub-content-registros').innerHTML = `
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-theme-100 space-y-4 text-xs">
@@ -721,9 +841,11 @@ house w-5 text-center text-theme-300"></i>
                             <div class="bg-theme-50 p-4 rounded-2xl border border-theme-200 space-y-3">
                                 <div class="flex justify-between items-center border-b pb-2">
                                     <span class="font-bold text-sm text-theme-900">Sessão do dia ${new Date(r.data + 'T00:00:00').toLocaleDateString('pt-BR')}</span>
-                                    <div class="space-x-2">
+                                    <div class="space-x-2 flex items-center">
                                         <button onclick="gerarPdfSessao(${r.id})" class="bg-theme-700 hover:bg-theme-800 text-white px-3 py-1.5 rounded-lg font-semibold"><i class="fa-solid fa-file-pdf mr-1"></i> Exportar Relatório PDF</button>
-                                        <button onclick="deletarRegistroPerfil(${r.id}, ${aluno.id})" class="text-red-400 p-1"><i class="fa-solid fa-trash"></i></button>
+                                        <button onclick="deletarRegistroSessao(${r.id}, ${aluno.id})" class="bg-red-100 text-red-600 hover:bg-red-200 px-2.5 py-1.5 rounded-lg font-semibold transition" title="Excluir Registro de Sessão">
+                                            <i class="fa-solid fa-trash mr-1"></i> Excluir
+                                        </button>
                                     </div>
                                 </div>
                                 <p><strong>Objetivos da Sessão:</strong> ${r.objetivos}</p>
@@ -781,7 +903,30 @@ house w-5 text-center text-theme-300"></i>
                                     <p class="font-bold text-theme-900">${new Date(ag.data + 'T00:00:00').toLocaleDateString('pt-BR')} às ${ag.horario} (${ag.duracao || '1h'})</p>
                                     <p class="text-gray-600">${ag.tipo} • Status: <span class="font-semibold">${ag.statusConfirmacao}</span></p>
                                 </div>
-                                <button onclick="deletarAgendamentoPerfil(${ag.id}, ${aluno.id})" class="text-red-500"><i class="fa-solid fa-trash"></i></button>
+                                <button onclick="deletarAgendamentoPerfil(${ag.id}, ${aluno.id})" class="text-red-500 hover:text-red-700 p-1"><i class="fa-solid fa-trash"></i> Excluir</button>
+                            </div>
+                        `).join('')}
+                </div>
+            `;
+
+            // Avaliações Diagnósticas
+            const avAluno = avaliacoes.filter(av => av.alunoId == id);
+            document.getElementById('psub-content-avaliacoes').innerHTML = `
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-theme-100 space-y-4 text-xs">
+                    <div class="flex justify-between items-center border-b pb-2">
+                        <h3 class="font-bold text-sm text-theme-900">Avaliações Diagnósticas</h3>
+                        <button onclick="openModalAvaliacaoParaAluno(${aluno.id})" class="bg-theme-700 text-white px-3 py-1.5 rounded-xl text-xs font-semibold">Nova Avaliação</button>
+                    </div>
+                    ${avAluno.length === 0 ? '<p class="text-gray-400 py-4 text-center">Nenhuma avaliação diagnóstica cadastrada.</p>' :
+                        avAluno.map(av => `
+                            <div class="bg-theme-50 p-4 rounded-xl border space-y-2 flex justify-between items-start">
+                                <div class="space-y-1">
+                                    <p><strong>Ano Avaliado:</strong> ${av.ano} (${av.data})</p>
+                                    <p><strong>Hipótese de Escrita:</strong> ${av.escrita}</p>
+                                    <p><strong>Caligrafia & Traçado:</strong> ${av.caligrafia || 'N/A'}</p>
+                                    <p><strong>Parecer:</strong> ${av.parecer || 'N/A'}</p>
+                                </div>
+                                <button onclick="deletarAvaliacao(${av.id}, ${aluno.id})" class="text-red-500 hover:text-red-700 p-1"><i class="fa-solid fa-trash"></i></button>
                             </div>
                         `).join('')}
                 </div>
@@ -828,7 +973,7 @@ house w-5 text-center text-theme-300"></i>
                                         <td class="p-3 font-medium">${f.descricao}</td>
                                         <td class="p-3">R$ ${f.valor.toFixed(2)}</td>
                                         <td class="p-3"><span class="px-2 py-0.5 rounded font-bold ${f.status === 'Pago' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}">${f.status}</span></td>
-                                        <td class="p-3 text-right"><button onclick="deletarFinanceiroGeral(${f.id})" class="text-red-400"><i class="fa-solid fa-trash"></i></button></td>
+                                        <td class="p-3 text-right"><button onclick="deletarFinanceiroGeral(${f.id})" class="text-red-500 hover:text-red-700 font-semibold"><i class="fa-solid fa-trash mr-1"></i> Excluir</button></td>
                                     </tr>
                                 `).join('')}
                             </tbody>
@@ -872,6 +1017,28 @@ house w-5 text-center text-theme-300"></i>
             reader.readAsText(file);
         }
 
+        // --- EXCLUSÃO DE DADOS (SESSÃO, PLANEJAMENTO, ETC) ---
+        function deletarRegistroSessao(id, alunoId) {
+            if(confirm('Tem certeza que deseja excluir este registro de sessão? Esta ação não poderá ser desfeita.')) {
+                registros = registros.filter(r => r.id !== id);
+                localStorage.setItem('st_registros', JSON.stringify(registros));
+                renderPerfilAlunoCompleto(alunoId);
+            }
+        }
+
+        function removerLinhaAtividadePlan(button) {
+            const parent = button.parentElement;
+            if(parent) parent.remove();
+        }
+
+        function deletarAvaliacao(id, alunoId) {
+            if(confirm('Tem certeza que deseja excluir esta avaliação diagnóstica?')) {
+                avaliacoes = avaliacoes.filter(av => av.id !== id);
+                localStorage.setItem('st_avaliacoes', JSON.stringify(avaliacoes));
+                renderPerfilAlunoCompleto(alunoId);
+            }
+        }
+
         // --- PLANEJAMENTOS ---
         function openModalPlanejamentoParaAluno(alunoId) {
             document.getElementById('plan-aluno-id').value = alunoId;
@@ -893,6 +1060,7 @@ house w-5 text-center text-theme-300"></i>
             container.innerHTML += `
                 <div class="flex items-center space-x-2">
                     <input type="text" class="plan-atividade-input flex-1 border rounded-xl px-3 py-2 outline-none" placeholder="Atividade ${idx}...">
+                    <button type="button" onclick="removerLinhaAtividadePlan(this)" class="text-red-500 hover:text-red-700 px-2 py-1"><i class="fa-solid fa-xmark"></i></button>
                 </div>
             `;
         }
@@ -1068,12 +1236,20 @@ house w-5 text-center text-theme-300"></i>
         }
 
         function deletarAgendamento(id) {
+            if(confirm('Excluir este agendamento?')) {
+                agendamentos = agendamentos.filter(a => a.id !== id);
+                localStorage.setItem('st_agendamentos', JSON.stringify(agendamentos));
+                renderAgendaSemanal();
+                atualizarContadoresMenu();
+            }
+        }
+        function deletarAgendamentoPerfil(id, alunoId) {
             agendamentos = agendamentos.filter(a => a.id !== id);
             localStorage.setItem('st_agendamentos', JSON.stringify(agendamentos));
+            renderPerfilAlunoCompleto(alunoId);
             renderAgendaSemanal();
             atualizarContadoresMenu();
         }
-        function deletarAgendamentoPerfil(id, alunoId) { deletarAgendamento(id); renderPerfilAlunoCompleto(alunoId); }
 
         function renderAgendaSemanal() {
             const segunda = getSegundaFeira(dataSemanaAtual);
@@ -1104,7 +1280,7 @@ house w-5 text-center text-theme-300"></i>
                                         <div class="bg-white p-2 rounded-xl border border-theme-200 text-[10px] space-y-1 shadow-sm">
                                             <div class="flex justify-between font-semibold text-theme-800">
                                                 <span>${ag.horario}</span>
-                                                <button onclick="deletarAgendamento(${ag.id})" class="text-red-400"><i class="fa-solid fa-trash text-[9px]"></i></button>
+                                                <button onclick="deletarAgendamento(${ag.id})" class="text-red-400 hover:text-red-600"><i class="fa-solid fa-trash text-[9px]"></i></button>
                                             </div>
                                             <div onclick="abrirPerfilAluno(${ag.alunoId})" class="flex items-center space-x-1.5 font-bold text-gray-800 cursor-pointer hover:text-theme-700">
                                                 <span class="truncate">${aluno ? aluno.nome : 'Aluno'}</span>
@@ -1203,7 +1379,7 @@ house w-5 text-center text-theme-300"></i>
         }
 
         function deletarAluno(id) {
-            if(confirm('Excluir este aluno?')) {
+            if(confirm('Excluir este aluno do sistema? Todos os registros atrelados também serão removidos.')) {
                 alunos = alunos.filter(a => a.id !== id);
                 localStorage.setItem('st_alunos', JSON.stringify(alunos));
                 renderInicioAlunos();
@@ -1231,7 +1407,7 @@ house w-5 text-center text-theme-300"></i>
                         <input type="checkbox" ${a.concluido ? 'checked' : ''} onchange="toggleAfazer(${a.id})" class="rounded text-theme-600">
                         <span class="${a.concluido ? 'line-through text-gray-400' : 'text-gray-700 font-medium'}">${a.texto}</span>
                     </div>
-                    <button onclick="deletarAfazer(${a.id})" class="text-red-400 p-1"><i class="fa-solid fa-trash"></i></button>
+                    <button onclick="deletarAfazer(${a.id})" class="text-red-400 p-1 hover:text-red-600"><i class="fa-solid fa-trash"></i></button>
                 </li>
             `).join('');
         }
@@ -1275,7 +1451,7 @@ house w-5 text-center text-theme-300"></i>
                         <td class="p-3 text-amber-600">R$ ${falta.toFixed(2)}</td>
                         <td class="p-3">${f.vencimento}</td>
                         <td class="p-3"><span class="px-2 py-0.5 rounded font-bold ${f.status === 'Pago' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}">${f.status}</span></td>
-                        <td class="p-3 text-right"><button onclick="deletarFinanceiroGeral(${f.id})" class="text-red-400"><i class="fa-solid fa-trash"></i></button></td>
+                        <td class="p-3 text-right"><button onclick="deletarFinanceiroGeral(${f.id})" class="text-red-500 hover:text-red-700 font-semibold"><i class="fa-solid fa-trash mr-1"></i> Excluir</button></td>
                     </tr>
                 `;
             }).join('');
@@ -1285,10 +1461,12 @@ house w-5 text-center text-theme-300"></i>
         }
 
         function deletarFinanceiroGeral(id) {
-            financeiro = financeiro.filter(f => f.id !== id);
-            localStorage.setItem('st_financeiro', JSON.stringify(financeiro));
-            renderFinanceiroGeral();
-            if(alunoPerfilAtivoId) renderPerfilAlunoCompleto(alunoPerfilAtivoId);
+            if(confirm('Excluir este lançamento financeiro?')) {
+                financeiro = financeiro.filter(f => f.id !== id);
+                localStorage.setItem('st_financeiro', JSON.stringify(financeiro));
+                renderFinanceiroGeral();
+                if(alunoPerfilAtivoId) renderPerfilAlunoCompleto(alunoPerfilAtivoId);
+            }
         }
 
         function enviarExtratoAlunoReal(alunoId) {
