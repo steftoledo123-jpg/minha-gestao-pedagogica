@@ -33,7 +33,22 @@ footer{text-align:center;font-size:11px;color:var(--muted);padding:20px}
 @media(min-width:650px){main{padding:20px}.grid{grid-template-columns:repeat(4,minmax(0,1fr))}header{padding-left:max(22px,calc((100vw - 810px)/2));padding-right:max(22px,calc((100vw - 810px)/2))}}
 </style>
 </head>
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="./icon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#B57AE8">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Minha Gestão">
 <body>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function () {
+    navigator.serviceWorker.register('./sw.js').catch(function (error) {
+      console.log('Registro do aplicativo indisponível:', error);
+    });
+  });
+}
+</script>
 <header>
   <div class="top">
     <div class="avatar" id="avatar">📚</div>
