@@ -11,17 +11,17 @@
             theme: {
                 extend: {
                     colors: {
-                        lilac: {
-                            50: '#f5f3ff',
-                            100: '#ede9fe',
-                            200: '#ddd6fe',
-                            300: '#c4b5fd',
-                            400: '#a78bfa',
-                            500: '#8b5cf6',
-                            600: '#7c3aed',
-                            700: '#6d28d9',
-                            800: '#5b21b6',
-                            900: '#4c1d95',
+                        rosado: {
+                            50: '#fdf2f4',
+                            100: '#fce7eb',
+                            200: '#f7d1d9',
+                            300: '#f2abbb',
+                            400: '#e87891',
+                            500: '#dc4a6b',
+                            600: '#c52a4e',
+                            700: '#a71f3f',
+                            800: '#8c1d37',
+                            900: '#751c32',
                         }
                     }
                 }
@@ -40,99 +40,99 @@
         }
     </style>
 </head>
-<body id="app-body" class="bg-lilac-50 text-gray-800 min-h-screen flex flex-col md:flex-row relative">
+<body id="app-body" class="bg-rosado-50 text-gray-800 min-h-screen flex flex-col md:flex-row relative">
 
     <!-- Area Oculta para Gerar PDF / Impressao -->
     <div id="area-impressao-pdf" class="p-8 bg-white hidden"></div>
 
     <!-- Fundo Personalizado Overlay -->
-    <div id="custom-bg-overlay" class="absolute inset-0 bg-lilac-50/90 pointer-events-none z-0"></div>
+    <div id="custom-bg-overlay" class="absolute inset-0 bg-rosado-50/90 pointer-events-none z-0"></div>
 
     <!-- TELA DE LOGIN / AUTENTICAÇÃO -->
-    <div id="view-login" class="fixed inset-0 bg-lilac-900 z-50 flex items-center justify-center p-4">
+    <div id="view-login" class="fixed inset-0 bg-rosado-900 z-50 flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-md rounded-3xl shadow-2xl p-8 space-y-6 text-gray-800">
             <div class="text-center space-y-2">
-                <div class="w-16 h-16 bg-lilac-100 text-lilac-700 rounded-full flex items-center justify-center mx-auto text-2xl shadow-inner">
+                <div class="w-16 h-16 bg-rosado-100 text-rosado-700 rounded-full flex items-center justify-center mx-auto text-2xl shadow-inner">
                     <i class="fa-solid fa-graduation-cap"></i>
                 </div>
-                <h1 class="text-xl font-bold text-lilac-900">Stefanie Toledo</h1>
+                <h1 class="text-xl font-bold text-rosado-900">Stefanie Toledo</h1>
                 <p class="text-xs text-gray-500">Painel Pedagógico Restrito</p>
             </div>
             <div class="space-y-4">
                 <div>
                     <label class="block text-xs font-semibold text-gray-600 mb-1">E-mail de Acesso</label>
-                    <input type="email" id="login-email" class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-lilac-600" placeholder="seu@email.com">
+                    <input type="email" id="login-email" class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-rosado-600" placeholder="seu@email.com">
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-gray-600 mb-1">Senha</label>
-                    <input type="password" id="login-senha" class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-lilac-600" placeholder="••••••••">
+                    <input type="password" id="login-senha" class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-rosado-600" placeholder="••••••••">
                 </div>
-                <button onclick="realizarLogin()" class="w-full bg-lilac-700 hover:bg-lilac-800 text-white font-semibold py-3 rounded-xl shadow transition text-sm">
+                <button onclick="realizarLogin()" class="w-full bg-rosado-700 hover:bg-rosado-800 text-white font-semibold py-3 rounded-xl shadow transition text-sm">
                     Entrar no Sistema
                 </button>
                 <div class="text-center pt-2">
-                    <button onclick="criarContaDemo()" class="text-xs text-lilac-700 hover:underline font-medium">Primeiro acesso? Clique aqui para criar sua senha</button>
+                    <button onclick="criarContaDemo()" class="text-xs text-rosado-700 hover:underline font-medium">Primeiro acesso? Clique aqui para criar sua senha</button>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Topo Mobile -->
-    <div class="md:hidden bg-lilac-800 text-white p-4 flex justify-between items-center z-20 relative">
+    <div class="md:hidden bg-rosado-800 text-white p-4 flex justify-between items-center z-20 relative">
         <div class="flex items-center space-x-3">
-            <div id="mobile-logo-container" class="w-10 h-10 rounded-full bg-lilac-200 flex items-center justify-center text-lilac-900 font-bold overflow-hidden shadow">
-                <i class="fa-solid fa-graduation-cap text-lilac-800"></i>
+            <div id="mobile-logo-container" class="w-10 h-10 rounded-full bg-rosado-200 flex items-center justify-center text-rosado-900 font-bold overflow-hidden shadow">
+                <i class="fa-solid fa-graduation-cap text-rosado-800"></i>
             </div>
             <div>
                 <h1 class="font-bold text-lg leading-tight">Stefanie Toledo</h1>
-                <p class="text-xs text-lilac-200">Pedagoga</p>
+                <p class="text-xs text-rosado-200">Pedagoga</p>
             </div>
         </div>
         <button onclick="toggleMobileMenu()" class="text-white focus:outline-none text-xl p-2"><i class="fa-solid fa-bars"></i></button>
     </div>
 
-    <!-- Menu Lateral (Sidebar Limpo) -->
-    <aside id="sidebar" class="bg-lilac-900 text-white w-full md:w-72 flex-shrink-0 flex flex-col justify-between transition-all duration-300 z-20 shadow-xl hidden md:flex relative">
+    <!-- Menu Lateral (Sidebar) -->
+    <aside id="sidebar" class="bg-rosado-900 text-white w-full md:w-72 flex-shrink-0 flex flex-col justify-between transition-all duration-300 z-20 shadow-xl hidden md:flex relative">
         <div>
-            <div class="p-6 border-b border-lilac-800 flex items-center space-x-4">
-                <div id="sidebar-logo-container" class="w-12 h-12 rounded-full bg-lilac-200 flex items-center justify-center text-lilac-900 font-bold text-xl overflow-hidden shadow-inner flex-shrink-0">
-                    <i class="fa-solid fa-graduation-cap text-lilac-800"></i>
+            <div class="p-6 border-b border-rosado-800 flex items-center space-x-4">
+                <div id="sidebar-logo-container" class="w-12 h-12 rounded-full bg-rosado-200 flex items-center justify-center text-rosado-900 font-bold text-xl overflow-hidden shadow-inner flex-shrink-0">
+                    <i class="fa-solid fa-graduation-cap text-rosado-800"></i>
                 </div>
                 <div>
                     <h1 class="font-bold text-lg leading-snug">Stefanie Toledo</h1>
-                    <p class="text-xs text-lilac-300 font-medium">Pedagoga • Aulas Particulares</p>
+                    <p class="text-xs text-rosado-300 font-medium">Pedagoga • Aulas Particulares</p>
                 </div>
             </div>
 
             <nav class="p-4 space-y-1.5 overflow-y-auto">
-                <button onclick="switchTab('inicio')" id="nav-inicio" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition text-lilac-100 hover:bg-lilac-800 bg-lilac-800 text-white">
-                    <i class="fa-solid fa-house w-5 text-center text-lilac-300"></i>
+                <button onclick="switchTab('inicio')" id="nav-inicio" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition text-rosado-100 hover:bg-rosado-800 bg-rosado-800 text-white">
+                    <i class="fa-solid fa-house w-5 text-center text-rosado-300"></i>
                     <span>Início</span>
                 </button>
-                <button onclick="switchTab('agenda')" id="nav-agenda" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition text-lilac-100 hover:bg-lilac-800">
-                    <i class="fa-solid fa-calendar-days w-5 text-center text-lilac-300"></i>
+                <button onclick="switchTab('agenda')" id="nav-agenda" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition text-rosado-100 hover:bg-rosado-800">
+                    <i class="fa-solid fa-calendar-days w-5 text-center text-rosado-300"></i>
                     <span>Agenda & Eventos</span>
                 </button>
-                <button onclick="switchTab('ia')" id="nav-ia" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition text-lilac-100 hover:bg-lilac-800">
-                    <i class="fa-solid fa-wand-magic-sparkles w-5 text-center text-lilac-300"></i>
+                <button onclick="switchTab('ia')" id="nav-ia" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition text-rosado-100 hover:bg-rosado-800">
+                    <i class="fa-solid fa-wand-magic-sparkles w-5 text-center text-rosado-300"></i>
                     <span>Assistente IA</span>
                 </button>
-                <button onclick="switchTab('aba')" id="nav-aba" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition text-lilac-100 hover:bg-lilac-800">
-                    <i class="fa-solid fa-brain w-5 text-center text-lilac-300"></i>
+                <button onclick="switchTab('aba')" id="nav-aba" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition text-rosado-100 hover:bg-rosado-800">
+                    <i class="fa-solid fa-brain w-5 text-center text-rosado-300"></i>
                     <span>Módulo ABA</span>
                 </button>
-                <button onclick="switchTab('financeiro')" id="nav-financeiro" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition text-lilac-100 hover:bg-lilac-800">
-                    <i class="fa-solid fa-wallet w-5 text-center text-lilac-300"></i>
+                <button onclick="switchTab('financeiro')" id="nav-financeiro" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition text-rosado-100 hover:bg-rosado-800">
+                    <i class="fa-solid fa-wallet w-5 text-center text-rosado-300"></i>
                     <span>Financeiro Geral</span>
                 </button>
-                <button onclick="switchTab('configuracoes')" id="nav-configuracoes" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition text-lilac-100 hover:bg-lilac-800">
-                    <i class="fa-solid fa-gear w-5 text-center text-lilac-300"></i>
+                <button onclick="switchTab('configuracoes')" id="nav-configuracoes" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition text-rosado-100 hover:bg-rosado-800">
+                    <i class="fa-solid fa-gear w-5 text-center text-rosado-300"></i>
                     <span>Configurações & Visual</span>
                 </button>
             </nav>
         </div>
 
-        <div class="p-4 border-t border-lilac-800 text-xs text-lilac-300 space-y-2">
+        <div class="p-4 border-t border-rosado-800 text-xs text-rosado-300 space-y-2">
             <div class="flex justify-between"><span>Alunos cadastrados:</span><span id="badge-total-alunos" class="font-bold text-white">0</span></div>
             <div class="flex justify-between"><span>Sessões hoje:</span><span id="badge-sessoes-hoje" class="font-bold text-white">0</span></div>
             <button onclick="realizarLogout()" class="w-full mt-2 bg-red-600/80 hover:bg-red-600 text-white py-2 rounded-xl font-medium transition flex items-center justify-center space-x-1">
@@ -147,17 +147,17 @@
 
         <!-- ABA 1: INÍCIO (DASHBOARD) -->
         <section id="tab-inicio" class="tab-content space-y-6">
-            <div class="bg-gradient-to-r from-lilac-800 to-lilac-900 text-white p-8 rounded-3xl shadow-lg space-y-2">
+            <div class="bg-gradient-to-r from-rosado-700 to-rosado-900 text-white p-8 rounded-3xl shadow-lg space-y-2">
                 <h2 class="text-3xl font-extrabold">Seja bem-vinda, Stefanie</h2>
-                <p class="text-lilac-200 text-sm md:text-base font-medium">Hoje é um belo dia para ensinar habilidades!</p>
+                <p class="text-rosado-100 text-sm md:text-base font-medium">Hoje é um belo dia para ensinar habilidades!</p>
             </div>
 
-            <div class="flex justify-between items-center bg-white p-6 rounded-2xl shadow-sm border border-lilac-100">
+            <div class="flex justify-between items-center bg-white p-6 rounded-2xl shadow-sm border border-rosado-100">
                 <div>
-                    <h3 class="text-xl font-bold text-lilac-900">Perfis dos Alunos</h3>
+                    <h3 class="text-xl font-bold text-rosado-900">Perfis dos Alunos</h3>
                     <p class="text-xs text-gray-500">Clique em qualquer aluno para abrir o perfil, planejamentos, sessões e financeiro.</p>
                 </div>
-                <button onclick="openModalAluno()" class="bg-lilac-700 hover:bg-lilac-800 text-white font-medium px-5 py-2.5 rounded-xl shadow transition flex items-center space-x-2 text-xs">
+                <button onclick="openModalAluno()" class="bg-rosado-700 hover:bg-rosado-800 text-white font-medium px-5 py-2.5 rounded-xl shadow transition flex items-center space-x-2 text-xs">
                     <i class="fa-solid fa-user-plus"></i>
                     <span>Cadastrar Novo Aluno</span>
                 </button>
@@ -166,21 +166,19 @@
             <div id="inicio-alunos-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
         </section>
 
-        <!-- ABA PERFIL INDIVIDUAL DO ALUNO (DINÂMICA) -->
+        <!-- ABA PERFIL INDIVIDUAL DO ALUNO -->
         <section id="tab-perfil-aluno" class="tab-content space-y-6 hidden">
-            <div id="perfil-header-container" class="bg-white p-6 rounded-2xl shadow-sm border border-lilac-100 flex flex-col md:flex-row justify-between items-start md:items-center gap-4"></div>
+            <div id="perfil-header-container" class="bg-white p-6 rounded-2xl shadow-sm border border-rosado-100 flex flex-col md:flex-row justify-between items-start md:items-center gap-4"></div>
 
-            <!-- Sub-abas do Perfil do Aluno -->
-            <div class="flex space-x-2 border-b border-lilac-200 pb-2 overflow-x-auto text-xs font-semibold">
-                <button onclick="switchPerfilSubTab('planejamentos')" id="btn-psub-planejamentos" class="psub-btn px-4 py-2 rounded-xl bg-lilac-700 text-white transition">📝 Planejamento de Aulas</button>
-                <button onclick="switchPerfilSubTab('registros')" id="btn-psub-registros" class="psub-btn px-4 py-2 rounded-xl bg-lilac-100 text-lilac-800 transition">📖 Diário de Sessões & PDF</button>
-                <button onclick="switchPerfilSubTab('anamnese')" id="btn-psub-anamnese" class="psub-btn px-4 py-2 rounded-xl bg-lilac-100 text-lilac-800 transition">📋 Anamnese & Família</button>
-                <button onclick="switchPerfilSubTab('agenda')" id="btn-psub-agenda" class="psub-btn px-4 py-2 rounded-xl bg-lilac-100 text-lilac-800 transition">📅 Horários na Agenda</button>
-                <button onclick="switchPerfilSubTab('avaliacoes')" id="btn-psub-avaliacoes" class="psub-btn px-4 py-2 rounded-xl bg-lilac-100 text-lilac-800 transition">🧠 Avaliação Diagnóstica</button>
-                <button onclick="switchPerfilSubTab('financeiro')" id="btn-psub-financeiro" class="psub-btn px-4 py-2 rounded-xl bg-lilac-100 text-lilac-800 transition">💰 Extrato Financeiro & PIX</button>
+            <div class="flex space-x-2 border-b border-rosado-200 pb-2 overflow-x-auto text-xs font-semibold">
+                <button onclick="switchPerfilSubTab('planejamentos')" id="btn-psub-planejamentos" class="psub-btn px-4 py-2 rounded-xl bg-rosado-700 text-white transition">📝 Planejamento de Aulas</button>
+                <button onclick="switchPerfilSubTab('registros')" id="btn-psub-registros" class="psub-btn px-4 py-2 rounded-xl bg-rosado-100 text-rosado-800 transition">📖 Diário de Sessões & PDF</button>
+                <button onclick="switchPerfilSubTab('anamnese')" id="btn-psub-anamnese" class="psub-btn px-4 py-2 rounded-xl bg-rosado-100 text-rosado-800 transition">📋 Anamnese & Família</button>
+                <button onclick="switchPerfilSubTab('agenda')" id="btn-psub-agenda" class="psub-btn px-4 py-2 rounded-xl bg-rosado-100 text-rosado-800 transition">📅 Horários na Agenda</button>
+                <button onclick="switchPerfilSubTab('avaliacoes')" id="btn-psub-avaliacoes" class="psub-btn px-4 py-2 rounded-xl bg-rosado-100 text-rosado-800 transition">🧠 Avaliação Diagnóstica</button>
+                <button onclick="switchPerfilSubTab('financeiro')" id="btn-psub-financeiro" class="psub-btn px-4 py-2 rounded-xl bg-rosado-100 text-rosado-800 transition">💰 Extrato Financeiro & PIX</button>
             </div>
 
-            <!-- Conteúdos das Sub-abas -->
             <div id="psub-content-planejamentos" class="psub-content space-y-4"></div>
             <div id="psub-content-registros" class="psub-content space-y-4 hidden"></div>
             <div id="psub-content-anamnese" class="psub-content space-y-4 hidden"></div>
@@ -191,50 +189,50 @@
 
         <!-- ABA 2: AGENDA & EVENTOS -->
         <section id="tab-agenda" class="tab-content space-y-6 hidden">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white p-6 rounded-2xl shadow-sm border border-lilac-100">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white p-6 rounded-2xl shadow-sm border border-rosado-100">
                 <div>
-                    <h2 class="text-2xl font-bold text-lilac-900">Agenda & Lançamento Automático</h2>
+                    <h2 class="text-2xl font-bold text-rosado-900">Agenda & Lançamento Automático</h2>
                     <p class="text-sm text-gray-500">Ao registrar a sessão, o valor da aula vai automaticamente para o financeiro.</p>
                 </div>
                 <div class="flex space-x-3">
-                    <button onclick="openModalAgendamento()" class="bg-lilac-700 hover:bg-lilac-800 text-white font-medium px-4 py-2.5 rounded-xl shadow transition flex items-center space-x-2 text-xs">
+                    <button onclick="openModalAgendamento()" class="bg-rosado-700 hover:bg-rosado-800 text-white font-medium px-4 py-2.5 rounded-xl shadow transition flex items-center space-x-2 text-xs">
                         <i class="fa-solid fa-calendar-plus"></i>
                         <span>Novo Agendamento</span>
                     </button>
-                    <button onclick="openModalEvento()" class="bg-purple-600 hover:bg-purple-700 text-white font-medium px-4 py-2.5 rounded-xl shadow transition flex items-center space-x-2 text-xs">
+                    <button onclick="openModalEvento()" class="bg-rosado-600 hover:bg-rosado-700 text-white font-medium px-4 py-2.5 rounded-xl shadow transition flex items-center space-x-2 text-xs">
                         <i class="fa-solid fa-note-sticky"></i>
                         <span>Novo Evento / Lembrete</span>
                     </button>
                 </div>
             </div>
 
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-lilac-100 space-y-4">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-rosado-100 space-y-4">
                 <div class="flex justify-between items-center border-b pb-4">
                     <div class="flex items-center space-x-3">
-                        <button onclick="mudarSemana(-1)" class="p-2 rounded-xl bg-lilac-100 hover:bg-lilac-200 text-lilac-800 transition"><i class="fa-solid fa-chevron-left"></i></button>
-                        <span id="semana-rotulo" class="font-bold text-lilac-900 text-sm md:text-base">Semana</span>
-                        <button onclick="mudarSemana(1)" class="p-2 rounded-xl bg-lilac-100 hover:bg-lilac-200 text-lilac-800 transition"><i class="fa-solid fa-chevron-right"></i></button>
+                        <button onclick="mudarSemana(-1)" class="p-2 rounded-xl bg-rosado-100 hover:bg-rosado-200 text-rosado-800 transition"><i class="fa-solid fa-chevron-left"></i></button>
+                        <span id="semana-rotulo" class="font-bold text-rosado-900 text-sm md:text-base">Semana</span>
+                        <button onclick="mudarSemana(1)" class="p-2 rounded-xl bg-rosado-100 hover:bg-rosado-200 text-rosado-800 transition"><i class="fa-solid fa-chevron-right"></i></button>
                     </div>
-                    <button onclick="irParaSemanaAtual()" class="text-xs bg-lilac-50 hover:bg-lilac-100 text-lilac-700 font-semibold px-3 py-1.5 rounded-lg border border-lilac-200">Hoje</button>
+                    <button onclick="irParaSemanaAtual()" class="text-xs bg-rosado-50 hover:bg-rosado-100 text-rosado-700 font-semibold px-3 py-1.5 rounded-lg border border-rosado-200">Hoje</button>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-7 gap-3 text-xs" id="grade-semanal"></div>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-lilac-100 space-y-4">
-                    <h3 class="font-bold text-lg text-lilac-900 flex items-center space-x-2">
-                        <i class="fa-solid fa-list-check text-lilac-600"></i>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-rosado-100 space-y-4">
+                    <h3 class="font-bold text-lg text-rosado-900 flex items-center space-x-2">
+                        <i class="fa-solid fa-list-check text-rosado-600"></i>
                         <span>Lista de Afazeres & Tarefas</span>
                     </h3>
                     <div class="flex space-x-2">
                         <input type="text" id="novo-afazer" class="flex-1 border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" placeholder="Ex: Preparar fichas de leitura...">
-                        <button onclick="adicionarAfazer()" class="bg-lilac-700 text-white px-4 py-2 rounded-xl text-sm font-medium">Adicionar</button>
+                        <button onclick="adicionarAfazer()" class="bg-rosado-700 text-white px-4 py-2 rounded-xl text-sm font-medium">Adicionar</button>
                     </div>
                     <ul id="lista-afazeres" class="space-y-2 pt-2"></ul>
                 </div>
 
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-lilac-100 space-y-4">
-                    <h3 class="font-bold text-lg text-lilac-900 flex items-center space-x-2">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-rosado-100 space-y-4">
+                    <h3 class="font-bold text-lg text-rosado-900 flex items-center space-x-2">
                         <i class="fa-brands fa-whatsapp text-emerald-600"></i>
                         <span>Envio de Confirmação (WhatsApp Automático)</span>
                     </h3>
@@ -252,36 +250,36 @@
 
         <!-- ABA 3: ASSISTENTE IA -->
         <section id="tab-ia" class="tab-content space-y-6 hidden">
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-lilac-100 flex justify-between items-center">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-rosado-100 flex justify-between items-center">
                 <div>
-                    <h2 class="text-2xl font-bold text-lilac-900 flex items-center space-x-2">
-                        <i class="fa-solid fa-wand-magic-sparkles text-lilac-600"></i>
+                    <h2 class="text-2xl font-bold text-rosado-900 flex items-center space-x-2">
+                        <i class="fa-solid fa-wand-magic-sparkles text-rosado-600"></i>
                         <span>Assistente IA Pedagógica</span>
                     </h2>
                     <p class="text-sm text-gray-500">Peça orientações, jogos de alfabetização, pareceres ou planejamentos.</p>
                 </div>
             </div>
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div class="lg:col-span-2 bg-white p-6 rounded-2xl shadow-sm border border-lilac-100 flex flex-col h-[520px]">
+                <div class="lg:col-span-2 bg-white p-6 rounded-2xl shadow-sm border border-rosado-100 flex flex-col h-[520px]">
                     <div id="ia-chat-box" class="flex-1 overflow-y-auto space-y-3 p-2 text-xs">
-                        <div class="bg-lilac-50 p-3 rounded-2xl text-lilac-900 border border-lilac-100">
+                        <div class="bg-rosado-50 p-3 rounded-2xl text-rosado-900 border border-rosado-100">
                             Olá, Prof. Stefanie! Sou sua assistente pedagógica de IA. Como posso te ajudar hoje com seus alunos ou planejamentos?
                         </div>
                     </div>
                     <div class="flex space-x-2 pt-3 border-t">
-                        <input type="text" id="ia-prompt-input" onkeypress="if(event.key==='Enter') enviarPromptIA()" class="flex-1 border rounded-xl px-3 py-2 text-xs outline-none focus:ring-2 focus:ring-lilac-500" placeholder="Digite sua pergunta para a IA...">
-                        <button onclick="enviarPromptIA()" class="bg-lilac-700 hover:bg-lilac-800 text-white px-5 py-2 rounded-xl text-xs font-semibold">Enviar</button>
+                        <input type="text" id="ia-prompt-input" onkeypress="if(event.key==='Enter') enviarPromptIA()" class="flex-1 border rounded-xl px-3 py-2 text-xs outline-none focus:ring-2 focus:ring-rosado-500" placeholder="Digite sua pergunta para a IA...">
+                        <button onclick="enviarPromptIA()" class="bg-rosado-700 hover:bg-rosado-800 text-white px-5 py-2 rounded-xl text-xs font-semibold">Enviar</button>
                     </div>
                 </div>
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-lilac-100 space-y-3 text-xs">
-                    <h3 class="font-bold text-sm text-lilac-900">Sugestões Rápidas:</h3>
-                    <button onclick="usarExemploIA('Elabore um parecer descritivo para aluno do 1º ano com hipótese silábica-alfabética.')" class="w-full text-left bg-lilac-50 hover:bg-lilac-100 p-2.5 rounded-xl border border-lilac-100 transition">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-rosado-100 space-y-3 text-xs">
+                    <h3 class="font-bold text-sm text-rosado-900">Sugestões Rápidas:</h3>
+                    <button onclick="usarExemploIA('Elabore um parecer descritivo para aluno do 1º ano com hipótese silábica-alfabética.')" class="w-full text-left bg-rosado-50 hover:bg-rosado-100 p-2.5 rounded-xl border border-rosado-100 transition">
                         ✍️ Gerar Parecer Descritivo
                     </button>
-                    <button onclick="usarExemploIA('Sugira 3 atividades lúdicas para trabalhar consciência fonológica e rimas.')" class="w-full text-left bg-lilac-50 hover:bg-lilac-100 p-2.5 rounded-xl border border-lilac-100 transition">
+                    <button onclick="usarExemploIA('Sugira 3 atividades lúdicas para trabalhar consciência fonológica e rimas.')" class="w-full text-left bg-rosado-50 hover:bg-rosado-100 p-2.5 rounded-xl border border-rosado-100 transition">
                         🎯 Jogos para Alfabetização
                     </button>
-                    <button onclick="usarExemploIA('Como estruturar uma rotina de atendimento ABA para criança com TDAH?')" class="w-full text-left bg-lilac-50 hover:bg-lilac-100 p-2.5 rounded-xl border border-lilac-100 transition">
+                    <button onclick="usarExemploIA('Como estruturar uma rotina de atendimento ABA para criança com TDAH?')" class="w-full text-left bg-rosado-50 hover:bg-rosado-100 p-2.5 rounded-xl border border-rosado-100 transition">
                         🧩 Dicas de Foco e Rotina (ABA)
                     </button>
                 </div>
@@ -290,41 +288,41 @@
 
         <!-- ABA 4: MÓDULO ABA -->
         <section id="tab-aba" class="tab-content space-y-6 hidden">
-            <div class="bg-white p-8 rounded-2xl shadow-sm border border-lilac-100 text-center space-y-4 max-w-2xl mx-auto my-8">
-                <div class="w-16 h-16 bg-lilac-100 text-lilac-700 rounded-full flex items-center justify-center mx-auto text-3xl">
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-rosado-100 text-center space-y-4 max-w-2xl mx-auto my-8">
+                <div class="w-16 h-16 bg-rosado-100 text-rosado-700 rounded-full flex items-center justify-center mx-auto text-3xl">
                     <i class="fa-solid fa-brain"></i>
                 </div>
-                <h2 class="text-2xl font-bold text-lilac-900">Módulo ABA (Análise do Comportamento)</h2>
+                <h2 class="text-2xl font-bold text-rosado-900">Módulo ABA (Análise do Comportamento)</h2>
                 <p class="text-sm text-gray-600 leading-relaxed">Espaço reservado para o cadastro de programas comportamentais e registro de habilidades ABA.</p>
-                <div class="inline-block bg-lilac-50 text-lilac-800 px-4 py-2 rounded-xl text-xs font-semibold border border-lilac-200">Em breve • Recurso em desenvolvimento</div>
+                <div class="inline-block bg-rosado-50 text-rosado-800 px-4 py-2 rounded-xl text-xs font-semibold border border-rosado-200">Em breve • Recurso em desenvolvimento</div>
             </div>
         </section>
 
         <!-- ABA 5: FINANCEIRO GERAL -->
         <section id="tab-financeiro" class="tab-content space-y-6 hidden">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white p-6 rounded-2xl shadow-sm border border-lilac-100">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white p-6 rounded-2xl shadow-sm border border-rosado-100">
                 <div>
-                    <h2 class="text-2xl font-bold text-lilac-900">Controle Financeiro Geral</h2>
+                    <h2 class="text-2xl font-bold text-rosado-900">Controle Financeiro Geral</h2>
                     <p class="text-sm text-gray-500">Visão consolidada de todas as mensalidades e sessões.</p>
                 </div>
-                <button onclick="openModalFinanceiro()" class="bg-lilac-700 hover:bg-lilac-800 text-white font-medium px-4 py-2.5 rounded-xl shadow transition flex items-center space-x-2 text-xs">
+                <button onclick="openModalFinanceiro()" class="bg-rosado-700 hover:bg-rosado-800 text-white font-medium px-4 py-2.5 rounded-xl shadow transition flex items-center space-x-2 text-xs">
                     <i class="fa-solid fa-file-invoice-dollar"></i>
                     <span>Novo Lançamento Manual</span>
                 </button>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div class="bg-white p-5 rounded-2xl border border-lilac-100 shadow-sm"><p class="text-xs font-semibold text-gray-500">Total Recebido</p><h3 id="fin-total-recebido" class="text-2xl font-bold text-emerald-600 mt-1">R$ 0,00</h3></div>
-                <div class="bg-white p-5 rounded-2xl border border-lilac-100 shadow-sm"><p class="text-xs font-semibold text-gray-500">Total Pendente</p><h3 id="fin-total-pendente" class="text-2xl font-bold text-amber-600 mt-1">R$ 0,00</h3></div>
-                <div class="bg-white p-5 rounded-2xl border border-lilac-100 shadow-sm"><p class="text-xs font-semibold text-gray-500">Lançamentos Registrados</p><h3 id="fin-total-qtd" class="text-2xl font-bold text-lilac-700 mt-1">0</h3></div>
+                <div class="bg-white p-5 rounded-2xl border border-rosado-100 shadow-sm"><p class="text-xs font-semibold text-gray-500">Total Recebido</p><h3 id="fin-total-recebido" class="text-2xl font-bold text-emerald-600 mt-1">R$ 0,00</h3></div>
+                <div class="bg-white p-5 rounded-2xl border border-rosado-100 shadow-sm"><p class="text-xs font-semibold text-gray-500">Total Pendente</p><h3 id="fin-total-pendente" class="text-2xl font-bold text-amber-600 mt-1">R$ 0,00</h3></div>
+                <div class="bg-white p-5 rounded-2xl border border-rosado-100 shadow-sm"><p class="text-xs font-semibold text-gray-500">Lançamentos Registrados</p><h3 id="fin-total-qtd" class="text-2xl font-bold text-rosado-700 mt-1">0</h3></div>
             </div>
 
-            <div class="bg-white rounded-2xl shadow-sm border border-lilac-100 overflow-hidden">
-                <div class="p-4 border-b border-gray-100 font-bold text-lilac-900">Todos os Lançamentos</div>
+            <div class="bg-white rounded-2xl shadow-sm border border-rosado-100 overflow-hidden">
+                <div class="p-4 border-b border-gray-100 font-bold text-rosado-900">Todos os Lançamentos</div>
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse text-sm">
                         <thead>
-                            <tr class="bg-lilac-50 text-lilac-900 border-b border-lilac-100">
+                            <tr class="bg-rosado-50 text-rosado-900 border-b border-rosado-100">
                                 <th class="p-3.5 font-semibold">Aluno</th>
                                 <th class="p-3.5 font-semibold">Descrição</th>
                                 <th class="p-3.5 font-semibold">Valor (R$)</th>
@@ -342,30 +340,30 @@
 
         <!-- ABA 6: CONFIGURAÇÕES -->
         <section id="tab-configuracoes" class="tab-content space-y-6 hidden">
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-lilac-100">
-                <h2 class="text-2xl font-bold text-lilac-900">Configurações Visual & Personalização</h2>
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-rosado-100">
+                <h2 class="text-2xl font-bold text-rosado-900">Configurações Visual & Personalização</h2>
                 <p class="text-sm text-gray-500">Personalize a logomarca e as cores de fundo do seu aplicativo e clique em Salvar.</p>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-lilac-100 space-y-4">
-                    <h3 class="font-bold text-lg text-lilac-900">Logomarca do App</h3>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-rosado-100 space-y-4">
+                    <h3 class="font-bold text-lg text-rosado-900">Logomarca do App</h3>
                     <div class="flex items-center space-x-4">
-                        <div id="config-logo-preview" class="w-16 h-16 rounded-full bg-lilac-100 flex items-center justify-center overflow-hidden border border-lilac-200"><i class="fa-solid fa-graduation-cap text-lilac-700 text-xl"></i></div>
+                        <div id="config-logo-preview" class="w-16 h-16 rounded-full bg-rosado-100 flex items-center justify-center overflow-hidden border border-rosado-200"><i class="fa-solid fa-graduation-cap text-rosado-700 text-xl"></i></div>
                         <input type="file" id="input-logo-file" accept="image/*" onchange="prepararLogoCustomizada(event)" class="text-xs text-gray-500">
                     </div>
                     <button onclick="removerLogoCustomizada()" class="text-xs text-red-600 hover:underline">Restaurar logo padrão</button>
                 </div>
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-lilac-100 space-y-4">
-                    <h3 class="font-bold text-lg text-lilac-900">Plano de Fundo</h3>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-rosado-100 space-y-4">
+                    <h3 class="font-bold text-lg text-rosado-900">Plano de Fundo</h3>
                     <div class="space-y-3">
-                        <div><label class="block text-xs font-semibold text-gray-600 mb-1">Cor Sólida</label><input type="color" id="input-cor-fundo" value="#f5f3ff" onchange="mudarCorFundo(this.value)" class="w-10 h-10 rounded-lg cursor-pointer border-0"></div>
+                        <div><label class="block text-xs font-semibold text-gray-600 mb-1">Cor Sólida</label><input type="color" id="input-cor-fundo" value="#fdf2f4" onchange="mudarCorFundo(this.value)" class="w-10 h-10 rounded-lg cursor-pointer border-0"></div>
                         <div><label class="block text-xs font-semibold text-gray-600 mb-1">Imagem de Fundo</label><input type="file" id="input-bg-file" accept="image/*" onchange="prepararFundoImagem(event)" class="text-xs text-gray-500"></div>
                         <button onclick="restaurarPadraoVisual()" class="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 py-2 rounded-xl text-xs transition">Restaurar Visual Padrão</button>
                     </div>
                 </div>
             </div>
             <div class="flex justify-end pt-4">
-                <button onclick="salvarConfiguracoesVisuais()" class="bg-lilac-700 hover:bg-lilac-800 text-white font-semibold px-6 py-3 rounded-xl shadow transition text-sm flex items-center space-x-2">
+                <button onclick="salvarConfiguracoesVisuais()" class="bg-rosado-700 hover:bg-rosado-800 text-white font-semibold px-6 py-3 rounded-xl shadow transition text-sm flex items-center space-x-2">
                     <i class="fa-solid fa-floppy-disk"></i>
                     <span>Salvar Alterações Visuais</span>
                 </button>
@@ -379,7 +377,7 @@
     <!-- Modal Novo Planejamento de Aula -->
     <div id="modal-planejamento" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-xl rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col">
-            <div class="bg-lilac-900 text-white p-4 flex justify-between items-center"><h3 class="font-bold text-lg">Novo Planejamento de Aula</h3><button onclick="closeModalPlanejamento()" class="text-white"><i class="fa-solid fa-xmark text-lg"></i></button></div>
+            <div class="bg-rosado-900 text-white p-4 flex justify-between items-center"><h3 class="font-bold text-lg">Novo Planejamento de Aula</h3><button onclick="closeModalPlanejamento()" class="text-white"><i class="fa-solid fa-xmark text-lg"></i></button></div>
             <div class="p-6 overflow-y-auto space-y-4 flex-1 text-xs">
                 <input type="hidden" id="plan-aluno-id">
                 <div><label class="block font-semibold mb-1">Data da Sessão</label><input type="date" id="plan-data" class="w-full border rounded-xl px-3 py-2 outline-none"></div>
@@ -388,32 +386,32 @@
                 
                 <div class="border-t pt-3 space-y-2">
                     <div class="flex justify-between items-center">
-                        <label class="font-bold text-lilac-900">Atividades Planejadas</label>
-                        <button onclick="adicionarCampoAtividadePlan()" class="bg-lilac-100 text-lilac-800 px-3 py-1 rounded-lg text-[11px] font-semibold"><i class="fa-solid fa-plus mr-1"></i> Adicionar Atividade</button>
+                        <label class="font-bold text-rosado-900">Atividades Planejadas</label>
+                        <button onclick="adicionarCampoAtividadePlan()" class="bg-rosado-100 text-rosado-800 px-3 py-1 rounded-lg text-[11px] font-semibold"><i class="fa-solid fa-plus mr-1"></i> Adicionar Atividade</button>
                     </div>
                     <div id="plan-atividades-container" class="space-y-2"></div>
                 </div>
             </div>
             <div class="p-4 bg-gray-50 border-t flex justify-end space-x-3">
                 <button onclick="closeModalPlanejamento()" class="px-4 py-2 text-sm text-gray-600">Cancelar</button>
-                <button onclick="salvarPlanejamento()" class="px-5 py-2 text-sm bg-lilac-700 text-white font-medium rounded-xl">Salvar Planejamento</button>
+                <button onclick="salvarPlanejamento()" class="px-5 py-2 text-sm bg-rosado-700 text-white font-medium rounded-xl">Salvar Planejamento</button>
             </div>
         </div>
     </div>
 
-    <!-- Modal Executar Planejamento (Preencher Desempenho) -->
+    <!-- Modal Executar Planejamento -->
     <div id="modal-executar-plan" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-xl rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col">
             <div class="bg-emerald-800 text-white p-4 flex justify-between items-center"><h3 class="font-bold text-lg">Registrar Desempenho & Concluir Aula</h3><button onclick="closeModalExecutarPlan()" class="text-white"><i class="fa-solid fa-xmark text-lg"></i></button></div>
             <div class="p-6 overflow-y-auto space-y-4 flex-1 text-xs">
                 <input type="hidden" id="exec-plan-id">
-                <div class="bg-lilac-50 p-3 rounded-xl border space-y-1">
+                <div class="bg-rosado-50 p-3 rounded-xl border space-y-1">
                     <p><strong>Data:</strong> <span id="exec-plan-data-txt"></span></p>
                     <p><strong>Objetivo:</strong> <span id="exec-plan-objetivo-txt"></span></p>
                 </div>
 
                 <div class="space-y-3">
-                    <h4 class="font-bold text-lilac-900 border-b pb-1">Avaliar Desempenho em cada atividade realizada:</h4>
+                    <h4 class="font-bold text-rosado-900 border-b pb-1">Avaliar Desempenho em cada atividade realizada:</h4>
                     <div id="exec-atividades-lista" class="space-y-3"></div>
                 </div>
 
@@ -432,12 +430,12 @@
     <!-- Modal Aluno -->
     <div id="modal-aluno" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col">
-            <div class="bg-lilac-900 text-white p-4 flex justify-between items-center"><h3 class="font-bold text-lg">Cadastro de Aluno</h3><button onclick="closeModalAluno()" class="text-white"><i class="fa-solid fa-xmark text-lg"></i></button></div>
+            <div class="bg-rosado-900 text-white p-4 flex justify-between items-center"><h3 class="font-bold text-lg">Cadastro de Aluno</h3><button onclick="closeModalAluno()" class="text-white"><i class="fa-solid fa-xmark text-lg"></i></button></div>
             <div class="p-6 overflow-y-auto space-y-4 flex-1 text-xs">
                 <input type="hidden" id="aluno-id">
-                <div class="flex items-center space-x-4 bg-lilac-50 p-3 rounded-2xl border border-lilac-100">
-                    <div id="aluno-foto-preview" class="w-16 h-16 rounded-full bg-lilac-200 flex items-center justify-center overflow-hidden border-2 border-lilac-400 font-bold text-lilac-800 text-xl flex-shrink-0"><i class="fa-solid fa-user"></i></div>
-                    <div><label class="block font-semibold text-lilac-900 mb-1">Foto do Aluno</label><input type="file" id="aluno-foto-file" accept="image/*" onchange="processarFotoAluno(event)" class="text-[11px] text-gray-500"></div>
+                <div class="flex items-center space-x-4 bg-rosado-50 p-3 rounded-2xl border border-rosado-100">
+                    <div id="aluno-foto-preview" class="w-16 h-16 rounded-full bg-rosado-200 flex items-center justify-center overflow-hidden border-2 border-rosado-400 font-bold text-rosado-800 text-xl flex-shrink-0"><i class="fa-solid fa-user"></i></div>
+                    <div><label class="block font-semibold text-rosado-900 mb-1">Foto do Aluno</label><input type="file" id="aluno-foto-file" accept="image/*" onchange="processarFotoAluno(event)" class="text-[11px] text-gray-500"></div>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <div><label class="block font-semibold mb-1">Nome Completo</label><input type="text" id="aluno-nome" class="w-full border rounded-xl px-3 py-2 outline-none"></div>
@@ -480,7 +478,7 @@
             </div>
             <div class="p-4 bg-gray-50 border-t flex justify-end space-x-3">
                 <button onclick="closeModalAluno()" class="px-4 py-2 text-sm text-gray-600">Cancelar</button>
-                <button onclick="salvarAluno()" class="px-5 py-2 text-sm bg-lilac-700 text-white font-medium rounded-xl">Salvar Aluno</button>
+                <button onclick="salvarAluno()" class="px-5 py-2 text-sm bg-rosado-700 text-white font-medium rounded-xl">Salvar Aluno</button>
             </div>
         </div>
     </div>
@@ -488,7 +486,7 @@
     <!-- Modal Agendamento -->
     <div id="modal-agendamento" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-md rounded-2xl shadow-2xl overflow-hidden flex flex-col">
-            <div class="bg-lilac-900 text-white p-4 flex justify-between items-center"><h3 id="modal-agenda-titulo" class="font-bold text-lg">Novo Agendamento</h3><button onclick="closeModalAgendamento()" class="text-white"><i class="fa-solid fa-xmark text-lg"></i></button></div>
+            <div class="bg-rosado-900 text-white p-4 flex justify-between items-center"><h3 id="modal-agenda-titulo" class="font-bold text-lg">Novo Agendamento</h3><button onclick="closeModalAgendamento()" class="text-white"><i class="fa-solid fa-xmark text-lg"></i></button></div>
             <div class="p-6 space-y-4 flex-1 text-xs">
                 <input type="hidden" id="agenda-id">
                 <div><label class="block font-semibold mb-1">Aluno</label><select id="agenda-aluno-id" onchange="atualizarDuracaoPadrao()" class="w-full border rounded-xl px-3 py-2 outline-none"></select></div>
@@ -508,15 +506,15 @@
                     <div><label class="block font-semibold mb-1">Assunto / Tipo</label><input type="text" id="agenda-tipo" value="Sessão Pedagógica" class="w-full border rounded-xl px-3 py-2 outline-none"></div>
                 </div>
                 <div id="div-recorrencia" class="pt-2 border-t">
-                    <label class="flex items-center space-x-2 cursor-pointer font-medium text-lilac-900">
-                        <input type="checkbox" id="agenda-recorrente" class="rounded text-lilac-600 w-4 h-4">
+                    <label class="flex items-center space-x-2 cursor-pointer font-medium text-rosado-900">
+                        <input type="checkbox" id="agenda-recorrente" class="rounded text-rosado-600 w-4 h-4">
                         <span>Repetir toda semana (Recorrente por 2 meses)</span>
                     </label>
                 </div>
             </div>
             <div class="p-4 bg-gray-50 border-t flex justify-end space-x-3">
                 <button onclick="closeModalAgendamento()" class="px-4 py-2 text-sm text-gray-600">Cancelar</button>
-                <button onclick="salvarAgendamento()" class="px-5 py-2 text-sm bg-lilac-700 text-white font-medium rounded-xl">Salvar Agendamento</button>
+                <button onclick="salvarAgendamento()" class="px-5 py-2 text-sm bg-rosado-700 text-white font-medium rounded-xl">Salvar Agendamento</button>
             </div>
         </div>
     </div>
@@ -524,7 +522,7 @@
     <!-- Modal Evento -->
     <div id="modal-evento" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-md rounded-2xl shadow-2xl overflow-hidden flex flex-col">
-            <div class="bg-purple-800 text-white p-4 flex justify-between items-center"><h3 class="font-bold text-lg">Novo Evento / Lembrete</h3><button onclick="closeModalEvento()" class="text-white"><i class="fa-solid fa-xmark text-lg"></i></button></div>
+            <div class="bg-rosado-800 text-white p-4 flex justify-between items-center"><h3 class="font-bold text-lg">Novo Evento / Lembrete</h3><button onclick="closeModalEvento()" class="text-white"><i class="fa-solid fa-xmark text-lg"></i></button></div>
             <div class="p-6 space-y-4 flex-1 text-xs">
                 <div><label class="block font-semibold mb-1">Título</label><input type="text" id="evento-titulo" class="w-full border rounded-xl px-3 py-2 outline-none"></div>
                 <div class="grid grid-cols-2 gap-3">
@@ -535,7 +533,7 @@
             </div>
             <div class="p-4 bg-gray-50 border-t flex justify-end space-x-3">
                 <button onclick="closeModalEvento()" class="px-4 py-2 text-sm text-gray-600">Cancelar</button>
-                <button onclick="salvarEvento()" class="px-5 py-2 text-sm bg-purple-700 text-white font-medium rounded-xl">Salvar Evento</button>
+                <button onclick="salvarEvento()" class="px-5 py-2 text-sm bg-rosado-700 text-white font-medium rounded-xl">Salvar Evento</button>
             </div>
         </div>
     </div>
@@ -543,7 +541,7 @@
     <!-- Modal Financeiro Manual -->
     <div id="modal-financeiro" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-md rounded-2xl shadow-2xl overflow-hidden flex flex-col">
-            <div class="bg-lilac-900 text-white p-4 flex justify-between items-center"><h3 class="font-bold text-lg">Lançamento Financeiro Manual</h3><button onclick="closeModalFinanceiro()" class="text-white"><i class="fa-solid fa-xmark text-lg"></i></button></div>
+            <div class="bg-rosado-900 text-white p-4 flex justify-between items-center"><h3 class="font-bold text-lg">Lançamento Financeiro Manual</h3><button onclick="closeModalFinanceiro()" class="text-white"><i class="fa-solid fa-xmark text-lg"></i></button></div>
             <div class="p-6 space-y-4 flex-1 text-xs">
                 <div><label class="block font-semibold mb-1">Aluno</label><select id="fin-aluno-id" class="w-full border rounded-xl px-3 py-2 outline-none"></select></div>
                 <div><label class="block font-semibold mb-1">Descrição</label><input type="text" id="fin-descricao" value="Sessão Pedagógica" class="w-full border rounded-xl px-3 py-2 outline-none"></div>
@@ -558,7 +556,7 @@
             </div>
             <div class="p-4 bg-gray-50 border-t flex justify-end space-x-3">
                 <button onclick="closeModalFinanceiro()" class="px-4 py-2 text-sm text-gray-600">Cancelar</button>
-                <button onclick="salvarFinanceiroManual()" class="px-5 py-2 text-sm bg-lilac-700 text-white font-medium rounded-xl">Salvar</button>
+                <button onclick="salvarFinanceiroManual()" class="px-5 py-2 text-sm bg-rosado-700 text-white font-medium rounded-xl">Salvar</button>
             </div>
         </div>
     </div>
@@ -576,7 +574,7 @@
         let avaliacoes = JSON.parse(localStorage.getItem('st_avaliacoes')) || [];
         let financeiro = JSON.parse(localStorage.getItem('st_financeiro')) || [];
         let afazeres = JSON.parse(localStorage.getItem('st_afazeres')) || [];
-        let configVisual = JSON.parse(localStorage.getItem('st_config_visual')) || { logo: '', corFundo: '#f5f3ff', bgImagem: '' };
+        let configVisual = JSON.parse(localStorage.getItem('st_config_visual')) || { logo: '', corFundo: '#fdf2f4', bgImagem: '' };
 
         let dataSemanaAtual = new Date();
         let alunoPerfilAtivoId = null;
@@ -634,12 +632,12 @@
             const contents = document.querySelectorAll('.tab-content');
             for(let i=0; i<contents.length; i++) contents[i].classList.add('hidden');
             const navBtns = document.querySelectorAll('.nav-btn');
-            for(let i=0; i<navBtns.length; i++) navBtns[i].classList.remove('bg-lilac-800', 'text-white');
+            for(let i=0; i<navBtns.length; i++) navBtns[i].classList.remove('bg-rosado-800', 'text-white');
 
             const target = document.getElementById('tab-' + tabId);
             if(target) target.classList.remove('hidden');
             const activeBtn = document.getElementById('nav-' + tabId);
-            if(activeBtn) activeBtn.classList.add('bg-lilac-800', 'text-white');
+            if(activeBtn) activeBtn.classList.add('bg-rosado-800', 'text-white');
 
             if(window.innerWidth < 768) document.getElementById('sidebar').classList.add('hidden');
         }
@@ -661,15 +659,15 @@
             for(let i=0; i<subContents.length; i++) subContents[i].classList.add('hidden');
             const subBtns = document.querySelectorAll('.psub-btn');
             for(let i=0; i<subBtns.length; i++) {
-                subBtns[i].classList.remove('bg-lilac-700', 'text-white');
-                subBtns[i].classList.add('bg-lilac-100', 'text-lilac-800');
+                subBtns[i].classList.remove('bg-rosado-700', 'text-white');
+                subBtns[i].classList.add('bg-rosado-100', 'text-rosado-800');
             }
 
             document.getElementById('psub-content-' + subId).classList.remove('hidden');
             const activeSubBtn = document.getElementById('btn-psub-' + subId);
             if(activeSubBtn) {
-                activeSubBtn.classList.remove('bg-lilac-100', 'text-lilac-800');
-                activeSubBtn.classList.add('bg-lilac-700', 'text-white');
+                activeSubBtn.classList.remove('bg-rosado-100', 'text-rosado-800');
+                activeSubBtn.classList.add('bg-rosado-700', 'text-white');
             }
         }
 
@@ -679,24 +677,24 @@
         function renderInicioAlunos() {
             const grid = document.getElementById('inicio-alunos-grid');
             if(alunos.length === 0) {
-                grid.innerHTML = `<div class="col-span-full text-center py-12 text-gray-400 bg-white rounded-2xl border border-lilac-100 p-8"><p>Nenhum aluno cadastrado ainda. Clique em "Cadastrar Novo Aluno" acima.</p></div>`;
+                grid.innerHTML = `<div class="col-span-full text-center py-12 text-gray-400 bg-white rounded-2xl border border-rosado-100 p-8"><p>Nenhum aluno cadastrado ainda. Clique em "Cadastrar Novo Aluno" acima.</p></div>`;
                 return;
             }
             grid.innerHTML = alunos.map(a => `
-                <div onclick="abrirPerfilAluno(${a.id})" class="bg-white rounded-2xl p-6 shadow-sm border border-lilac-100 hover:border-lilac-400 cursor-pointer transition space-y-3 group">
+                <div onclick="abrirPerfilAluno(${a.id})" class="bg-white rounded-2xl p-6 shadow-sm border border-rosado-100 hover:border-rosado-400 cursor-pointer transition space-y-3 group">
                     <div class="flex items-center space-x-4">
-                        <div class="w-14 h-14 rounded-full bg-lilac-200 flex items-center justify-center overflow-hidden border-2 border-lilac-300 font-bold text-lilac-800 text-lg flex-shrink-0 group-hover:scale-105 transition">
+                        <div class="w-14 h-14 rounded-full bg-rosado-200 flex items-center justify-center overflow-hidden border-2 border-rosado-300 font-bold text-rosado-800 text-lg flex-shrink-0 group-hover:scale-105 transition">
                             ${a.foto ? `<img src="${a.foto}" class="w-full h-full object-cover">` : a.nome.substring(0,2).toUpperCase()}
                         </div>
                         <div>
-                            <h3 class="font-bold text-lg text-lilac-900 group-hover:text-lilac-700 transition">${a.nome}</h3>
-                            <span class="inline-block bg-lilac-100 text-lilac-800 text-xs px-2.5 py-0.5 rounded font-medium mt-0.5">${a.ano}</span>
+                            <h3 class="font-bold text-lg text-rosado-900 group-hover:text-rosado-700 transition">${a.nome}</h3>
+                            <span class="inline-block bg-rosado-100 text-rosado-800 text-xs px-2.5 py-0.5 rounded font-medium mt-0.5">${a.ano}</span>
                         </div>
                     </div>
                     <div class="text-xs text-gray-600 space-y-1 pt-2 border-t">
                         <p><strong>Responsável:</strong> ${a.responsavel || 'Não informado'}</p>
                         <p><strong>Escola:</strong> ${a.escola || 'Não informada'}</p>
-                        <p class="text-lilac-700 font-semibold pt-1"><i class="fa-solid fa-arrow-right mr-1"></i> Abrir planejamentos, sessões e financeiro</p>
+                        <p class="text-rosado-700 font-semibold pt-1"><i class="fa-solid fa-arrow-right mr-1"></i> Abrir planejamentos, sessões e financeiro</p>
                     </div>
                 </div>
             `).join('');
@@ -706,40 +704,39 @@
             const aluno = alunos.find(a => a.id == id);
             if(!aluno) return;
 
-            // Header
             document.getElementById('perfil-header-container').innerHTML = `
                 <div class="flex items-center space-x-4">
-                    <div class="w-16 h-16 rounded-full bg-lilac-200 overflow-hidden border-2 border-lilac-400 font-bold text-lilac-800 text-xl flex-shrink-0 flex items-center justify-center">
+                    <div class="w-16 h-16 rounded-full bg-rosado-200 overflow-hidden border-2 border-rosado-400 font-bold text-rosado-800 text-xl flex-shrink-0 flex items-center justify-center">
                         ${aluno.foto ? `<img src="${aluno.foto}" class="w-full h-full object-cover">` : aluno.nome.substring(0,2).toUpperCase()}
                     </div>
                     <div>
-                        <h2 class="text-2xl font-bold text-lilac-900">${aluno.nome}</h2>
+                        <h2 class="text-2xl font-bold text-rosado-900">${aluno.nome}</h2>
                         <p class="text-xs text-gray-500">${aluno.ano} • ${aluno.escola || 'Escola não informada'}</p>
                     </div>
                 </div>
                 <div class="flex space-x-2">
-                    <button onclick="openModalAluno(${aluno.id})" class="bg-lilac-100 hover:bg-lilac-200 text-lilac-800 font-semibold px-4 py-2 rounded-xl text-xs transition"><i class="fa-solid fa-pen mr-1"></i> Editar Cadastro</button>
+                    <button onclick="openModalAluno(${aluno.id})" class="bg-rosado-100 hover:bg-rosado-200 text-rosado-800 font-semibold px-4 py-2 rounded-xl text-xs transition"><i class="fa-solid fa-pen mr-1"></i> Editar Cadastro</button>
                     <button onclick="deletarAluno(${aluno.id}); switchTab('inicio');" class="bg-red-50 hover:bg-red-100 text-red-600 font-semibold px-3 py-2 rounded-xl text-xs transition"><i class="fa-solid fa-trash"></i></button>
                 </div>
             `;
 
-            // 1. Planejamentos de Aulas
+            // Planejamentos
             const planAluno = planejamentos.filter(p => p.alunoId == id);
             document.getElementById('psub-content-planejamentos').innerHTML = `
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-lilac-100 space-y-4 text-xs">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-rosado-100 space-y-4 text-xs">
                     <div class="flex justify-between items-center border-b pb-2">
                         <div>
-                            <h3 class="font-bold text-sm text-lilac-900">Planejamento de Sessões</h3>
+                            <h3 class="font-bold text-sm text-rosado-900">Planejamento de Sessões</h3>
                             <p class="text-gray-500 text-[11px]">Planeje as atividades e objetivos e depois conclua para gerar o registro automático.</p>
                         </div>
-                        <button onclick="openModalPlanejamentoParaAluno(${aluno.id})" class="bg-lilac-700 text-white px-4 py-2 rounded-xl text-xs font-semibold"><i class="fa-solid fa-plus mr-1"></i> Criar Planejamento</button>
+                        <button onclick="openModalPlanejamentoParaAluno(${aluno.id})" class="bg-rosado-700 text-white px-4 py-2 rounded-xl text-xs font-semibold"><i class="fa-solid fa-plus mr-1"></i> Criar Planejamento</button>
                     </div>
 
                     ${planAluno.length === 0 ? '<p class="text-gray-400 py-6 text-center">Nenhum planejamento cadastrado para este aluno.</p>' :
                         planAluno.map(p => `
-                            <div class="bg-lilac-50 p-4 rounded-2xl border border-lilac-200 space-y-3">
+                            <div class="bg-rosado-50 p-4 rounded-2xl border border-rosado-200 space-y-3">
                                 <div class="flex justify-between items-center border-b pb-2">
-                                    <span class="font-bold text-sm text-lilac-900"><i class="fa-regular fa-calendar mr-1"></i> Data: ${new Date(p.data + 'T00:00:00').toLocaleDateString('pt-BR')}</span>
+                                    <span class="font-bold text-sm text-rosado-900"><i class="fa-regular fa-calendar mr-1"></i> Data: ${new Date(p.data + 'T00:00:00').toLocaleDateString('pt-BR')}</span>
                                     <div class="space-x-2">
                                         ${p.concluido ? '<span class="bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-lg font-bold text-[10px]">✓ Concluída & Registrada</span>' :
                                             `<button onclick="openModalExecutarPlanejamento(${p.id})" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-lg font-semibold"><i class="fa-solid fa-check mr-1"></i> Registrar Desempenho / Concluir</button>`}
@@ -749,7 +746,7 @@
                                 <p><strong>Objetivo Geral:</strong> ${p.objetivo}</p>
                                 <p><strong>O que vou avaliar:</strong> ${p.avaliar}</p>
                                 <div class="space-y-1 pt-1">
-                                    <p class="font-bold text-lilac-900">Atividades Planejadas:</p>
+                                    <p class="font-bold text-rosado-900">Atividades Planejadas:</p>
                                     <ul class="list-disc pl-4 space-y-0.5">
                                         ${p.atividades.map(at => `<li>${at}</li>`).join('')}
                                     </ul>
@@ -759,24 +756,24 @@
                 </div>
             `;
 
-            // 2. Diário de Sessões com Exportação PDF
+            // Diário & PDF
             const regAluno = registros.filter(r => r.alunoId == id);
             document.getElementById('psub-content-registros').innerHTML = `
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-lilac-100 space-y-4 text-xs">
-                    <h3 class="font-bold text-sm text-lilac-900 border-b pb-2">Diário de Aulas Realizadas & Exportação</h3>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-rosado-100 space-y-4 text-xs">
+                    <h3 class="font-bold text-sm text-rosado-900 border-b pb-2">Diário de Aulas Realizadas & Exportação</h3>
                     ${regAluno.length === 0 ? '<p class="text-gray-400 py-6 text-center">Nenhuma sessão registrada ainda. Crie um planejamento e conclua a aula para gerar o diário automaticamente!</p>' :
                         regAluno.map(r => `
-                            <div class="bg-lilac-50 p-4 rounded-2xl border border-lilac-200 space-y-3">
+                            <div class="bg-rosado-50 p-4 rounded-2xl border border-rosado-200 space-y-3">
                                 <div class="flex justify-between items-center border-b pb-2">
-                                    <span class="font-bold text-sm text-lilac-900">Sessão do dia ${new Date(r.data + 'T00:00:00').toLocaleDateString('pt-BR')}</span>
+                                    <span class="font-bold text-sm text-rosado-900">Sessão do dia ${new Date(r.data + 'T00:00:00').toLocaleDateString('pt-BR')}</span>
                                     <div class="space-x-2">
-                                        <button onclick="gerarPdfSessao(${r.id})" class="bg-lilac-700 hover:bg-lilac-800 text-white px-3 py-1.5 rounded-lg font-semibold"><i class="fa-solid fa-file-pdf mr-1"></i> Exportar Relatório PDF</button>
+                                        <button onclick="gerarPdfSessao(${r.id})" class="bg-rosado-700 hover:bg-rosado-800 text-white px-3 py-1.5 rounded-lg font-semibold"><i class="fa-solid fa-file-pdf mr-1"></i> Exportar Relatório PDF</button>
                                         <button onclick="deletarRegistroPerfil(${r.id}, ${aluno.id})" class="text-red-400 p-1"><i class="fa-solid fa-trash"></i></button>
                                     </div>
                                 </div>
                                 <p><strong>Objetivos da Sessão:</strong> ${r.objetivos}</p>
                                 <div class="space-y-1">
-                                    <p class="font-bold text-lilac-900">Desempenho nas Atividades:</p>
+                                    <p class="font-bold text-rosado-900">Desempenho nas Atividades:</p>
                                     <div class="bg-white p-3 rounded-xl border space-y-1">
                                         ${r.atividadesDetalhadas ? r.atividadesDetalhadas.map(at => `
                                             <div class="flex justify-between border-b pb-1 last:border-0">
@@ -792,16 +789,16 @@
                 </div>
             `;
 
-            // 3. Anamnese & Família
+            // Anamnese
             document.getElementById('psub-content-anamnese').innerHTML = `
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-lilac-100 space-y-4 text-xs">
-                    <h3 class="font-bold text-sm text-lilac-900 border-b pb-1">Dados da Família & Contato</h3>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-rosado-100 space-y-4 text-xs">
+                    <h3 class="font-bold text-sm text-rosado-900 border-b pb-1">Dados da Família & Contato</h3>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
                         <p><strong>Responsável:</strong> ${aluno.responsavel || 'Não informado'}</p>
                         <p><strong>Parentesco:</strong> ${aluno.parentesco || 'Não informado'}</p>
                         <p><strong>WhatsApp:</strong> ${aluno.whatsapp || 'Não informado'}</p>
                     </div>
-                    <h3 class="font-bold text-sm text-lilac-900 border-b pb-1 pt-2">Parâmetros & Anamnese</h3>
+                    <h3 class="font-bold text-sm text-rosado-900 border-b pb-1 pt-2">Parâmetros & Anamnese</h3>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
                         <p><strong>Duração da Aula:</strong> ${aluno.duracao || '1 hora'}</p>
                         <p><strong>Valor da Sessão:</strong> R$ ${Number(aluno.valorSessao || 0).toFixed(2)}</p>
@@ -814,19 +811,19 @@
                 </div>
             `;
 
-            // 4. Agenda do Aluno
+            // Agenda do Aluno
             const agsAluno = agendamentos.filter(a => a.alunoId == id);
             document.getElementById('psub-content-agenda').innerHTML = `
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-lilac-100 space-y-4 text-xs">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-rosado-100 space-y-4 text-xs">
                     <div class="flex justify-between items-center border-b pb-2">
-                        <h3 class="font-bold text-sm text-lilac-900">Horários na Agenda</h3>
-                        <button onclick="openModalAgendamentoParaAluno(${aluno.id})" class="bg-lilac-700 text-white px-3 py-1.5 rounded-xl text-xs font-semibold">Novo Agendamento</button>
+                        <h3 class="font-bold text-sm text-rosado-900">Horários na Agenda</h3>
+                        <button onclick="openModalAgendamentoParaAluno(${aluno.id})" class="bg-rosado-700 text-white px-3 py-1.5 rounded-xl text-xs font-semibold">Novo Agendamento</button>
                     </div>
                     ${agsAluno.length === 0 ? '<p class="text-gray-400 py-4 text-center">Nenhum agendamento ativo.</p>' :
                         agsAluno.map(ag => `
-                            <div class="bg-lilac-50 p-3 rounded-xl border flex justify-between items-center">
+                            <div class="bg-rosado-50 p-3 rounded-xl border flex justify-between items-center">
                                 <div>
-                                    <p class="font-bold text-lilac-900">${new Date(ag.data + 'T00:00:00').toLocaleDateString('pt-BR')} às ${ag.horario} (${ag.duracao || '1h'})</p>
+                                    <p class="font-bold text-rosado-900">${new Date(ag.data + 'T00:00:00').toLocaleDateString('pt-BR')} às ${ag.horario} (${ag.duracao || '1h'})</p>
                                     <p class="text-gray-600">${ag.tipo} • Status: <span class="font-semibold">${ag.statusConfirmacao}</span></p>
                                 </div>
                                 <button onclick="deletarAgendamentoPerfil(${ag.id}, ${aluno.id})" class="text-red-500"><i class="fa-solid fa-trash"></i></button>
@@ -835,17 +832,17 @@
                 </div>
             `;
 
-            // 5. Avaliações
+            // Avaliações
             const avAluno = avaliacoes.filter(av => av.alunoId == id);
             document.getElementById('psub-content-avaliacoes').innerHTML = `
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-lilac-100 space-y-4 text-xs">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-rosado-100 space-y-4 text-xs">
                     <div class="flex justify-between items-center border-b pb-2">
-                        <h3 class="font-bold text-sm text-lilac-900">Avaliações Diagnósticas</h3>
-                        <button onclick="openModalAvaliacaoParaAluno(${aluno.id})" class="bg-lilac-700 text-white px-3 py-1.5 rounded-xl text-xs font-semibold">Nova Avaliação</button>
+                        <h3 class="font-bold text-sm text-rosado-900">Avaliações Diagnósticas</h3>
+                        <button onclick="openModalAvaliacaoParaAluno(${aluno.id})" class="bg-rosado-700 text-white px-3 py-1.5 rounded-xl text-xs font-semibold">Nova Avaliação</button>
                     </div>
                     ${avAluno.length === 0 ? '<p class="text-gray-400 py-4 text-center">Nenhuma avaliação diagnóstica cadastrada.</p>' :
                         avAluno.map(av => `
-                            <div class="bg-lilac-50 p-4 rounded-xl border space-y-2">
+                            <div class="bg-rosado-50 p-4 rounded-xl border space-y-2">
                                 <p><strong>Ano Avaliado:</strong> ${av.ano} (${av.data})</p>
                                 <p><strong>Hipótese de Escrita:</strong> ${av.escrita}</p>
                                 <p><strong>Caligrafia & Traçado:</strong> ${av.caligrafia || 'N/A'}</p>
@@ -855,7 +852,7 @@
                 </div>
             `;
 
-            // 6. Financeiro & PIX
+            // Financeiro
             const finAluno = financeiro.filter(f => f.alunoId == id);
             let totalDevidoAluno = 0;
             let itensExtratoTxt = finAluno.filter(f => f.status !== 'Pago').map(f => {
@@ -868,10 +865,10 @@
             const mensagemExtrato = `Olá, ${aluno.responsavel || 'Família'}! Aqui é a Professora Stefanie Toledo.\n\nSegue o extrato financeiro das sessões de ${aluno.nome}:\n\n${itensExtratoTxt}\n\n*Total a Pagar: R$ ${totalDevidoAluno.toFixed(2)}*\n\n💳 *Chave PIX:* steftoledo123@gmail.com`;
 
             document.getElementById('psub-content-financeiro').innerHTML = `
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-lilac-100 space-y-4 text-xs">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-rosado-100 space-y-4 text-xs">
                     <div class="flex justify-between items-center border-b pb-2">
-                        <h3 class="font-bold text-sm text-lilac-900">Extrato Financeiro & PIX</h3>
-                        <button onclick="openModalFinanceiroParaAluno(${aluno.id})" class="bg-lilac-700 text-white px-3 py-1.5 rounded-xl text-xs font-semibold">Novo Lançamento</button>
+                        <h3 class="font-bold text-sm text-rosado-900">Extrato Financeiro & PIX</h3>
+                        <button onclick="openModalFinanceiroParaAluno(${aluno.id})" class="bg-rosado-700 text-white px-3 py-1.5 rounded-xl text-xs font-semibold">Novo Lançamento</button>
                     </div>
                     <div class="bg-emerald-50 p-4 rounded-2xl border border-emerald-200 space-y-3">
                         <div class="flex justify-between items-center">
@@ -883,7 +880,7 @@
                     <div class="overflow-x-auto pt-2">
                         <table class="w-full text-left border-collapse text-xs">
                             <thead>
-                                <tr class="bg-lilac-50 text-lilac-900 border-b border-lilac-100">
+                                <tr class="bg-rosado-50 text-rosado-900 border-b border-rosado-100">
                                     <th class="p-3 font-semibold">Descrição</th>
                                     <th class="p-3 font-semibold">Valor</th>
                                     <th class="p-3 font-semibold">Status</th>
@@ -967,7 +964,7 @@
             }
         }
 
-        // --- EXECUTAR PLANEJAMENTO E GERAR DIÁRIO AUTO ---
+        // --- EXECUTAR PLANEJAMENTO ---
         function openModalExecutarPlanejamento(planId) {
             const plan = planejamentos.find(p => p.id === planId);
             if(!plan) return;
@@ -978,8 +975,8 @@
 
             const lista = document.getElementById('exec-atividades-lista');
             lista.innerHTML = plan.atividades.map((at, i) => `
-                <div class="bg-lilac-50 p-3 rounded-xl border space-y-1">
-                    <p class="font-bold text-lilac-900">${i+1}. ${at}</p>
+                <div class="bg-rosado-50 p-3 rounded-xl border space-y-1">
+                    <p class="font-bold text-rosado-900">${i+1}. ${at}</p>
                     <label class="block text-[11px] text-gray-600 mb-1">Como foi o desempenho do aluno?</label>
                     <select class="exec-status-select w-full border rounded-xl p-2 outline-none" data-atividade="${at}">
                         <option value="Bom (Com autonomia)">🟢 Bom (Com autonomia)</option>
@@ -1013,14 +1010,11 @@
             const aluno = alunos.find(a => a.id === plan.alunoId);
             const valorAula = aluno && aluno.valorSessao ? aluno.valorSessao : 0;
 
-            // 1. Marca planejamento como concluído
             plan.concluido = true;
             localStorage.setItem('st_planejamentos', JSON.stringify(planejamentos));
 
-            // 2. Cria registro automático no Diário
-            const novoRegId = Date.now();
             registros.push({
-                id: novoRegId,
+                id: Date.now(),
                 alunoId: plan.alunoId,
                 data: plan.data,
                 objetivos: plan.objetivo,
@@ -1029,7 +1023,6 @@
             });
             localStorage.setItem('st_registros', JSON.stringify(registros));
 
-            // 3. Lança no Financeiro
             financeiro.push({
                 id: Date.now() + 1,
                 alunoId: plan.alunoId,
@@ -1047,7 +1040,7 @@
             alert('Aula concluída, registrada no diário e lançada no financeiro com sucesso!');
         }
 
-        // --- EXPORTAR PDF DA SESSÃO ---
+        // --- EXPORTAR PDF ---
         function gerarPdfSessao(registroId) {
             const r = registros.find(reg => reg.id === registroId);
             if(!r) return;
@@ -1058,7 +1051,7 @@
                 <div class="space-y-6 text-gray-800">
                     <div class="border-b pb-4 flex justify-between items-center">
                         <div>
-                            <h1 class="text-2xl font-bold text-purple-900">Stefanie Toledo</h1>
+                            <h1 class="text-2xl font-bold text-rosado-900">Stefanie Toledo</h1>
                             <p class="text-xs text-gray-500">Atendimento e Acompanhamento Pedagógico</p>
                         </div>
                         <div class="text-right text-xs text-gray-500">
@@ -1073,12 +1066,12 @@
                     </div>
 
                     <div class="space-y-2 text-sm">
-                        <h3 class="font-bold text-purple-900 text-base border-b pb-1">1. Objetivos da Sessão</h3>
+                        <h3 class="font-bold text-rosado-900 text-base border-b pb-1">1. Objetivos da Sessão</h3>
                         <p class="text-gray-700">${r.objetivos}</p>
                     </div>
 
                     <div class="space-y-2 text-sm">
-                        <h3 class="font-bold text-purple-900 text-base border-b pb-1">2. Desempenho nas Atividades Realizadas</h3>
+                        <h3 class="font-bold text-rosado-900 text-base border-b pb-1">2. Desempenho nas Atividades Realizadas</h3>
                         <div class="space-y-2 pt-1">
                             ${r.atividadesDetalhadas ? r.atividadesDetalhadas.map(at => `
                                 <div class="flex justify-between border-b pb-1">
@@ -1090,7 +1083,7 @@
                     </div>
 
                     <div class="space-y-2 text-sm">
-                        <h3 class="font-bold text-purple-900 text-base border-b pb-1">3. Observações Finais & Avanços</h3>
+                        <h3 class="font-bold text-rosado-900 text-base border-b pb-1">3. Observações Finais & Avanços</h3>
                         <p class="text-gray-700">${r.observacoes || 'Sem observações.'}</p>
                     </div>
 
@@ -1099,11 +1092,10 @@
                     </div>
                 </div>
             `;
-
             window.print();
         }
 
-        // --- AGENDA & OUTROS ---
+        // --- AGENDA ---
         function openModalAgendamento() {
             document.getElementById('agenda-data').value = new Date().toISOString().split('T')[0];
             document.getElementById('agenda-horario').value = '14:00';
@@ -1168,22 +1160,22 @@
                 const agsDia = agendamentos.filter(a => a.data === isoDate).sort((a,b) => a.horario.localeCompare(b.horario));
 
                 grade.innerHTML += `
-                    <div class="border rounded-2xl p-2.5 flex flex-col ${isHoje ? 'bg-lilac-100 border-lilac-400 font-bold' : 'bg-lilac-50/50 border-lilac-100'} min-h-[160px]">
-                        <div class="text-center border-b pb-1 mb-2 border-lilac-200">
-                            <span class="text-[10px] uppercase text-lilac-700 block">${diasSemana[i]}</span>
-                            <span class="text-xs font-bold text-lilac-900">${dia.getDate()}</span>
+                    <div class="border rounded-2xl p-2.5 flex flex-col ${isHoje ? 'bg-rosado-100 border-rosado-400 font-bold' : 'bg-rosado-50/50 border-rosado-100'} min-h-[160px]">
+                        <div class="text-center border-b pb-1 mb-2 border-rosado-200">
+                            <span class="text-[10px] uppercase text-rosado-700 block">${diasSemana[i]}</span>
+                            <span class="text-xs font-bold text-rosado-900">${dia.getDate()}</span>
                         </div>
                         <div class="space-y-2 flex-1">
                             ${agsDia.length === 0 ? '<p class="text-[10px] text-gray-400 text-center py-4">Sem registros</p>' : 
                                 agsDia.map(ag => {
                                     const aluno = alunos.find(a => a.id === ag.alunoId);
                                     return `
-                                        <div class="bg-white p-2 rounded-xl border border-lilac-200 text-[10px] space-y-1 shadow-sm">
-                                            <div class="flex justify-between font-semibold text-lilac-800">
+                                        <div class="bg-white p-2 rounded-xl border border-rosado-200 text-[10px] space-y-1 shadow-sm">
+                                            <div class="flex justify-between font-semibold text-rosado-800">
                                                 <span>${ag.horario}</span>
                                                 <button onclick="deletarAgendamento(${ag.id})" class="text-red-400"><i class="fa-solid fa-trash text-[9px]"></i></button>
                                             </div>
-                                            <div onclick="abrirPerfilAluno(${ag.alunoId})" class="flex items-center space-x-1.5 font-bold text-gray-800 cursor-pointer hover:text-lilac-700">
+                                            <div onclick="abrirPerfilAluno(${ag.alunoId})" class="flex items-center space-x-1.5 font-bold text-gray-800 cursor-pointer hover:text-rosado-700">
                                                 <span class="truncate">${aluno ? aluno.nome : 'Aluno'}</span>
                                             </div>
                                         </div>
@@ -1206,7 +1198,7 @@
         function mudarSemana(offset) { dataSemanaAtual.setDate(dataSemanaAtual.getDate() + (offset * 7)); renderAgendaSemanal(); }
         function irParaSemanaAtual() { dataSemanaAtual = new Date(); renderAgendaSemanal(); }
 
-        // --- ALUNOS & OUTROS MODAIS ---
+        // --- ALUNOS ---
         function openModalAluno(id = null) {
             fotoBase64Temp = '';
             document.getElementById('aluno-id').value = '';
@@ -1286,7 +1278,7 @@
             }
         }
 
-        // --- AFAZERES & OUTROS ---
+        // --- AFAZERES ---
         function adicionarAfazer() {
             const input = document.getElementById('novo-afazer'); const texto = input.value.trim();
             if(!texto) return;
@@ -1300,9 +1292,9 @@
             const lista = document.getElementById('lista-afazeres');
             if(afazeres.length === 0) { lista.innerHTML = `<li class="text-xs text-gray-400 text-center py-2">Nenhum afazer pendente.</li>`; return; }
             lista.innerHTML = afazeres.map(a => `
-                <li class="flex justify-between items-center bg-lilac-50 p-2.5 rounded-xl text-xs border border-lilac-100">
+                <li class="flex justify-between items-center bg-rosado-50 p-2.5 rounded-xl text-xs border border-rosado-100">
                     <div class="flex items-center space-x-2">
-                        <input type="checkbox" ${a.concluido ? 'checked' : ''} onchange="toggleAfazer(${a.id})" class="rounded text-lilac-600">
+                        <input type="checkbox" ${a.concluido ? 'checked' : ''} onchange="toggleAfazer(${a.id})" class="rounded text-rosado-600">
                         <span class="${a.concluido ? 'line-through text-gray-400' : 'text-gray-700 font-medium'}">${a.texto}</span>
                     </div>
                     <button onclick="deletarAfazer(${a.id})" class="text-red-400 p-1"><i class="fa-solid fa-trash"></i></button>
@@ -1343,7 +1335,7 @@
                 const falta = f.valor - f.pago; rec += f.pago; pen += falta > 0 ? falta : 0;
                 return `
                     <tr class="border-b text-xs">
-                        <td class="p-3 font-medium text-lilac-700 cursor-pointer" onclick="abrirPerfilAluno(${f.alunoId})">${aluno ? aluno.nome : 'Aluno'}</td>
+                        <td class="p-3 font-medium text-rosado-700 cursor-pointer" onclick="abrirPerfilAluno(${f.alunoId})">${aluno ? aluno.nome : 'Aluno'}</td>
                         <td class="p-3">${f.descricao}</td>
                         <td class="p-3">R$ ${f.valor.toFixed(2)}</td>
                         <td class="p-3 text-emerald-600">R$ ${f.pago.toFixed(2)}</td>
@@ -1374,7 +1366,6 @@
             window.open(`https://api.whatsapp.com/send?phone=55${numero}&text=${encodeURIComponent(texto)}`, '_blank');
         }
 
-        // --- CONFIGURACES ---
         function prepararLogoCustomizada(e) {
             const file = e.target.files[0];
             if(file) {
@@ -1393,7 +1384,7 @@
                 r.readAsDataURL(file);
             }
         }
-        function restaurarPadraoVisual() { configVisual = { logo: '', corFundo: '#f5f3ff', bgImagem: '' }; localStorage.setItem('st_config_visual', JSON.stringify(configVisual)); aplicarConfigVisualSalva(); }
+        function restaurarPadraoVisual() { configVisual = { logo: '', corFundo: '#fdf2f4', bgImagem: '' }; localStorage.setItem('st_config_visual', JSON.stringify(configVisual)); aplicarConfigVisualSalva(); }
 
         function salvarConfiguracoesVisuais() {
             if(configLogoTemp) configVisual.logo = configLogoTemp;
@@ -1416,7 +1407,7 @@
                 overlay.className = 'absolute inset-0 bg-white/80 pointer-events-none z-0';
             } else {
                 body.style.backgroundImage = 'none';
-                overlay.className = 'absolute inset-0 bg-lilac-50/90 pointer-events-none z-0';
+                overlay.className = 'absolute inset-0 bg-rosado-50/90 pointer-events-none z-0';
             }
 
             if(configVisual.logo) {
@@ -1448,11 +1439,6 @@
             eventos.push({ id: Date.now(), titulo, data, horario: document.getElementById('evento-horario').value, descricao: document.getElementById('evento-descricao').value });
             localStorage.setItem('st_eventos', JSON.stringify(eventos));
             closeModalEvento();
-            renderAgendaSemanal();
-        }
-        function deletarEvento(id) {
-            eventos = eventos.filter(e => e.id !== id);
-            localStorage.setItem('st_eventos', JSON.stringify(eventos));
             renderAgendaSemanal();
         }
         function preencherWhatsappFamilia(sessaoId) {
