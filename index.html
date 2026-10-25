@@ -45,7 +45,7 @@
     <!-- Fundo Personalizado Overlay -->
     <div id="custom-bg-overlay" class="absolute inset-0 bg-lilac-50/90 pointer-events-none z-0"></div>
 
-    <!-- TELA DE LOGIN / AUTENTICAÇÃO (BLOQUEIO) -->
+    <!-- TELA DE LOGIN / AUTENTICAÇÃO -->
     <div id="view-login" class="fixed inset-0 bg-lilac-900 z-50 flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-md rounded-3xl shadow-2xl p-8 space-y-6 text-gray-800">
             <div class="text-center space-y-2">
@@ -132,7 +132,7 @@
                 </button>
                 <button onclick="switchTab('agenda')" id="nav-agenda" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition text-lilac-100 hover:bg-lilac-800">
                     <i class="fa-solid fa-calendar-days w-5 text-center text-lilac-300"></i>
-                    <span>Agenda</span>
+                    <span>Agenda & Eventos</span>
                 </button>
                 <button onclick="switchTab('registros')" id="nav-registros" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition text-lilac-100 hover:bg-lilac-800">
                     <i class="fa-solid fa-book-open w-5 text-center text-lilac-300"></i>
@@ -179,7 +179,7 @@
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white p-6 rounded-2xl shadow-sm border border-lilac-100">
                 <div>
                     <h2 class="text-2xl font-bold text-lilac-900">Cadastro de Alunos & Anamnese Pedagógica</h2>
-                    <p class="text-sm text-gray-500">Mapeamento completo do perfil, foto, rotina e histórico familiar.</p>
+                    <p class="text-sm text-gray-500">Mapeamento completo do perfil, foto, duração padrão da aula e histórico.</p>
                 </div>
                 <button onclick="openModalAluno()" class="bg-lilac-700 hover:bg-lilac-800 text-white font-medium px-5 py-2.5 rounded-xl shadow transition flex items-center space-x-2">
                     <i class="fa-solid fa-user-plus"></i>
@@ -189,17 +189,23 @@
             <div id="alunos-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
         </section>
 
-        <!-- ABA 2: AGENDA -->
+        <!-- ABA 2: AGENDA & EVENTOS -->
         <section id="tab-agenda" class="tab-content space-y-6 hidden">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white p-6 rounded-2xl shadow-sm border border-lilac-100">
                 <div>
-                    <h2 class="text-2xl font-bold text-lilac-900">Agenda & Confirmações</h2>
-                    <p class="text-sm text-gray-500">Grade semanal com fotos dos alunos e envio de link via WhatsApp.</p>
+                    <h2 class="text-2xl font-bold text-lilac-900">Agenda & Gestão de Eventos</h2>
+                    <p class="text-sm text-gray-500">Acompanhe suas aulas, duração, múltiplos alunos por dia e compromissos.</p>
                 </div>
-                <button onclick="openModalAgendamento()" class="bg-lilac-700 hover:bg-lilac-800 text-white font-medium px-5 py-2.5 rounded-xl shadow transition flex items-center space-x-2">
-                    <i class="fa-solid fa-calendar-plus"></i>
-                    <span>Novo Agendamento</span>
-                </button>
+                <div class="flex space-x-3">
+                    <button onclick="openModalAgendamento()" class="bg-lilac-700 hover:bg-lilac-800 text-white font-medium px-4 py-2.5 rounded-xl shadow transition flex items-center space-x-2 text-xs">
+                        <i class="fa-solid fa-calendar-plus"></i>
+                        <span>Novo Agendamento</span>
+                    </button>
+                    <button onclick="openModalEvento()" class="bg-purple-600 hover:bg-purple-700 text-white font-medium px-4 py-2.5 rounded-xl shadow transition flex items-center space-x-2 text-xs">
+                        <i class="fa-solid fa-note-sticky"></i>
+                        <span>Novo Evento / Lembrete</span>
+                    </button>
+                </div>
             </div>
 
             <div class="bg-white p-6 rounded-2xl shadow-sm border border-lilac-100 space-y-4">
@@ -218,10 +224,10 @@
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-lilac-100 space-y-4">
                     <h3 class="font-bold text-lg text-lilac-900 flex items-center space-x-2">
                         <i class="fa-solid fa-list-check text-lilac-600"></i>
-                        <span>Lista de Afazeres</span>
+                        <span>Lista de Afazeres & Tarefas</span>
                     </h3>
                     <div class="flex space-x-2">
-                        <input type="text" id="novo-afazer" class="flex-1 border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" placeholder="Ex: Preparar jogo de leitura...">
+                        <input type="text" id="novo-afazer" class="flex-1 border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none" placeholder="Ex: Preparar fichas de leitura para amanhã...">
                         <button onclick="adicionarAfazer()" class="bg-lilac-700 text-white px-4 py-2 rounded-xl text-sm font-medium">Adicionar</button>
                     </div>
                     <ul id="lista-afazeres" class="space-y-2 pt-2"></ul>
@@ -368,14 +374,14 @@
         <section id="tab-configuracoes" class="tab-content space-y-6 hidden">
             <div class="bg-white p-6 rounded-2xl shadow-sm border border-lilac-100">
                 <h2 class="text-2xl font-bold text-lilac-900">Configurações Visual & Personalização</h2>
-                <p class="text-sm text-gray-500">Personalize a logomarca e as cores de fundo do seu aplicativo.</p>
+                <p class="text-sm text-gray-500">Personalize a logomarca e as cores de fundo do seu aplicativo e clique em Salvar.</p>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-lilac-100 space-y-4">
                     <h3 class="font-bold text-lg text-lilac-900">Logomarca do App</h3>
                     <div class="flex items-center space-x-4">
                         <div id="config-logo-preview" class="w-16 h-16 rounded-full bg-lilac-100 flex items-center justify-center overflow-hidden border border-lilac-200"><i class="fa-solid fa-graduation-cap text-lilac-700 text-xl"></i></div>
-                        <input type="file" id="input-logo-file" accept="image/*" onchange="carregarLogoCustomizada(event)" class="text-xs text-gray-500">
+                        <input type="file" id="input-logo-file" accept="image/*" onchange="prepararLogoCustomizada(event)" class="text-xs text-gray-500">
                     </div>
                     <button onclick="removerLogoCustomizada()" class="text-xs text-red-600 hover:underline">Restaurar logo padrão</button>
                 </div>
@@ -383,10 +389,16 @@
                     <h3 class="font-bold text-lg text-lilac-900">Plano de Fundo</h3>
                     <div class="space-y-3">
                         <div><label class="block text-xs font-semibold text-gray-600 mb-1">Cor Sólida</label><input type="color" id="input-cor-fundo" value="#f5f3ff" onchange="mudarCorFundo(this.value)" class="w-10 h-10 rounded-lg cursor-pointer border-0"></div>
-                        <div><label class="block text-xs font-semibold text-gray-600 mb-1">Imagem de Fundo</label><input type="file" id="input-bg-file" accept="image/*" onchange="carregarFundoImagem(event)" class="text-xs text-gray-500"></div>
+                        <div><label class="block text-xs font-semibold text-gray-600 mb-1">Imagem de Fundo</label><input type="file" id="input-bg-file" accept="image/*" onchange="prepararFundoImagem(event)" class="text-xs text-gray-500"></div>
                         <button onclick="restaurarPadraoVisual()" class="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 py-2 rounded-xl text-xs transition">Restaurar Visual Padrão</button>
                     </div>
                 </div>
+            </div>
+            <div class="flex justify-end pt-4">
+                <button onclick="salvarConfiguracoesVisuais()" class="bg-lilcap-700 bg-lilac-700 hover:bg-lilac-800 text-white font-semibold px-6 py-3 rounded-xl shadow transition text-sm flex items-center space-x-2">
+                    <i class="fa-solid fa-floppy-disk"></i>
+                    <span>Salvar Alterações Visuais</span>
+                </button>
             </div>
         </section>
 
@@ -394,7 +406,7 @@
 
     <!-- MODAIS DO SISTEMA -->
 
-    <!-- Modal Aluno & Anamnese Completa com Foto -->
+    <!-- Modal Aluno & Anamnese Completa com Foto e Duração -->
     <div id="modal-aluno" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col">
             <div class="bg-lilac-900 text-white p-4 flex justify-between items-center">
@@ -415,12 +427,12 @@
                     </div>
                 </div>
                 
-                <h4 class="font-bold text-lilac-900 uppercase tracking-wide border-b pb-1">1. Dados Básicos & Escolares</h4>
+                <h4 class="font-bold text-lilac-900 uppercase tracking-wide border-b pb-1">1. Dados Básicos, Escolares & Duração</h4>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <div><label class="block font-semibold mb-1">Nome Completo</label><input type="text" id="aluno-nome" class="w-full border rounded-xl px-3 py-2 outline-none"></div>
                     <div><label class="block font-semibold mb-1">Data de Nascimento</label><input type="date" id="aluno-nascimento" class="w-full border rounded-xl px-3 py-2 outline-none"></div>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
                     <div><label class="block font-semibold mb-1">Ano Escolar</label>
                         <select id="aluno-ano" class="w-full border rounded-xl px-3 py-2 outline-none">
                             <option value="1º Ano Fundamental">1º Ano Fundamental</option>
@@ -432,6 +444,14 @@
                         </select>
                     </div>
                     <div><label class="block font-semibold mb-1">Escola em que Estuda</label><input type="text" id="aluno-escola" class="w-full border rounded-xl px-3 py-2 outline-none"></div>
+                    <div><label class="block font-semibold mb-1">Duração Padrão da Aula</label>
+                        <select id="aluno-duracao" class="w-full border rounded-xl px-3 py-2 outline-none">
+                            <option value="50 minutos">50 minutos</option>
+                            <option value="1 hora">1 hora</option>
+                            <option value="1 hora e 30 min">1 hora e 30 min</option>
+                            <option value="2 horas">2 horas</option>
+                        </select>
+                    </div>
                 </div>
 
                 <h4 class="font-bold text-lilac-900 uppercase tracking-wide border-b pb-1 pt-2">2. Queixa Principal & Histórico</h4>
@@ -454,21 +474,58 @@
         </div>
     </div>
 
-    <!-- Modal Agendamento -->
+    <!-- Modal Agendamento (Com Duração e Recorrência) -->
     <div id="modal-agendamento" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-md rounded-2xl shadow-2xl overflow-hidden flex flex-col">
-            <div class="bg-lilac-900 text-white p-4 flex justify-between items-center"><h3 class="font-bold text-lg">Novo Agendamento</h3><button onclick="closeModalAgendamento()" class="text-white"><i class="fa-solid fa-xmark text-lg"></i></button></div>
+            <div class="bg-lilac-900 text-white p-4 flex justify-between items-center"><h3 id="modal-agenda-titulo" class="font-bold text-lg">Novo Agendamento</h3><button onclick="closeModalAgendamento()" class="text-white"><i class="fa-solid fa-xmark text-lg"></i></button></div>
             <div class="p-6 space-y-4 flex-1 text-xs">
-                <div><label class="block font-semibold mb-1">Aluno</label><select id="agenda-aluno-id" class="w-full border rounded-xl px-3 py-2 outline-none"></select></div>
+                <input type="hidden" id="agenda-id">
+                <div><label class="block font-semibold mb-1">Aluno</label><select id="agenda-aluno-id" onchange="atualizarDuracaoPadrao()" class="w-full border rounded-xl px-3 py-2 outline-none"></select></div>
                 <div class="grid grid-cols-2 gap-3">
-                    <div><label class="block font-semibold mb-1">Data</label><input type="date" id="agenda-data" class="w-full border rounded-xl px-3 py-2 outline-none"></div>
+                    <div><label class="block font-semibold mb-1">Data Inicial</label><input type="date" id="agenda-data" class="w-full border rounded-xl px-3 py-2 outline-none"></div>
                     <div><label class="block font-semibold mb-1">Horário</label><input type="time" id="agenda-horario" class="w-full border rounded-xl px-3 py-2 outline-none"></div>
                 </div>
-                <div><label class="block font-semibold mb-1">Assunto / Tipo</label><input type="text" id="agenda-tipo" value="Sessão Pedagógica" class="w-full border rounded-xl px-3 py-2 outline-none"></div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div><label class="block font-semibold mb-1">Duração da Sessão</label>
+                        <select id="agenda-duracao" class="w-full border rounded-xl px-3 py-2 outline-none">
+                            <option value="50 minutos">50 minutos</option>
+                            <option value="1 hora">1 hora</option>
+                            <option value="1 hora e 30 min">1 hora e 30 min</option>
+                            <option value="2 horas">2 horas</option>
+                        </select>
+                    </div>
+                    <div><label class="block font-semibold mb-1">Assunto / Tipo</label><input type="text" id="agenda-tipo" value="Sessão Pedagógica" class="w-full border rounded-xl px-3 py-2 outline-none"></div>
+                </div>
+                <div id="div-recorrencia" class="pt-2 border-t">
+                    <label class="flex items-center space-x-2 cursor-pointer font-medium text-lilac-900">
+                        <input type="checkbox" id="agenda-recorrente" class="rounded text-lilac-600 w-4 h-4">
+                        <span>Repetir toda semana (Recorrente por 2 meses)</span>
+                    </label>
+                </div>
             </div>
             <div class="p-4 bg-gray-50 border-t flex justify-end space-x-3">
                 <button onclick="closeModalAgendamento()" class="px-4 py-2 text-sm text-gray-600">Cancelar</button>
-                <button onclick="salvarAgendamento()" class="px-5 py-2 text-sm bg-lilac-700 text-white font-medium rounded-xl">Agendar</button>
+                <button onclick="salvarAgendamento()" class="px-5 py-2 text-sm bg-lilac-700 text-white font-medium rounded-xl">Salvar Agendamento</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Evento / Lembrete Avulso -->
+    <div id="modal-evento" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-md rounded-2xl shadow-2xl overflow-hidden flex flex-col">
+            <div class="bg-purple-800 text-white p-4 flex justify-between items-center"><h3 class="font-bold text-lg">Novo Evento ou Lembrete</h3><button onclick="closeModalEvento()" class="text-white"><i class="fa-solid fa-xmark text-lg"></i></button></div>
+            <div class="p-6 space-y-4 flex-1 text-xs">
+                <input type="hidden" id="evento-id">
+                <div><label class="block font-semibold mb-1">Título do Evento / Lembrete</label><input type="text" id="evento-titulo" class="w-full border rounded-xl px-3 py-2 outline-none" placeholder="Ex: Reunião escolar, Comprar material..."></div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div><label class="block font-semibold mb-1">Data</label><input type="date" id="evento-data" class="w-full border rounded-xl px-3 py-2 outline-none"></div>
+                    <div><label class="block font-semibold mb-1">Horário (Opcional)</label><input type="time" id="evento-horario" class="w-full border rounded-xl px-3 py-2 outline-none"></div>
+                </div>
+                <div><label class="block font-semibold mb-1">Descrição / Notas</label><textarea id="evento-descricao" rows="2" class="w-full border rounded-xl p-3 outline-none" placeholder="Detalhes adicionais..."></textarea></div>
+            </div>
+            <div class="p-4 bg-gray-50 border-t flex justify-end space-x-3">
+                <button onclick="closeModalEvento()" class="px-4 py-2 text-sm text-gray-600">Cancelar</button>
+                <button onclick="salvarEvento()" class="px-5 py-2 text-sm bg-purple-700 text-white font-medium rounded-xl">Salvar Evento</button>
             </div>
         </div>
     </div>
@@ -582,6 +639,7 @@
 
         let alunos = JSON.parse(localStorage.getItem('st_alunos')) || [];
         let agendamentos = JSON.parse(localStorage.getItem('st_agendamentos')) || [];
+        let eventos = JSON.parse(localStorage.getItem('st_eventos')) || [];
         let registros = JSON.parse(localStorage.getItem('st_registros')) || [];
         let avaliacoes = JSON.parse(localStorage.getItem('st_avaliacoes')) || [];
         let financeiro = JSON.parse(localStorage.getItem('st_financeiro')) || [];
@@ -591,6 +649,8 @@
         let dataSemanaAtual = new Date();
         let sessaoRespondendoId = null;
         let fotoBase64Temp = '';
+        let configLogoTemp = '';
+        let configBgTemp = '';
 
         window.onload = function() {
             verificarLoginEstado();
@@ -654,7 +714,7 @@
                     document.getElementById('detalhes-sessao-familia').innerHTML = `
                         <p><strong>Aluno(a):</strong> ${aluno ? aluno.nome : 'Estudante'}</p>
                         <p><strong>Data:</strong> ${new Date(ag.data + 'T00:00:00').toLocaleDateString('pt-BR')}</p>
-                        <p><strong>Horário:</strong> ${ag.horario}</p>
+                        <p><strong>Horário:</strong> ${ag.horario} (${ag.duracao || '1 hora'})</p>
                     `;
                     document.getElementById('view-confirmacao-familia').classList.remove('hidden');
                 }
@@ -756,7 +816,7 @@
             enviarPromptIA();
         }
 
-        // --- AGENDA & WHATSAPP ---
+        // --- AGENDA & EVENTOS ---
         function getSegundaFeira(d) {
             const date = new Date(d);
             const day = date.getDay();
@@ -766,6 +826,153 @@
 
         function mudarSemana(offset) { dataSemanaAtual.setDate(dataSemanaAtual.getDate() + (offset * 7)); renderAgendaSemanal(); }
         function irParaSemanaAtual() { dataSemanaAtual = new Date(); renderAgendaSemanal(); }
+
+        function openModalAgendamento(id = null) {
+            document.getElementById('agenda-id').value = '';
+            document.getElementById('agenda-data').value = new Date().toISOString().split('T')[0];
+            document.getElementById('agenda-horario').value = '14:00';
+            document.getElementById('agenda-tipo').value = 'Sessão Pedagógica';
+            document.getElementById('div-recorrencia').style.display = 'block';
+            document.getElementById('agenda-recorrente').checked = false;
+            document.getElementById('modal-agenda-titulo').innerText = 'Novo Agendamento';
+            atualizarDuracaoPadrao();
+
+            if(id) {
+                const ag = agendamentos.find(a => a.id === id);
+                if(ag) {
+                    document.getElementById('agenda-id').value = ag.id;
+                    document.getElementById('agenda-aluno-id').value = ag.alunoId;
+                    document.getElementById('agenda-data').value = ag.data;
+                    document.getElementById('agenda-horario').value = ag.horario;
+                    document.getElementById('agenda-duracao').value = ag.duracao || '1 hora';
+                    document.getElementById('agenda-tipo').value = ag.tipo;
+                    document.getElementById('div-recorrencia').style.display = 'none';
+                    document.getElementById('modal-agenda-titulo').innerText = 'Editar Agendamento';
+                }
+            }
+            document.getElementById('modal-agendamento').classList.remove('hidden');
+        }
+
+        function closeModalAgendamento() { document.getElementById('modal-agendamento').classList.add('hidden'); }
+
+        function atualizarDuracaoPadrao() {
+            const alunoId = document.getElementById('agenda-aluno-id').value;
+            const aluno = alunos.find(a => a.id == alunoId);
+            if(aluno && aluno.duracao) {
+                document.getElementById('agenda-duracao').value = aluno.duracao;
+            }
+        }
+
+        function salvarAgendamento() {
+            const id = document.getElementById('agenda-id').value;
+            const alunoId = document.getElementById('agenda-aluno-id').value;
+            const data = document.getElementById('agenda-data').value;
+            const horario = document.getElementById('agenda-horario').value;
+            const duracao = document.getElementById('agenda-duracao').value;
+            const tipo = document.getElementById('agenda-tipo').value;
+            const recorrente = document.getElementById('agenda-recorrente').checked;
+
+            if(!alunoId || !data || !horario) { alert('Preencha todos os campos obrigatórios.'); return; }
+
+            if(id) {
+                const index = agendamentos.findIndex(a => a.id == id);
+                if(index !== -1) {
+                    agendamentos[index].alunoId = Number(alunoId);
+                    agendamentos[index].data = data;
+                    agendamentos[index].horario = horario;
+                    agendamentos[index].duracao = duracao;
+                    agendamentos[index].tipo = tipo;
+                }
+            } else {
+                let dataBase = new Date(data + 'T00:00:00');
+                const qtdSemanas = recorrente ? 8 : 1;
+
+                for(let i = 0; i < qtdSemanas; i++) {
+                    const novaDataIso = dataBase.toISOString().split('T')[0];
+                    agendamentos.push({
+                        id: Date.now() + i,
+                        alunoId: Number(alunoId),
+                        data: novaDataIso,
+                        horario,
+                        duracao,
+                        tipo,
+                        statusConfirmacao: 'Pendente'
+                    });
+                    dataBase.setDate(dataBase.getDate() + 7);
+                }
+            }
+
+            localStorage.setItem('st_agendamentos', JSON.stringify(agendamentos));
+            closeModalAgendamento();
+            renderAgendaSemanal();
+            atualizarContadoresMenu();
+        }
+
+        function deletarAgendamento(id) {
+            if(confirm('Tem certeza que deseja excluir este agendamento?')) {
+                agendamentos = agendamentos.filter(a => a.id !== id);
+                localStorage.setItem('st_agendamentos', JSON.stringify(agendamentos));
+                renderAgendaSemanal();
+                atualizarContadoresMenu();
+            }
+        }
+
+        // --- EVENTOS / LEMBRETES AVULSOS ---
+        function openModalEvento(id = null) {
+            document.getElementById('evento-id').value = '';
+            document.getElementById('evento-titulo').value = '';
+            document.getElementById('evento-data').value = new Date().toISOString().split('T')[0];
+            document.getElementById('evento-horario').value = '';
+            document.getElementById('evento-descricao').value = '';
+
+            if(id) {
+                const ev = eventos.find(e => e.id === id);
+                if(ev) {
+                    document.getElementById('evento-id').value = ev.id;
+                    document.getElementById('evento-titulo').value = ev.titulo;
+                    document.getElementById('evento-data').value = ev.data;
+                    document.getElementById('evento-horario').value = ev.horario || '';
+                    document.getElementById('evento-descricao').value = ev.descricao || '';
+                }
+            }
+            document.getElementById('modal-evento').classList.remove('hidden');
+        }
+
+        function closeModalEvento() { document.getElementById('modal-evento').classList.add('hidden'); }
+
+        function salvarEvento() {
+            const id = document.getElementById('evento-id').value;
+            const titulo = document.getElementById('evento-titulo').value.trim();
+            const data = document.getElementById('evento-data').value;
+            if(!titulo || !data) { alert('Informe o título e a data do evento.'); return; }
+
+            const dados = {
+                id: id ? Number(id) : Date.now(),
+                titulo,
+                data,
+                horario: document.getElementById('evento-horario').value,
+                descricao: document.getElementById('evento-descricao').value
+            };
+
+            if(id) {
+                const idx = eventos.findIndex(e => e.id == id);
+                if(idx !== -1) eventos[idx] = dados;
+            } else {
+                eventos.push(dados);
+            }
+
+            localStorage.setItem('st_eventos', JSON.stringify(eventos));
+            closeModalEvento();
+            renderAgendaSemanal();
+        }
+
+        function deletarEvento(id) {
+            if(confirm('Excluir este evento/lembrete?')) {
+                eventos = eventos.filter(e => e.id !== id);
+                localStorage.setItem('st_eventos', JSON.stringify(eventos));
+                renderAgendaSemanal();
+            }
+        }
 
         function renderAgendaSemanal() {
             const segunda = getSegundaFeira(dataSemanaAtual);
@@ -780,33 +987,55 @@
                 const dia = new Date(segunda); dia.setDate(segunda.getDate() + i);
                 const isoDate = dia.toISOString().split('T')[0];
                 const isHoje = isoDate === new Date().toISOString().split('T')[0];
-                const agsDia = agendamentos.filter(a => a.data === isoDate);
+                const agsDia = agendamentos.filter(a => a.data === isoDate).sort((a,b) => a.horario.localeCompare(b.horario));
+                const evsDia = eventos.filter(e => e.data === isoDate);
 
                 grade.innerHTML += `
-                    <div class="border rounded-2xl p-2.5 flex flex-col ${isHoje ? 'bg-lilac-100 border-lilac-400 font-bold' : 'bg-lilac-50/50 border-lilac-100'} min-h-[140px]">
+                    <div class="border rounded-2xl p-2.5 flex flex-col ${isHoje ? 'bg-lilac-100 border-lilac-400 font-bold' : 'bg-lilac-50/50 border-lilac-100'} min-h-[180px]">
                         <div class="text-center border-b pb-1 mb-2 border-lilac-200">
                             <span class="text-[10px] uppercase text-lilac-700 block">${diasSemana[i]}</span>
                             <span class="text-xs font-bold text-lilac-900">${dia.getDate()}</span>
                         </div>
-                        <div class="space-y-1.5 flex-1">
-                            ${agsDia.length === 0 ? '<p class="text-[10px] text-gray-400 text-center py-2">Sem horários</p>' : 
+                        <div class="space-y-2 flex-1">
+                            <!-- Eventos/Lembretes Avulsos -->
+                            ${evsDia.map(ev => `
+                                <div class="bg-purple-100 border border-purple-300 p-2 rounded-xl text-[10px] space-y-0.5 shadow-sm">
+                                    <div class="flex justify-between font-bold text-purple-900">
+                                        <span><i class="fa-solid fa-note-sticky mr-0.5"></i> ${ev.horario ? ev.horario : 'Lembrete'}</span>
+                                        <div class="space-x-1">
+                                            <button onclick="openModalEvento(${ev.id})" class="text-purple-700 hover:text-purple-900"><i class="fa-solid fa-pen text-[8px]"></i></button>
+                                            <button onclick="deletarEvento(${ev.id})" class="text-red-500 hover:text-red-700"><i class="fa-solid fa-trash text-[8px]"></i></button>
+                                        </div>
+                                    </div>
+                                    <div class="text-purple-950 font-semibold truncate">${ev.titulo}</div>
+                                </div>
+                            `).join('')}
+
+                            <!-- Aulas / Agendamentos -->
+                            ${agsDia.length === 0 && evsDia.length === 0 ? '<p class="text-[10px] text-gray-400 text-center py-4">Sem registros</p>' : 
                                 agsDia.map(ag => {
                                     const aluno = alunos.find(a => a.id === ag.alunoId);
                                     let badgeColor = 'bg-gray-100 text-gray-700'; let badgeText = 'Pendente';
-                                    if(ag.statusConfirmacao === 'Confirmado') { badgeColor = 'bg-emerald-100 text-emerald-800'; badgeText = 'Confirmado'; }
-                                    if(ag.statusConfirmacao === 'Cancelado') { badgeColor = 'bg-red-100 text-red-800'; badgeText = 'Cancelado'; }
+                                    if(ag.statusConfirmacao === 'Confirmado') { badgeColor = 'bg-emerald-100 text-emerald-800'; badgeText = 'Confirm.'; }
+                                    if(ag.statusConfirmacao === 'Cancelado') { badgeColor = 'bg-red-100 text-red-800'; badgeText = 'Canc.'; }
 
                                     return `
-                                        <div class="bg-white p-2 rounded-xl border border-lilac-200 text-[10px] space-y-1">
-                                            <div class="flex justify-between font-semibold text-lilac-800">
-                                                <span>${ag.horario}</span>
-                                                <span class="px-1.5 py-0.5 rounded text-[8px] ${badgeColor}">${badgeText}</span>
+                                        <div class="bg-white p-2 rounded-xl border border-lilac-200 text-[10px] space-y-1 shadow-sm">
+                                            <div class="flex justify-between items-center font-semibold text-lilac-800">
+                                                <span><i class="fa-regular fa-clock mr-0.5"></i> ${ag.horario} <span class="text-[8px] text-gray-500">(${ag.duracao || '1h'})</span></span>
+                                                <div class="space-x-1">
+                                                    <button onclick="openModalAgendamento(${ag.id})" class="text-lilac-600 hover:text-lilac-900"><i class="fa-solid fa-pen text-[9px]"></i></button>
+                                                    <button onclick="deletarAgendamento(${ag.id})" class="text-red-400 hover:text-red-600"><i class="fa-solid fa-trash text-[9px]"></i></button>
+                                                </div>
                                             </div>
-                                            <div class="flex items-center space-x-1 font-bold text-gray-800">
-                                                <div class="w-4 h-4 rounded-full bg-lilac-200 overflow-hidden flex-shrink-0">
-                                                    ${aluno && aluno.foto ? `<img src="${aluno.foto}" class="w-full h-full object-cover">` : '<i class="fa-solid fa-user text-[8px] text-center block"></i>'}
+                                            <div class="flex items-center space-x-1.5 font-bold text-gray-800">
+                                                <div class="w-5 h-5 rounded-full bg-lilac-200 overflow-hidden flex-shrink-0">
+                                                    ${aluno && aluno.foto ? `<img src="${aluno.foto}" class="w-full h-full object-cover">` : '<i class="fa-solid fa-user text-[9px] text-center block pt-0.5"></i>'}
                                                 </div>
                                                 <span class="truncate">${aluno ? aluno.nome : 'Aluno'}</span>
+                                            </div>
+                                            <div class="text-right">
+                                                <span class="px-1.5 py-0.5 rounded text-[8px] ${badgeColor}">${badgeText}</span>
                                             </div>
                                         </div>
                                     `;
@@ -869,6 +1098,7 @@
             document.getElementById('aluno-nome').value = '';
             document.getElementById('aluno-nascimento').value = '';
             document.getElementById('aluno-escola').value = '';
+            document.getElementById('aluno-duracao').value = '1 hora';
             document.getElementById('anamnese-queixa').value = '';
             document.getElementById('anamnese-desenvolvimento').value = '';
             document.getElementById('anamnese-escolar').value = '';
@@ -884,6 +1114,7 @@
                     document.getElementById('aluno-nascimento').value = a.nascimento || '';
                     document.getElementById('aluno-ano').value = a.ano;
                     document.getElementById('aluno-escola').value = a.escola || '';
+                    document.getElementById('aluno-duracao').value = a.duracao || '1 hora';
                     document.getElementById('anamnese-queixa').value = a.queixa || '';
                     document.getElementById('anamnese-desenvolvimento').value = a.desenvolvimento || '';
                     document.getElementById('anamnese-escolar').value = a.historicoEscolar || '';
@@ -911,6 +1142,7 @@
                 nascimento: document.getElementById('aluno-nascimento').value,
                 ano: document.getElementById('aluno-ano').value,
                 escola: document.getElementById('aluno-escola').value,
+                duracao: document.getElementById('aluno-duracao').value,
                 queixa: document.getElementById('anamnese-queixa').value,
                 desenvolvimento: document.getElementById('anamnese-desenvolvimento').value,
                 historicoEscolar: document.getElementById('anamnese-escolar').value,
@@ -960,28 +1192,12 @@
                         </div>
                     </div>
                     <div class="text-xs text-gray-600 space-y-1 pt-2 border-t">
+                        <p><strong>Duração da Aula:</strong> ${a.duracao || '1 hora'}</p>
                         <p><strong>Escola:</strong> ${a.escola || 'Não informada'}</p>
                         <p><strong>Queixa Principal:</strong> ${a.queixa || 'Não informada'}</p>
-                        <p><strong>Pontos Fortes/Interesses:</strong> ${a.interesses || 'Não informados'}</p>
                     </div>
                 </div>
             `).join('');
-        }
-
-        function openModalAgendamento() {
-            document.getElementById('agenda-data').value = new Date().toISOString().split('T')[0];
-            document.getElementById('agenda-horario').value = '14:00';
-            document.getElementById('modal-agendamento').classList.remove('hidden');
-        }
-        function closeModalAgendamento() { document.getElementById('modal-agendamento').classList.add('hidden'); }
-        function salvarAgendamento() {
-            const alunoId = document.getElementById('agenda-aluno-id').value;
-            const data = document.getElementById('agenda-data').value;
-            const horario = document.getElementById('agenda-horario').value;
-            if(!alunoId || !data || !horario) return;
-            agendamentos.push({ id: Date.now(), alunoId: Number(alunoId), data, horario, tipo: document.getElementById('agenda-tipo').value, statusConfirmacao: 'Pendente' });
-            localStorage.setItem('st_agendamentos', JSON.stringify(agendamentos));
-            closeModalAgendamento(); renderAgendaSemanal(); atualizarContadoresMenu();
         }
 
         // --- REGISTROS ---
@@ -1122,26 +1338,36 @@
             renderFinanceiro();
         }
 
-        // --- CONFIGURAÇÕES ---
-        function carregarLogoCustomizada(e) {
+        // --- CONFIGURAÇÕES VISUAIS COM SALVAMENTO GARANTIDO ---
+        function prepararLogoCustomizada(e) {
             const file = e.target.files[0];
             if(file) {
                 const r = new FileReader();
-                r.onloadend = () => { configVisual.logo = r.result; localStorage.setItem('st_config_visual', JSON.stringify(configVisual)); aplicarConfigVisualSalva(); };
+                r.onloadend = () => { configLogoTemp = r.result; document.getElementById('config-logo-preview').innerHTML = `<img src="${configLogoTemp}" class="w-full h-full object-cover">`; };
                 r.readAsDataURL(file);
             }
         }
-        function removerLogoCustomizada() { configVisual.logo = ''; localStorage.setItem('st_config_visual', JSON.stringify(configVisual)); aplicarConfigVisualSalva(); }
-        function mudarCorFundo(cor) { configVisual.corFundo = cor; configVisual.bgImagem = ''; localStorage.setItem('st_config_visual', JSON.stringify(configVisual)); aplicarConfigVisualSalva(); }
-        function carregarFundoImagem(e) {
+        function removerLogoCustomizada() { configLogoTemp = ''; configVisual.logo = ''; localStorage.setItem('st_config_visual', JSON.stringify(configVisual)); aplicarConfigVisualSalva(); alert('Logomarca removida com sucesso!'); }
+        function mudarCorFundo(cor) { configVisual.corFundo = cor; }
+        function prepararFundoImagem(e) {
             const file = e.target.files[0];
             if(file) {
                 const r = new FileReader();
-                r.onloadend = () => { configVisual.bgImagem = r.result; localStorage.setItem('st_config_visual', JSON.stringify(configVisual)); aplicarConfigVisualSalva(); };
+                r.onloadend = () => { configBgTemp = r.result; };
                 r.readAsDataURL(file);
             }
         }
-        function restaurarPadraoVisual() { configVisual = { logo: '', corFundo: '#f5f3ff', bgImagem: '' }; localStorage.setItem('st_config_visual', JSON.stringify(configVisual)); aplicarConfigVisualSalva(); }
+        function restaurarPadraoVisual() { configVisual = { logo: '', corFundo: '#f5f3ff', bgImagem: '' }; localStorage.setItem('st_config_visual', JSON.stringify(configVisual)); aplicarConfigVisualSalva(); alert('Visual restaurado para o padrão!'); }
+
+        function salvarConfiguracoesVisuais() {
+            if(configLogoTemp) configVisual.logo = configLogoTemp;
+            if(configBgTemp) {
+                configVisual.bgImagem = configBgTemp;
+            }
+            localStorage.setItem('st_config_visual', JSON.stringify(configVisual));
+            aplicarConfigVisualSalva();
+            alert('Configurações visuais salvas com sucesso!');
+        }
 
         function aplicarConfigVisualSalva() {
             const body = document.getElementById('app-body');
@@ -1150,6 +1376,8 @@
             const mobileLogo = document.getElementById('mobile-logo-container');
 
             body.style.backgroundColor = configVisual.corFundo;
+            document.getElementById('input-cor-fundo').value = configVisual.corFundo || '#f5f3ff';
+
             if(configVisual.bgImagem) {
                 body.style.backgroundImage = `url(${configVisual.bgImagem})`;
                 body.style.backgroundSize = 'cover';
@@ -1162,9 +1390,11 @@
             if(configVisual.logo) {
                 sidebarLogo.innerHTML = `<img src="${configVisual.logo}" class="w-full h-full object-cover">`;
                 mobileLogo.innerHTML = `<img src="${configVisual.logo}" class="w-full h-full object-cover">`;
+                document.getElementById('config-logo-preview').innerHTML = `<img src="${configVisual.logo}" class="w-full h-full object-cover">`;
             } else {
                 sidebarLogo.innerHTML = `<i class="fa-solid fa-graduation-cap text-lilac-800"></i>`;
                 mobileLogo.innerHTML = `<i class="fa-solid fa-graduation-cap text-lilac-800"></i>`;
+                document.getElementById('config-logo-preview').innerHTML = `<i class="fa-solid fa-graduation-cap text-lilac-700 text-xl"></i>`;
             }
         }
 
